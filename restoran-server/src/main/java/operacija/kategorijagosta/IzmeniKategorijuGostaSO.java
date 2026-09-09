@@ -3,8 +3,19 @@ package operacija.kategorijagosta;
 
 import domen.KategorijaGosta;
 import operacija.ApstraktnaGenerickaOperacija;
+import repository.db.DbRepository;
 
 public class IzmeniKategorijuGostaSO extends ApstraktnaGenerickaOperacija {
+
+    
+
+    public IzmeniKategorijuGostaSO() {
+        super();
+    }
+
+    public IzmeniKategorijuGostaSO(DbRepository broker) {
+        super(broker);
+    }
 
     @Override
     protected void preduslovi(Object param) throws Exception {

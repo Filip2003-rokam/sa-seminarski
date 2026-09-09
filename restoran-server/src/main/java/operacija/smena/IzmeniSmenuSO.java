@@ -2,12 +2,23 @@ package operacija.smena;
 
 import domen.Smena;
 import operacija.ApstraktnaGenerickaOperacija;
+import repository.db.DbRepository;
 
 /**
  * Sistemska operacija za izmenu postojeće smene.
  * @author Cofara
  */
 public class IzmeniSmenuSO extends ApstraktnaGenerickaOperacija {
+
+    
+
+    public IzmeniSmenuSO() {
+        super();
+    }
+
+    public IzmeniSmenuSO(DbRepository broker) {
+        super(broker);
+    }
 
     @Override
     protected void preduslovi(Object param) throws Exception {

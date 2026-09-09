@@ -6,23 +6,24 @@ package operacija.gosti;
 
 import domen.Gost;
 import operacija.ApstraktnaGenerickaOperacija;
-import repository.Repository;
 import repository.db.DbRepository;
-import repository.db.impl.DbRepositoryGeneric;
 
 /**
  *
  * @author Cofara
  */
-public class IzmeniGostaSO  {
-
-    private final Repository broker;
+public class IzmeniGostaSO extends ApstraktnaGenerickaOperacija {
 
     public IzmeniGostaSO() {
-        this.broker = new DbRepositoryGeneric();
+        super();
     }
-    
-    private void preduslovi(Object param) throws Exception {
+
+    public IzmeniGostaSO(DbRepository broker) {
+        super(broker);
+    }
+
+    @Override
+    protected void preduslovi(Object param) throws Exception {
         if(param == null || !(param instanceof Gost)){
             throw new Exception("Sistem nije mogao da doda gosta");
         }
@@ -38,36 +39,11 @@ public class IzmeniGostaSO  {
         }
     }
 
-    private void izvrsiOperaciju(Object param, String kljuc) throws Exception {
+    @Override
+    protected void izvrsiOperaciju(Object param, String kljuc) throws Exception {
         
         broker.edit((Gost)param);
         
-    }
-    
-        public final void izvrsi(Object objekat, String kljuc) throws Exception {
-        try {
-            preduslovi(objekat);
-            zapocniTransakciju();
-            izvrsiOperaciju(objekat, kljuc);
-            potvrdiTransakciju();
-        } catch (Exception e) {
-            ponistiTransakciju();
-            throw e;
-        } finally {
-            //ugasiKonekciju();
-        }
-    }
-        
-    private void zapocniTransakciju() throws Exception {
-        ((DbRepository) broker).connect();
-    }
-
-    private void potvrdiTransakciju() throws Exception {
-        ((DbRepository) broker).commit();
-    }
-
-    private void ponistiTransakciju() throws Exception {
-        ((DbRepository) broker).rollback();
     }
 
     

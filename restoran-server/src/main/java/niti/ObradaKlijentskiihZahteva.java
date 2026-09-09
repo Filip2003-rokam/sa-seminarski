@@ -58,6 +58,10 @@ public class ObradaKlijentskiihZahteva extends Thread {
             
             try {
                 Zahtev zahtev = (Zahtev) primalac.primi();
+                if (zahtev == null) {
+                    kraj = true;
+                    break;
+                }
                 Odgovor odgovor = new Odgovor();
                 switch (zahtev.getOperacija()) {
                     case LOGIN:

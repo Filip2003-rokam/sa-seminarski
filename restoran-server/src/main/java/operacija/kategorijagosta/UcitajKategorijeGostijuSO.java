@@ -4,6 +4,7 @@ package operacija.kategorijagosta;
 import domen.KategorijaGosta;
 import java.util.List;
 import operacija.ApstraktnaGenerickaOperacija;
+import repository.db.DbRepository;
 
 /**
  *
@@ -12,6 +13,16 @@ import operacija.ApstraktnaGenerickaOperacija;
 public class UcitajKategorijeGostijuSO extends ApstraktnaGenerickaOperacija {
 
     private List<KategorijaGosta> kategorije;
+
+    
+
+    public UcitajKategorijeGostijuSO() {
+        super();
+    }
+
+    public UcitajKategorijeGostijuSO(DbRepository broker) {
+        super(broker);
+    }
 
     @Override
     protected void preduslovi(Object param) throws Exception {

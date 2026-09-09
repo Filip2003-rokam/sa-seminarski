@@ -8,6 +8,7 @@ import domen.ApstraktniDomenskiObjekat;
 import domen.Artikal;
 import java.util.List;
 import operacija.ApstraktnaGenerickaOperacija;
+import repository.db.DbRepository;
 
 /**
  *
@@ -17,6 +18,16 @@ public class UcitajArtikleSO extends ApstraktnaGenerickaOperacija {
 
     private List<Artikal> artikli;
     
+    
+
+    public UcitajArtikleSO() {
+        super();
+    }
+
+    public UcitajArtikleSO(DbRepository broker) {
+        super(broker);
+    }
+
     @Override
     protected void preduslovi(Object param) throws Exception {
         // ovde nema posebnih preduslova jer ne dobijaš parametar

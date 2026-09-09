@@ -2,8 +2,19 @@ package operacija.artikal;
 
 import domen.Artikal;
 import operacija.ApstraktnaGenerickaOperacija;
+import repository.db.DbRepository;
 
 public class IzmeniArtikalSO extends ApstraktnaGenerickaOperacija {
+
+    
+
+    public IzmeniArtikalSO() {
+        super();
+    }
+
+    public IzmeniArtikalSO(DbRepository broker) {
+        super(broker);
+    }
 
     @Override
     protected void preduslovi(Object param) throws Exception {

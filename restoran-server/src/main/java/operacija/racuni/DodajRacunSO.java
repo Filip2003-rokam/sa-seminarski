@@ -8,6 +8,7 @@ import domen.Racun;
 import domen.StavkaRacuna;
 import java.util.List;
 import operacija.ApstraktnaGenerickaOperacija;
+import repository.db.DbRepository;
 
 /**
  *
@@ -15,7 +16,15 @@ import operacija.ApstraktnaGenerickaOperacija;
  */
 public class DodajRacunSO extends ApstraktnaGenerickaOperacija{
 
-@Override
+    public DodajRacunSO() {
+        super();
+    }
+
+    public DodajRacunSO(DbRepository broker) {
+        super(broker);
+    }
+
+    @Override
 protected void preduslovi(Object param) throws Exception {
     
         if (param == null || !(param instanceof Racun)) {

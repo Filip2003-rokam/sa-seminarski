@@ -2,11 +2,22 @@ package operacija.raspored;
 
 import domen.KonobarSmena;
 import operacija.ApstraktnaGenerickaOperacija;
+import repository.db.DbRepository;
 
 /**
  * Sistemska operacija za dodavanje veze između konobara i smene (raspored)
  */
 public class DodajRasporedSO extends ApstraktnaGenerickaOperacija {
+
+    
+
+    public DodajRasporedSO() {
+        super();
+    }
+
+    public DodajRasporedSO(DbRepository broker) {
+        super(broker);
+    }
 
     @Override
     protected void preduslovi(Object param) throws Exception {
