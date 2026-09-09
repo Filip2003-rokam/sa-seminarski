@@ -26,3 +26,6 @@ Thumbs.db
 
 # Radne beleske
 PROJEKAT_OPIS.md
+
+# Maven
+dependency-reduced-pom.xml
