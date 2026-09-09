@@ -39,12 +39,13 @@ public class LoginOperacija extends ApstraktnaGenerickaOperacija {
     @Override
     protected void izvrsiOperaciju(Object param, String kljuc) throws Exception {
         
-        List<Konobar> sviKonobari = broker.getAll((Konobar) param, null);
+        Konobar trazeni = (Konobar) param;
+        List<Konobar> sviKonobari = broker.getAll(trazeni, null);
         System.out.println("KLASA LoginOperacija SO " + sviKonobari);
 
-        for (Konobar z : sviKonobari) {
-            if (z.equals((Konobar) param)) {
-                konobar = z;
+        for (Konobar k : sviKonobari) {
+            if (k.proveriKredencijale(trazeni.getKorisnickoIme(), trazeni.getSifra())) {
+                konobar = k;
                 return;
             }
         }
