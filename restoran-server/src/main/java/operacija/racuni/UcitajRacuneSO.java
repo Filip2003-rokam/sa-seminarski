@@ -4,10 +4,21 @@ import domen.ApstraktniDomenskiObjekat;
 import domen.Racun;
 import java.util.List;
 import operacija.ApstraktnaGenerickaOperacija;
+import repository.db.DbRepository;
 
 public class UcitajRacuneSO extends ApstraktnaGenerickaOperacija {
 
     private List<Racun> racuni;
+
+    
+
+    public UcitajRacuneSO() {
+        super();
+    }
+
+    public UcitajRacuneSO(DbRepository broker) {
+        super(broker);
+    }
 
     @Override
     protected void preduslovi(Object param) throws Exception {

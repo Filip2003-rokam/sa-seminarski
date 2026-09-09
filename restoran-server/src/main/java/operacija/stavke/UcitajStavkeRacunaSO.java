@@ -4,6 +4,7 @@ import domen.Racun;
 import domen.StavkaRacuna;
 import java.util.List;
 import operacija.ApstraktnaGenerickaOperacija;
+import repository.db.DbRepository;
 
 /**
  *
@@ -12,6 +13,16 @@ import operacija.ApstraktnaGenerickaOperacija;
 public class UcitajStavkeRacunaSO extends ApstraktnaGenerickaOperacija {
 
     private List<StavkaRacuna> stavke;
+
+    
+
+    public UcitajStavkeRacunaSO() {
+        super();
+    }
+
+    public UcitajStavkeRacunaSO(DbRepository broker) {
+        super(broker);
+    }
 
     public List<StavkaRacuna> getStavke() {
         return stavke;

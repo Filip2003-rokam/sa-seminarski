@@ -1,13 +1,24 @@
-package operacija.smene;
+package operacija.smena;
 
 import domen.Smena;
 import operacija.ApstraktnaGenerickaOperacija;
+import repository.db.DbRepository;
 
 /**
  * Sistemska operacija za brisanje smene iz baze.
  * @author Cofara
  */
 public class ObrisiSmenuSO extends ApstraktnaGenerickaOperacija {
+
+    
+
+    public ObrisiSmenuSO() {
+        super();
+    }
+
+    public ObrisiSmenuSO(DbRepository broker) {
+        super(broker);
+    }
 
     @Override
     protected void preduslovi(Object param) throws Exception {

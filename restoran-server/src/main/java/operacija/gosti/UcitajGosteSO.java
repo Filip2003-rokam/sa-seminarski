@@ -3,10 +3,21 @@ package operacija.gosti;
 import java.util.List;
 import domen.Gost;
 import operacija.ApstraktnaGenerickaOperacija;
+import repository.db.DbRepository;
 
 public class UcitajGosteSO extends ApstraktnaGenerickaOperacija {
 
     private List<Gost> gosti;
+
+    
+
+    public UcitajGosteSO() {
+        super();
+    }
+
+    public UcitajGosteSO(DbRepository broker) {
+        super(broker);
+    }
 
     public List<Gost> getGosti() {
         return gosti;

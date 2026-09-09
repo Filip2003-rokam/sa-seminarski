@@ -8,6 +8,7 @@ import domen.Gost;
 import operacija.ApstraktnaGenerickaOperacija;
 import repository.Repository;
 import repository.db.impl.DbRepositoryGeneric;
+import repository.db.DbRepository;
 
 /**
  *
@@ -17,6 +18,16 @@ public class DodajGostaSO extends ApstraktnaGenerickaOperacija{
 
     
     //@Override
+    
+
+    public DodajGostaSO() {
+        super();
+    }
+
+    public DodajGostaSO(DbRepository broker) {
+        super(broker);
+    }
+
     protected void preduslovi(Object param) throws Exception {
         if(param == null || !(param instanceof Gost)){
             throw new Exception("Sistem nije mogao da doda gosta");
@@ -35,8 +46,8 @@ public class DodajGostaSO extends ApstraktnaGenerickaOperacija{
 
     }
 
-    //@Override
-    public void izvrsiOperaciju(Object param, String kljuc) throws Exception {
+    @Override
+    protected void izvrsiOperaciju(Object param, String kljuc) throws Exception {
         
         broker.add((Gost)param);
         

@@ -4,6 +4,7 @@ package operacija.raspored;
 import domen.KonobarSmena;
 import java.util.List;
 import operacija.ApstraktnaGenerickaOperacija;
+import repository.db.DbRepository;
 
 /**
  * Sistemska operacija za učitavanje rasporeda konobara po smenama.
@@ -11,6 +12,16 @@ import operacija.ApstraktnaGenerickaOperacija;
 public class UcitajRasporedSO extends ApstraktnaGenerickaOperacija {
 
     private List<KonobarSmena> lista;
+
+    
+
+    public UcitajRasporedSO() {
+        super();
+    }
+
+    public UcitajRasporedSO(DbRepository broker) {
+        super(broker);
+    }
 
     public List<KonobarSmena> getLista() {
         return lista;

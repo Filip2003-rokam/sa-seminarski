@@ -6,12 +6,23 @@ package operacija.gosti;
 
 import domen.Gost;
 import operacija.ApstraktnaGenerickaOperacija;
+import repository.db.DbRepository;
 
 /**
  *
  * @author Cofara
  */
 public class ObrisiGostaSO extends ApstraktnaGenerickaOperacija {
+
+    
+
+    public ObrisiGostaSO() {
+        super();
+    }
+
+    public ObrisiGostaSO(DbRepository broker) {
+        super(broker);
+    }
 
     @Override
     protected void preduslovi(Object param) throws Exception {

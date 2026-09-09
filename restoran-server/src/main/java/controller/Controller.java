@@ -29,7 +29,6 @@ import operacija.konobar.DodajKonobaraSO;
 import operacija.konobar.IzmeniKonobaraSO;
 import operacija.konobar.ObrisiKonobaraSO;
 import operacija.konobar.UcitajKonobareSO;
-import operacija.konobarsmena.ObrisiRasporedSO;
 import operacija.login.LoginOperacija;
 import operacija.racuni.DodajRacunSO;
 import operacija.racuni.IzmeniRacunSO;
@@ -38,11 +37,12 @@ import operacija.racuni.UcitajRacuneSO;
 import operacija.stavke.ObrisiStavkuRacunaSO;
 import operacija.raspored.DodajRasporedSO;
 import operacija.raspored.IzmeniRasporedSO;
+import operacija.raspored.ObrisiRasporedSO;
 import operacija.raspored.UcitajRasporedSO;
+import operacija.smena.DodajSmenuSO;
 import operacija.smena.IzmeniSmenuSO;
+import operacija.smena.ObrisiSmenuSO;
 import operacija.smena.UcitajSmeneSO;
-import operacija.smene.DodajSmenuSO;
-import operacija.smene.ObrisiSmenuSO;
 import operacija.stavke.UcitajStavkeRacunaSO;
 
 
@@ -88,7 +88,7 @@ public class Controller {
     public void dodajGosta(Gost g) throws Exception{
         
         DodajGostaSO operacija = new DodajGostaSO();
-        operacija.izvrsiOperaciju(g,null);
+        operacija.izvrsi(g, null);
         
     }
 

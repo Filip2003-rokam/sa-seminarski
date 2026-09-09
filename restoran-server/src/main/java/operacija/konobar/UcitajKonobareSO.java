@@ -3,10 +3,21 @@ package operacija.konobar;
 import domen.Konobar;
 import java.util.List;
 import operacija.ApstraktnaGenerickaOperacija;
+import repository.db.DbRepository;
 
 public class UcitajKonobareSO extends ApstraktnaGenerickaOperacija {
 
     private List<Konobar> konobari;
+
+    
+
+    public UcitajKonobareSO() {
+        super();
+    }
+
+    public UcitajKonobareSO(DbRepository broker) {
+        super(broker);
+    }
 
     @Override
     protected void preduslovi(Object param) throws Exception {
