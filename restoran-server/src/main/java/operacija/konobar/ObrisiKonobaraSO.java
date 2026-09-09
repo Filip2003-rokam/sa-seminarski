@@ -2,8 +2,19 @@ package operacija.konobar;
 
 import domen.Konobar;
 import operacija.ApstraktnaGenerickaOperacija;
+import repository.db.DbRepository;
 
 public class ObrisiKonobaraSO extends ApstraktnaGenerickaOperacija {
+
+    
+
+    public ObrisiKonobaraSO() {
+        super();
+    }
+
+    public ObrisiKonobaraSO(DbRepository broker) {
+        super(broker);
+    }
 
     @Override
     protected void preduslovi(Object param) throws Exception {

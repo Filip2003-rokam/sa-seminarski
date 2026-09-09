@@ -1,9 +1,20 @@
-package operacija.konobarsmena;
+package operacija.raspored;
 
 import domen.KonobarSmena;
 import operacija.ApstraktnaGenerickaOperacija;
+import repository.db.DbRepository;
 
 public class ObrisiRasporedSO extends ApstraktnaGenerickaOperacija {
+
+    
+
+    public ObrisiRasporedSO() {
+        super();
+    }
+
+    public ObrisiRasporedSO(DbRepository broker) {
+        super(broker);
+    }
 
     @Override
     protected void preduslovi(Object param) throws Exception {

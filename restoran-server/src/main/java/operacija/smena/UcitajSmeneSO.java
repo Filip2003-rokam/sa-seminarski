@@ -7,6 +7,7 @@ package operacija.smena;
 import domen.Smena;
 import java.util.List;
 import operacija.ApstraktnaGenerickaOperacija;
+import repository.db.DbRepository;
 
 /**
  *
@@ -15,6 +16,16 @@ import operacija.ApstraktnaGenerickaOperacija;
 public class UcitajSmeneSO extends ApstraktnaGenerickaOperacija {
 
     private List<Smena> smene;
+
+    
+
+    public UcitajSmeneSO() {
+        super();
+    }
+
+    public UcitajSmeneSO(DbRepository broker) {
+        super(broker);
+    }
 
     public List<Smena> getSmene() {
         return smene;

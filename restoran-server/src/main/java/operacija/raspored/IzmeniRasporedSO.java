@@ -2,11 +2,22 @@ package operacija.raspored;
 
 import domen.KonobarSmena;
 import operacija.ApstraktnaGenerickaOperacija;
+import repository.db.DbRepository;
 
 /**
  * Sistemska operacija za izmenu postojećeg rasporeda (Konobar-Smena)
  */
 public class IzmeniRasporedSO extends ApstraktnaGenerickaOperacija {
+
+    
+
+    public IzmeniRasporedSO() {
+        super();
+    }
+
+    public IzmeniRasporedSO(DbRepository broker) {
+        super(broker);
+    }
 
     @Override
     protected void preduslovi(Object param) throws Exception {

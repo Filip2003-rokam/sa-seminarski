@@ -4,12 +4,23 @@ package operacija.kategorijagosta;
 
 import domen.KategorijaGosta;
 import operacija.ApstraktnaGenerickaOperacija;
+import repository.db.DbRepository;
 
 /**
  *
  * @author Cofara
  */
 public class ObrisiKategorijuGostaSO extends ApstraktnaGenerickaOperacija {
+
+    
+
+    public ObrisiKategorijuGostaSO() {
+        super();
+    }
+
+    public ObrisiKategorijuGostaSO(DbRepository broker) {
+        super(broker);
+    }
 
     @Override
     protected void preduslovi(Object param) throws Exception {

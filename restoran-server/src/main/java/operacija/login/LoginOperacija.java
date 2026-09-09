@@ -5,6 +5,7 @@ import domen.Gost;
 import domen.Konobar;
 import java.util.List;
 import operacija.ApstraktnaGenerickaOperacija;
+import repository.db.DbRepository;
 
 /**
  *
@@ -14,6 +15,16 @@ public class LoginOperacija extends ApstraktnaGenerickaOperacija {
 
     Konobar konobar;
     
+    
+
+    public LoginOperacija() {
+        super();
+    }
+
+    public LoginOperacija(DbRepository broker) {
+        super(broker);
+    }
+
     @Override
     protected void preduslovi(Object param) throws Exception {
         if(param == null || !(param instanceof Konobar)){

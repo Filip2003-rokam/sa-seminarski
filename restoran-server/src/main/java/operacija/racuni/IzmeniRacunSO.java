@@ -8,12 +8,23 @@ import domen.Racun;
 import domen.StavkaRacuna;
 import java.util.List;
 import operacija.ApstraktnaGenerickaOperacija;
+import repository.db.DbRepository;
 
 /**
  *
  * @author Cofara
  */
 public class IzmeniRacunSO extends ApstraktnaGenerickaOperacija{
+
+    
+
+    public IzmeniRacunSO() {
+        super();
+    }
+
+    public IzmeniRacunSO(DbRepository broker) {
+        super(broker);
+    }
 
     @Override
     protected void preduslovi(Object param) throws Exception {

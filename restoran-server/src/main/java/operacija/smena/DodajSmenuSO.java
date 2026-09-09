@@ -1,13 +1,24 @@
-package operacija.smene;
+package operacija.smena;
 
 import domen.Smena;
 import operacija.ApstraktnaGenerickaOperacija;
+import repository.db.DbRepository;
 
 /**
  * Sistemska operacija za dodavanje nove smene.
  * @author Cofara
  */
 public class DodajSmenuSO extends ApstraktnaGenerickaOperacija {
+
+    
+
+    public DodajSmenuSO() {
+        super();
+    }
+
+    public DodajSmenuSO(DbRepository broker) {
+        super(broker);
+    }
 
     @Override
     protected void preduslovi(Object param) throws Exception {

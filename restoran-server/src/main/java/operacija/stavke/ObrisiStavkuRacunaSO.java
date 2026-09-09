@@ -6,12 +6,23 @@ package operacija.stavke;
 
 import domen.StavkaRacuna;
 import operacija.ApstraktnaGenerickaOperacija;
+import repository.db.DbRepository;
 
 /**
  *
  * @author Cofara
  */
 public class ObrisiStavkuRacunaSO extends ApstraktnaGenerickaOperacija{
+
+    
+
+    public ObrisiStavkuRacunaSO() {
+        super();
+    }
+
+    public ObrisiStavkuRacunaSO(DbRepository broker) {
+        super(broker);
+    }
 
     @Override
     protected void preduslovi(Object param) throws Exception {
