@@ -20,12 +20,13 @@ public class Konfiguracija {
     
     private static Konfiguracija instanca;
     private Properties konfiguracija;
+    private static final String CONFIG_PATH = "config/config.properties";
    
     private Konfiguracija() {
         
         konfiguracija = new Properties();
         try {
-            konfiguracija.load(new FileInputStream("C:\\Users\\Cofara\\Desktop\\Folders\\Faks\\Projektovanje Softvera\\NetBeansProjekti\\0_SEMINARSKI_SERVER\\config\\config.properties"));
+            konfiguracija.load(new FileInputStream(CONFIG_PATH));
         } catch (FileNotFoundException ex) {
             ex.printStackTrace();
             Logger.getLogger(Konfiguracija.class.getName()).log(Level.SEVERE, null, ex);
@@ -55,7 +56,7 @@ public class Konfiguracija {
 
     public void sacuvajIzmene() {
     try {
-        konfiguracija.store(new FileOutputStream("C:\\Users\\Cofara\\Desktop\\Folders\\Faks\\Projektovanje Softvera\\NetBeansProjekti\\0_SEMINARSKI_SERVER\\config\\config.properties"), "");
+        konfiguracija.store(new FileOutputStream(CONFIG_PATH), "");
     } catch (IOException ex) {
         ex.printStackTrace();
         Logger.getLogger(Konfiguracija.class.getName()).log(Level.SEVERE, null, ex);

@@ -43,9 +43,9 @@ public class LoginForma extends javax.swing.JFrame {
 
         jLabel2.setText("password");
 
-        jTextFieldUsername.setText("filip");
+        jTextFieldUsername.setText("admin");
 
-        jPasswordField1.setText("filip");
+        jPasswordField1.setText("admin");
         jPasswordField1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jPasswordField1ActionPerformed(evt);

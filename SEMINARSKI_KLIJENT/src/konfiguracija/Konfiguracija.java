@@ -20,12 +20,14 @@ public class Konfiguracija {
     
     private static Konfiguracija instanca;
     private Properties konfiguracija;
+    // KLIJENT nema svoj config folder, pa čitamo config sa SERVER-a
+    private static final String CONFIG_PATH = "../SEMINARSKI_SERVER/config/config.properties";
    
     private Konfiguracija() {
         
         konfiguracija = new Properties();
         try {
-            konfiguracija.load(new FileInputStream("C:\\Users\\Cofara\\Desktop\\Folders\\Faks\\Projektovanje Softvera\\NetBeansProjekti\\0_SEMINARSKI_SERVER\\config\\config.properties"));
+            konfiguracija.load(new FileInputStream(CONFIG_PATH));
         } catch (FileNotFoundException ex) {
             ex.printStackTrace();
             Logger.getLogger(Konfiguracija.class.getName()).log(Level.SEVERE, null, ex);
