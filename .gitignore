@@ -1,0 +1,28 @@
+# Build artefakti
+build/
+dist/
+target/
+*.class
+*.jar
+
+# NetBeans
+**/nbproject/private/
+**/nbproject/build-impl.xml
+**/nbproject/genfiles.properties
+nbbuild/
+nbdist/
+
+# IDE
+.idea/
+*.iml
+.vscode/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Logovi
+*.log
+
+# Radne beleske
+PROJEKAT_OPIS.md

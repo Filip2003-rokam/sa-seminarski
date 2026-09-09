@@ -1,1 +1,0 @@
-operacija.konobarsmena.ObrisiRasporedSO
