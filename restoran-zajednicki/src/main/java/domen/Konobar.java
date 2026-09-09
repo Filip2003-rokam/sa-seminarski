@@ -41,7 +41,10 @@ public class Konobar implements ApstraktniDomenskiObjekat{
     public String getSifra() { return sifra; }
     public void setSifra(String sifra) { this.sifra = sifra; }
 
-    
+    public boolean proveriKredencijale(String korisnickoIme, String sifra) {
+        return Objects.equals(this.korisnickoIme, korisnickoIme)
+                && Objects.equals(this.sifra, sifra);
+    }
 
     @Override
     public String toString() {
@@ -103,8 +106,7 @@ public class Konobar implements ApstraktniDomenskiObjekat{
 
     @Override
     public int hashCode() {
-        int hash = 7;
-        return hash;
+        return Objects.hash(idKonobar);
     }
 
     @Override
@@ -119,10 +121,7 @@ public class Konobar implements ApstraktniDomenskiObjekat{
             return false;
         }
         final Konobar other = (Konobar) obj;
-        if (!Objects.equals(this.korisnickoIme, other.korisnickoIme)) {
-            return false;
-        }
-        return Objects.equals(this.sifra, other.sifra);
+        return this.idKonobar == other.idKonobar;
     }
 
     
