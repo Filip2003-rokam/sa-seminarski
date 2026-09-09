@@ -1,44 +1,45 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package konfiguracija;
 
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.Properties;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
+ * Singleton klasa koja upravlja konfiguracijom klijentske aplikacije.
+ * Parametri se ucitavaju iz classpath resursa <code>config.properties</code>.
  *
- * @author Cofara
+ * @author Filip Oketic
+ * @version 1.0
  */
 public class Konfiguracija {
-    
+
     private static Konfiguracija instanca;
-    private Properties konfiguracija;
-    // KLIJENT nema svoj config folder, pa čitamo config sa SERVER-a
-    private static final String CONFIG_PATH = "../SEMINARSKI_SERVER/config/config.properties";
-   
+
+    private final Properties konfiguracija;
+
+    private static final String RESURS = "config.properties";
+
     private Konfiguracija() {
-        
         konfiguracija = new Properties();
-        try {
-            konfiguracija.load(new FileInputStream(CONFIG_PATH));
-        } catch (FileNotFoundException ex) {
-            ex.printStackTrace();
-            Logger.getLogger(Konfiguracija.class.getName()).log(Level.SEVERE, null, ex);
+        try (InputStream in = Konfiguracija.class.getClassLoader().getResourceAsStream(RESURS)) {
+            if (in != null) {
+                konfiguracija.load(in);
+            } else {
+                Logger.getLogger(Konfiguracija.class.getName())
+                        .log(Level.WARNING, "Resurs {0} nije pronadjen u classpath-u.", RESURS);
+            }
         } catch (IOException ex) {
-            ex.printStackTrace();
             Logger.getLogger(Konfiguracija.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
     }
 
-    // 3. Javna metoda za pristup instanci
+    /**
+     * Vraca jedinu instancu klase Konfiguracija.
+     *
+     * @return instanca klase Konfiguracija
+     */
     public static Konfiguracija getInstanca() {
         if (instanca == null) {
             instanca = new Konfiguracija();
@@ -46,16 +47,23 @@ public class Konfiguracija {
         return instanca;
     }
 
-
+    /**
+     * Vraca vrednost konfiguracionog parametra.
+     *
+     * @param key naziv parametra
+     * @return vrednost parametra, ili "n/a" ako parametar ne postoji
+     */
     public String getProperty(String key) {
         return konfiguracija.getProperty(key, "n/a");
     }
 
+    /**
+     * Postavlja vrednost konfiguracionog parametra u memoriji.
+     *
+     * @param key naziv parametra
+     * @param value nova vrednost parametra
+     */
     public void setProperty(String key, String value) {
         konfiguracija.setProperty(key, value);
     }
-
-
-    
-    
 }

@@ -43,8 +43,9 @@ public class Komunikacija {
     public void konekcija() {
         try {
             
+            String host = konfiguracija.Konfiguracija.getInstanca().getProperty("host");
             int port = Integer.parseInt(konfiguracija.Konfiguracija.getInstanca().getProperty("port"));
-            soket = new Socket("localhost", port);
+            soket = new Socket(host, port);
             posiljalac = new Posiljalac(soket);
             primalac = new Primalac(soket);
         } catch (IOException ex) {
