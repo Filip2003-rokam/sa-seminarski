@@ -1,0 +1,1 @@
+operacija.smene.ObrisiSmenuSO
