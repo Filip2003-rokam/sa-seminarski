@@ -77,7 +77,7 @@ class ObrisiStavkuRacunaSOTest {
     void testNullArtikalBacaGresku() throws Exception {
         validnaStavka.setArtikal(null);
         Exception ex = assertThrows(Exception.class, () -> so.izvrsi(validnaStavka, null));
-        assertEquals("Stavka računa mora imati izabrano artikal.", ex.getMessage());
+        assertEquals("Stavka računa mora imati izabran artikal.", ex.getMessage());
         verify(broker).rollback();
         verify(broker, never()).delete(any());
     }

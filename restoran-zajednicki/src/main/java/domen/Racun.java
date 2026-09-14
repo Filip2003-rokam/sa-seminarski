@@ -81,7 +81,7 @@ public class Racun implements ApstraktniDomenskiObjekat{
 
     @Override
     public String vratiNazivTabele() {
-        return "racun ";
+        return "racun";
     }
 
     @Override

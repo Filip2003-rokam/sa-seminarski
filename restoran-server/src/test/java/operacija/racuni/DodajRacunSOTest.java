@@ -133,7 +133,7 @@ class DodajRacunSOTest {
     void testStavkaBezArtiklaBacaGresku() throws Exception {
         validanRacun.getStavke().get(0).setArtikal(null);
         Exception ex = assertThrows(Exception.class, () -> so.izvrsi(validanRacun, null));
-        assertEquals("Svaka stavka mora imati izabrano artikal.", ex.getMessage());
+        assertEquals("Svaka stavka mora imati izabran artikal.", ex.getMessage());
         verify(broker).rollback();
         verify(broker, never()).addReturnKey(any());
     }

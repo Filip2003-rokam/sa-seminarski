@@ -68,7 +68,7 @@ public class IzmeniRacunSO extends ApstraktnaGenerickaOperacija{
         // 🔹 Proveri svaku stavku računa
         for (StavkaRacuna sr : r.getStavke()) {
             if (sr.getArtikal() == null) {
-                throw new Exception("Svaka stavka mora imati izabrano artikal.");
+                throw new Exception("Svaka stavka mora imati izabran artikal.");
             }
             if (sr.getKolicina() <= 0) {
                 throw new Exception("Količina svake stavke mora biti veća od nule.");

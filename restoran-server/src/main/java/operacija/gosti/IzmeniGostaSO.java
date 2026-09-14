@@ -25,7 +25,7 @@ public class IzmeniGostaSO extends ApstraktnaGenerickaOperacija {
     @Override
     protected void preduslovi(Object param) throws Exception {
         if(param == null || !(param instanceof Gost)){
-            throw new Exception("Sistem nije mogao da doda gosta");
+            throw new Exception("Sistem nije mogao da izmeni gosta");
         }
         
         Gost g = (Gost) param;

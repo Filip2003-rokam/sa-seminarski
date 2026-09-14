@@ -184,9 +184,9 @@ class RacunTest {
     }
 
     @Test
-    @DisplayName("vratiNazivTabele vraća ime tabele racun sa razmakom na kraju")
+    @DisplayName("vratiNazivTabele vraća ime tabele racun")
     void testVratiNazivTabele() {
-        assertEquals("racun ", racun.vratiNazivTabele());
+        assertEquals("racun", racun.vratiNazivTabele());
     }
 
     @Test

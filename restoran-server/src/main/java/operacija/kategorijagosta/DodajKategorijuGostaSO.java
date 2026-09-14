@@ -25,7 +25,7 @@ public class DodajKategorijuGostaSO extends ApstraktnaGenerickaOperacija {
         KategorijaGosta kg = (KategorijaGosta) param;
 
         if (kg.getOpis()== null || kg.getOpis().isEmpty() || kg.getOpis().length() < 2) {
-            throw new Exception("GRESKA NAZIV");
+            throw new Exception("GRESKA OPIS");
         }
 
         if (kg.getPopust() < 0) {
