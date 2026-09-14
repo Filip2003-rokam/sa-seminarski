@@ -44,7 +44,7 @@ public class ObrisiStavkuRacunaSO extends ApstraktnaGenerickaOperacija{
 
         // 🔹 Proveri da li stavka ima vezano artikal
         if (sr.getArtikal() == null) {
-            throw new Exception("Stavka računa mora imati izabrano artikal.");
+            throw new Exception("Stavka računa mora imati izabran artikal.");
         }
 
         // 🔹 Proveri da li su količina i cena validne

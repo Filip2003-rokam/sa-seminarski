@@ -33,7 +33,7 @@ class IzmeniGostaSOTest {
         IzmeniGostaSO so = new IzmeniGostaSO(broker);
 
         Exception ex = assertThrows(Exception.class, () -> so.izvrsi(null, null));
-        assertEquals("Sistem nije mogao da doda gosta", ex.getMessage());
+        assertEquals("Sistem nije mogao da izmeni gosta", ex.getMessage());
         verify(broker).rollback();
         verify(broker, never()).connect();
         verify(broker, never()).edit(any());
@@ -47,7 +47,7 @@ class IzmeniGostaSOTest {
         IzmeniGostaSO so = new IzmeniGostaSO(broker);
 
         Exception ex = assertThrows(Exception.class, () -> so.izvrsi(new Konobar(), null));
-        assertEquals("Sistem nije mogao da doda gosta", ex.getMessage());
+        assertEquals("Sistem nije mogao da izmeni gosta", ex.getMessage());
         verify(broker).rollback();
         verify(broker, never()).edit(any());
         verify(broker, never()).commit();

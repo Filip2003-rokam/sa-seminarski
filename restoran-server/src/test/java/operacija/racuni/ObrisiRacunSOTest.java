@@ -55,7 +55,7 @@ class ObrisiRacunSOTest {
     @DisplayName("Null parametar baca grešku tipa")
     void testNullParametarBacaGresku() throws Exception {
         Exception ex = assertThrows(Exception.class, () -> so.izvrsi(null, null));
-        assertEquals("Sistem ne moze da obrise Racunl", ex.getMessage());
+        assertEquals("Sistem ne može da obriše račun", ex.getMessage());
         verify(broker).rollback();
         verify(broker, never()).delete(any());
         verify(broker, never()).commit();
@@ -65,7 +65,7 @@ class ObrisiRacunSOTest {
     @DisplayName("Parametar pogrešnog tipa baca grešku tipa")
     void testPogresanTipParametaraBacaGresku() throws Exception {
         Exception ex = assertThrows(Exception.class, () -> so.izvrsi("nije racun", null));
-        assertEquals("Sistem ne moze da obrise Racunl", ex.getMessage());
+        assertEquals("Sistem ne može da obriše račun", ex.getMessage());
         verify(broker).rollback();
         verify(broker, never()).delete(any());
         verify(broker, never()).commit();

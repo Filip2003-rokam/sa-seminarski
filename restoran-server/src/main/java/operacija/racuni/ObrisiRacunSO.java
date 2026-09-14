@@ -30,7 +30,7 @@ public class ObrisiRacunSO extends ApstraktnaGenerickaOperacija{
     protected void preduslovi(Object param) throws Exception {
         
         if(param == null || !(param instanceof Racun)){
-            throw new Exception("Sistem ne moze da obrise Racunl");
+            throw new Exception("Sistem ne može da obriše račun");
         }
         
     }

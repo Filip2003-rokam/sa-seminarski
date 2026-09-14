@@ -62,27 +62,27 @@ class IzmeniKategorijuGostaSOTest {
     }
 
     @Test
-    @DisplayName("Null opis baca GRESKA NAZIV")
+    @DisplayName("Null opis baca GRESKA OPIS")
     void testNullOpisBacaGresku() {
         validnaKategorija.setOpis(null);
         Exception ex = assertThrows(Exception.class, () -> so.izvrsi(validnaKategorija, null));
-        assertEquals("GRESKA NAZIV", ex.getMessage());
+        assertEquals("GRESKA OPIS", ex.getMessage());
     }
 
     @Test
-    @DisplayName("Prazan opis baca GRESKA NAZIV")
+    @DisplayName("Prazan opis baca GRESKA OPIS")
     void testPrazanOpisBacaGresku() {
         validnaKategorija.setOpis("");
         Exception ex = assertThrows(Exception.class, () -> so.izvrsi(validnaKategorija, null));
-        assertEquals("GRESKA NAZIV", ex.getMessage());
+        assertEquals("GRESKA OPIS", ex.getMessage());
     }
 
     @Test
-    @DisplayName("Opis kraći od 2 karaktera baca GRESKA NAZIV")
+    @DisplayName("Opis kraći od 2 karaktera baca GRESKA OPIS")
     void testKratakOpisBacaGresku() {
         validnaKategorija.setOpis("B");
         Exception ex = assertThrows(Exception.class, () -> so.izvrsi(validnaKategorija, null));
-        assertEquals("GRESKA NAZIV", ex.getMessage());
+        assertEquals("GRESKA OPIS", ex.getMessage());
     }
 
     @Test

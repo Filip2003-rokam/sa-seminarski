@@ -28,7 +28,7 @@ public class ObrisiGostaSO extends ApstraktnaGenerickaOperacija {
     protected void preduslovi(Object param) throws Exception {
         
         if(param == null || !(param instanceof Gost)){
-            throw new Exception("Sistem nije mogao da obrise gosta");
+            throw new Exception("Sistem nije mogao da obriše gosta");
         }
         
     }
