@@ -2,9 +2,16 @@ package domen;
 
 import java.sql.ResultSet;
 import java.util.List;
+import java.util.stream.Stream;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.MethodSource;
+import org.junit.jupiter.params.provider.NullSource;
+import org.junit.jupiter.params.provider.ValueSource;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
@@ -16,6 +23,11 @@ class KategorijaGostaTest {
     @BeforeEach
     void setUp() {
         kategorija = new KategorijaGosta(1, "VIP", 10.0, true);
+    }
+
+    @AfterEach
+    void tearDown() {
+        kategorija = null;
     }
 
     @Test
@@ -35,12 +47,59 @@ class KategorijaGostaTest {
         assertTrue(kg.isImaPopust());
     }
 
+    @ParameterizedTest
+    @ValueSource(ints = {-1, -10, -100})
+    @DisplayName("Pun konstruktor baca izuzetak za negativan id")
+    void testPunKonstruktorBacaZaNegativanId(int id) {
+        IllegalArgumentException ex = assertThrows(IllegalArgumentException.class,
+                () -> new KategorijaGosta(id, "VIP", 10.0, true));
+        assertEquals("Id kategorije gosta ne sme biti negativan.", ex.getMessage());
+    }
+
+    @ParameterizedTest
+    @NullSource
+    @ValueSource(strings = {"", "a"})
+    @DisplayName("Pun konstruktor baca izuzetak za nevalidan opis")
+    void testPunKonstruktorBacaZaNevalidanOpis(String opis) {
+        IllegalArgumentException ex = assertThrows(IllegalArgumentException.class,
+                () -> new KategorijaGosta(1, opis, 10.0, true));
+        assertEquals("Opis kategorije gosta mora imati najmanje 2 karaktera.", ex.getMessage());
+    }
+
+    @ParameterizedTest
+    @ValueSource(doubles = {-0.01, -1.0, -100.0})
+    @DisplayName("Pun konstruktor baca izuzetak za negativan popust")
+    void testPunKonstruktorBacaZaNegativanPopust(double popust) {
+        IllegalArgumentException ex = assertThrows(IllegalArgumentException.class,
+                () -> new KategorijaGosta(1, "VIP", popust, true));
+        assertEquals("Popust kategorije gosta mora biti veci ili jednak nuli.", ex.getMessage());
+    }
+
     @Test
     @DisplayName("Setter i getter za idKategorijaGosta rade ispravno")
     void testSetGetIdKategorijaGosta() {
         KategorijaGosta kg = new KategorijaGosta();
         kg.setIdKategorijaGosta(10);
         assertEquals(10, kg.getIdKategorijaGosta());
+    }
+
+    @ParameterizedTest
+    @ValueSource(ints = {0, 1, 100})
+    @DisplayName("setIdKategorijaGosta prihvata validne vrednosti")
+    void testSetIdKategorijaGostaPrihvataValidneVrednosti(int id) {
+        KategorijaGosta kg = new KategorijaGosta();
+        kg.setIdKategorijaGosta(id);
+        assertEquals(id, kg.getIdKategorijaGosta());
+    }
+
+    @ParameterizedTest
+    @ValueSource(ints = {-1, -5, -100})
+    @DisplayName("setIdKategorijaGosta baca izuzetak za negativan id")
+    void testSetIdKategorijaGostaBacaZaNegativanId(int id) {
+        KategorijaGosta kg = new KategorijaGosta();
+        IllegalArgumentException ex = assertThrows(IllegalArgumentException.class,
+                () -> kg.setIdKategorijaGosta(id));
+        assertEquals("Id kategorije gosta ne sme biti negativan.", ex.getMessage());
     }
 
     @Test
@@ -51,12 +110,51 @@ class KategorijaGostaTest {
         assertEquals("Regular", kg.getOpis());
     }
 
+    @ParameterizedTest
+    @ValueSource(strings = {"VIP", "Student", "Regular"})
+    @DisplayName("setOpis prihvata validne vrednosti")
+    void testSetOpisPrihvataValidneVrednosti(String opis) {
+        KategorijaGosta kg = new KategorijaGosta();
+        kg.setOpis(opis);
+        assertEquals(opis, kg.getOpis());
+    }
+
+    @ParameterizedTest
+    @NullSource
+    @ValueSource(strings = {"", "a"})
+    @DisplayName("setOpis baca izuzetak za nevalidan opis")
+    void testSetOpisBacaZaNevalidanOpis(String opis) {
+        KategorijaGosta kg = new KategorijaGosta();
+        IllegalArgumentException ex = assertThrows(IllegalArgumentException.class,
+                () -> kg.setOpis(opis));
+        assertEquals("Opis kategorije gosta mora imati najmanje 2 karaktera.", ex.getMessage());
+    }
+
     @Test
     @DisplayName("Setter i getter za popust rade ispravno")
     void testSetGetPopust() {
         KategorijaGosta kg = new KategorijaGosta();
         kg.setPopust(20.5);
         assertEquals(20.5, kg.getPopust());
+    }
+
+    @ParameterizedTest
+    @ValueSource(doubles = {0.0, 0.01, 10.0, 100.0})
+    @DisplayName("setPopust prihvata validne vrednosti")
+    void testSetPopustPrihvataValidneVrednosti(double popust) {
+        KategorijaGosta kg = new KategorijaGosta();
+        kg.setPopust(popust);
+        assertEquals(popust, kg.getPopust());
+    }
+
+    @ParameterizedTest
+    @ValueSource(doubles = {-0.01, -1.0, -50.0})
+    @DisplayName("setPopust baca izuzetak za negativan popust")
+    void testSetPopustBacaZaNegativanPopust(double popust) {
+        KategorijaGosta kg = new KategorijaGosta();
+        IllegalArgumentException ex = assertThrows(IllegalArgumentException.class,
+                () -> kg.setPopust(popust));
+        assertEquals("Popust kategorije gosta mora biti veci ili jednak nuli.", ex.getMessage());
     }
 
     @Test
@@ -67,6 +165,15 @@ class KategorijaGostaTest {
         assertFalse(kg.isImaPopust());
         kg.setImaPopust(true);
         assertTrue(kg.isImaPopust());
+    }
+
+    @ParameterizedTest
+    @ValueSource(booleans = {true, false})
+    @DisplayName("setImaPopust prihvata true i false")
+    void testSetImaPopustPrihvataValidneVrednosti(boolean imaPopust) {
+        KategorijaGosta kg = new KategorijaGosta();
+        kg.setImaPopust(imaPopust);
+        assertEquals(imaPopust, kg.isImaPopust());
     }
 
     @Test
@@ -87,18 +194,28 @@ class KategorijaGostaTest {
         assertFalse(kategorija.equals("nije kategorija"));
     }
 
-    @Test
-    @DisplayName("Dve kategorije sa istim identifikatorom su jednake i ako se ostala polja razlikuju")
-    void testEqualsIstiIdRazlicitaOstalaPolja() {
-        KategorijaGosta druga = new KategorijaGosta(1, "Drugi opis", 99.0, false);
-        assertTrue(kategorija.equals(druga));
+    static Stream<Arguments> equalsIdBasedProvider() {
+        return Stream.of(
+                Arguments.of(
+                        new KategorijaGosta(1, "VIP", 10.0, true),
+                        new KategorijaGosta(1, "Drugi opis", 99.0, false),
+                        true),
+                Arguments.of(
+                        new KategorijaGosta(1, "VIP", 10.0, true),
+                        new KategorijaGosta(2, "VIP", 10.0, true),
+                        false),
+                Arguments.of(
+                        new KategorijaGosta(5, "Student", 15.0, true),
+                        new KategorijaGosta(5, "Regular", 0.0, false),
+                        true)
+        );
     }
 
-    @Test
-    @DisplayName("Dve kategorije sa različitim identifikatorom nisu jednake")
-    void testEqualsRazlicitId() {
-        KategorijaGosta druga = new KategorijaGosta(2, "VIP", 10.0, true);
-        assertFalse(kategorija.equals(druga));
+    @ParameterizedTest
+    @MethodSource("equalsIdBasedProvider")
+    @DisplayName("equals poredi kategorije po identifikatoru")
+    void testEqualsPoIdentifikatoru(KategorijaGosta k1, KategorijaGosta k2, boolean expected) {
+        assertEquals(expected, k1.equals(k2));
     }
 
     @Test

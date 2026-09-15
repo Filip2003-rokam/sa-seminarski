@@ -2,9 +2,17 @@ package domen;
 
 import java.sql.ResultSet;
 import java.util.List;
+import java.util.stream.Stream;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.MethodSource;
+import org.junit.jupiter.params.provider.NullAndEmptySource;
+import org.junit.jupiter.params.provider.NullSource;
+import org.junit.jupiter.params.provider.ValueSource;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
@@ -16,6 +24,11 @@ class ArtikalTest {
     @BeforeEach
     void setUp() {
         artikal = new Artikal(1, "Pizza", 850.0, "Jelo");
+    }
+
+    @AfterEach
+    void tearDown() {
+        artikal = null;
     }
 
     @Test
@@ -35,12 +48,68 @@ class ArtikalTest {
         assertEquals("Pice", a.getTip());
     }
 
+    @ParameterizedTest
+    @ValueSource(ints = {-1, -10, -100})
+    @DisplayName("Pun konstruktor baca izuzetak za negativan id")
+    void testPunKonstruktorBacaZaNegativanId(int id) {
+        IllegalArgumentException ex = assertThrows(IllegalArgumentException.class,
+                () -> new Artikal(id, "Pizza", 850.0, "Jelo"));
+        assertEquals("Id artikla ne sme biti negativan.", ex.getMessage());
+    }
+
+    @ParameterizedTest
+    @NullSource
+    @ValueSource(strings = {"", "a"})
+    @DisplayName("Pun konstruktor baca izuzetak za nevalidan naziv")
+    void testPunKonstruktorBacaZaNevalidanNaziv(String naziv) {
+        IllegalArgumentException ex = assertThrows(IllegalArgumentException.class,
+                () -> new Artikal(1, naziv, 850.0, "Jelo"));
+        assertEquals("Naziv artikla mora imati najmanje 2 karaktera.", ex.getMessage());
+    }
+
+    @ParameterizedTest
+    @ValueSource(doubles = {0.0, -1.0, -100.5})
+    @DisplayName("Pun konstruktor baca izuzetak za nevalidnu cenu")
+    void testPunKonstruktorBacaZaNevalidnuCenu(double cena) {
+        IllegalArgumentException ex = assertThrows(IllegalArgumentException.class,
+                () -> new Artikal(1, "Pizza", cena, "Jelo"));
+        assertEquals("Cena artikla mora biti veca od nule.", ex.getMessage());
+    }
+
+    @ParameterizedTest
+    @NullAndEmptySource
+    @DisplayName("Pun konstruktor baca izuzetak za prazan tip")
+    void testPunKonstruktorBacaZaPrazanTip(String tip) {
+        IllegalArgumentException ex = assertThrows(IllegalArgumentException.class,
+                () -> new Artikal(1, "Pizza", 850.0, tip));
+        assertEquals("Tip artikla ne sme biti prazan.", ex.getMessage());
+    }
+
     @Test
     @DisplayName("Setter i getter za idArtikal rade ispravno")
     void testSetGetIdArtikal() {
         Artikal a = new Artikal();
         a.setIdArtikal(10);
         assertEquals(10, a.getIdArtikal());
+    }
+
+    @ParameterizedTest
+    @ValueSource(ints = {0, 1, 100})
+    @DisplayName("setIdArtikal prihvata validne vrednosti")
+    void testSetIdArtikalPrihvataValidneVrednosti(int id) {
+        Artikal a = new Artikal();
+        a.setIdArtikal(id);
+        assertEquals(id, a.getIdArtikal());
+    }
+
+    @ParameterizedTest
+    @ValueSource(ints = {-1, -5, -100})
+    @DisplayName("setIdArtikal baca izuzetak za negativan id")
+    void testSetIdArtikalBacaZaNegativanId(int id) {
+        Artikal a = new Artikal();
+        IllegalArgumentException ex = assertThrows(IllegalArgumentException.class,
+                () -> a.setIdArtikal(id));
+        assertEquals("Id artikla ne sme biti negativan.", ex.getMessage());
     }
 
     @Test
@@ -51,6 +120,26 @@ class ArtikalTest {
         assertEquals("Pasta", a.getNaziv());
     }
 
+    @ParameterizedTest
+    @ValueSource(strings = {"Pi", "Pizza", "Coca Cola"})
+    @DisplayName("setNaziv prihvata validne vrednosti")
+    void testSetNazivPrihvataValidneVrednosti(String naziv) {
+        Artikal a = new Artikal();
+        a.setNaziv(naziv);
+        assertEquals(naziv, a.getNaziv());
+    }
+
+    @ParameterizedTest
+    @NullSource
+    @ValueSource(strings = {"", "a"})
+    @DisplayName("setNaziv baca izuzetak za nevalidan naziv")
+    void testSetNazivBacaZaNevalidanNaziv(String naziv) {
+        Artikal a = new Artikal();
+        IllegalArgumentException ex = assertThrows(IllegalArgumentException.class,
+                () -> a.setNaziv(naziv));
+        assertEquals("Naziv artikla mora imati najmanje 2 karaktera.", ex.getMessage());
+    }
+
     @Test
     @DisplayName("Setter i getter za cenu rade ispravno")
     void testSetGetCena() {
@@ -59,12 +148,50 @@ class ArtikalTest {
         assertEquals(420.5, a.getCena());
     }
 
+    @ParameterizedTest
+    @ValueSource(doubles = {0.01, 1.0, 850.0, 9999.99})
+    @DisplayName("setCena prihvata validne vrednosti")
+    void testSetCenaPrihvataValidneVrednosti(double cena) {
+        Artikal a = new Artikal();
+        a.setCena(cena);
+        assertEquals(cena, a.getCena());
+    }
+
+    @ParameterizedTest
+    @ValueSource(doubles = {0.0, -0.01, -1.0, -100.0})
+    @DisplayName("setCena baca izuzetak za cenu manju ili jednaku nuli")
+    void testSetCenaBacaZaNevalidnuCenu(double cena) {
+        Artikal a = new Artikal();
+        IllegalArgumentException ex = assertThrows(IllegalArgumentException.class,
+                () -> a.setCena(cena));
+        assertEquals("Cena artikla mora biti veca od nule.", ex.getMessage());
+    }
+
     @Test
     @DisplayName("Setter i getter za tip rade ispravno")
     void testSetGetTip() {
         Artikal a = new Artikal();
         a.setTip("Pice");
         assertEquals("Pice", a.getTip());
+    }
+
+    @ParameterizedTest
+    @ValueSource(strings = {"Jelo", "Pice", "Desert"})
+    @DisplayName("setTip prihvata validne vrednosti")
+    void testSetTipPrihvataValidneVrednosti(String tip) {
+        Artikal a = new Artikal();
+        a.setTip(tip);
+        assertEquals(tip, a.getTip());
+    }
+
+    @ParameterizedTest
+    @NullAndEmptySource
+    @DisplayName("setTip baca izuzetak za null ili prazan tip")
+    void testSetTipBacaZaPrazanTip(String tip) {
+        Artikal a = new Artikal();
+        IllegalArgumentException ex = assertThrows(IllegalArgumentException.class,
+                () -> a.setTip(tip));
+        assertEquals("Tip artikla ne sme biti prazan.", ex.getMessage());
     }
 
     @Test
@@ -85,18 +212,28 @@ class ArtikalTest {
         assertFalse(artikal.equals("nije artikal"));
     }
 
-    @Test
-    @DisplayName("Dva artikla sa istim identifikatorom su jednaka i ako se ostala polja razlikuju")
-    void testEqualsIstiIdRazlicitaOstalaPolja() {
-        Artikal drugi = new Artikal(1, "Drugi naziv", 99.0, "Pice");
-        assertTrue(artikal.equals(drugi));
+    static Stream<Arguments> equalsIdBasedProvider() {
+        return Stream.of(
+                Arguments.of(
+                        new Artikal(1, "Pizza", 850.0, "Jelo"),
+                        new Artikal(1, "Drugi naziv", 99.0, "Pice"),
+                        true),
+                Arguments.of(
+                        new Artikal(1, "Pizza", 850.0, "Jelo"),
+                        new Artikal(2, "Pizza", 850.0, "Jelo"),
+                        false),
+                Arguments.of(
+                        new Artikal(5, "Sok", 200.0, "Pice"),
+                        new Artikal(5, "Voda", 100.0, "Pice"),
+                        true)
+        );
     }
 
-    @Test
-    @DisplayName("Dva artikla sa različitim identifikatorom nisu jednaka")
-    void testEqualsRazlicitId() {
-        Artikal drugi = new Artikal(2, "Pizza", 850.0, "Jelo");
-        assertFalse(artikal.equals(drugi));
+    @ParameterizedTest
+    @MethodSource("equalsIdBasedProvider")
+    @DisplayName("equals poredi artikle po identifikatoru")
+    void testEqualsPoIdentifikatoru(Artikal a1, Artikal a2, boolean expected) {
+        assertEquals(expected, a1.equals(a2));
     }
 
     @Test

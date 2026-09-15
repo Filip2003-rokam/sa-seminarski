@@ -1,6 +1,7 @@
 package operacija.kategorijagosta;
 
 import domen.KategorijaGosta;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -24,6 +25,13 @@ class ObrisiKategorijuGostaSOTest {
         doNothing().when(broker).rollback();
         so = new ObrisiKategorijuGostaSO(broker);
         kategorija = new KategorijaGosta(1, "VIP", 10.0, true);
+    }
+
+    @AfterEach
+    void tearDown() {
+        broker = null;
+        so = null;
+        kategorija = null;
     }
 
     @Test

@@ -7,6 +7,7 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.Arrays;
 import java.util.List;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -32,6 +33,12 @@ class UcitajRasporedSOTest {
         doNothing().when(broker).commit();
         doNothing().when(broker).rollback();
         so = new UcitajRasporedSO(broker);
+    }
+
+    @AfterEach
+    void tearDown() {
+        broker = null;
+        so = null;
     }
 
     @Test

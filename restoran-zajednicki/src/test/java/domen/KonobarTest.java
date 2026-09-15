@@ -2,9 +2,18 @@ package domen;
 
 import java.sql.ResultSet;
 import java.util.List;
+import java.util.stream.Stream;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.CsvSource;
+import org.junit.jupiter.params.provider.MethodSource;
+import org.junit.jupiter.params.provider.NullAndEmptySource;
+import org.junit.jupiter.params.provider.NullSource;
+import org.junit.jupiter.params.provider.ValueSource;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
@@ -16,6 +25,11 @@ class KonobarTest {
     @BeforeEach
     void setUp() {
         konobar = new Konobar(1, "Petar", "Petrovic", "ppetrovic", "sifra123");
+    }
+
+    @AfterEach
+    void tearDown() {
+        konobar = null;
     }
 
     @Test
@@ -36,12 +50,78 @@ class KonobarTest {
         assertEquals("pass", k.getSifra());
     }
 
+    @ParameterizedTest
+    @ValueSource(ints = {-1, -10, -100})
+    @DisplayName("Pun konstruktor baca izuzetak za negativan id")
+    void testPunKonstruktorBacaZaNegativanId(int id) {
+        IllegalArgumentException ex = assertThrows(IllegalArgumentException.class,
+                () -> new Konobar(id, "Petar", "Petrovic", "ppetrovic", "sifra123"));
+        assertEquals("Id konobara ne sme biti negativan.", ex.getMessage());
+    }
+
+    @ParameterizedTest
+    @NullSource
+    @ValueSource(strings = {"", "a"})
+    @DisplayName("Pun konstruktor baca izuzetak za nevalidno ime")
+    void testPunKonstruktorBacaZaNevalidnoIme(String ime) {
+        IllegalArgumentException ex = assertThrows(IllegalArgumentException.class,
+                () -> new Konobar(1, ime, "Petrovic", "ppetrovic", "sifra123"));
+        assertEquals("Ime konobara mora imati najmanje 2 karaktera.", ex.getMessage());
+    }
+
+    @ParameterizedTest
+    @NullSource
+    @ValueSource(strings = {"", "a"})
+    @DisplayName("Pun konstruktor baca izuzetak za nevalidno prezime")
+    void testPunKonstruktorBacaZaNevalidnoPrezime(String prezime) {
+        IllegalArgumentException ex = assertThrows(IllegalArgumentException.class,
+                () -> new Konobar(1, "Petar", prezime, "ppetrovic", "sifra123"));
+        assertEquals("Prezime konobara mora imati najmanje 2 karaktera.", ex.getMessage());
+    }
+
+    @ParameterizedTest
+    @NullAndEmptySource
+    @DisplayName("Pun konstruktor baca izuzetak za prazno korisničko ime")
+    void testPunKonstruktorBacaZaPraznoKorisnickoIme(String korisnickoIme) {
+        IllegalArgumentException ex = assertThrows(IllegalArgumentException.class,
+                () -> new Konobar(1, "Petar", "Petrovic", korisnickoIme, "sifra123"));
+        assertEquals("Korisnicko ime konobara ne sme biti prazno.", ex.getMessage());
+    }
+
+    @ParameterizedTest
+    @NullAndEmptySource
+    @DisplayName("Pun konstruktor baca izuzetak za praznu šifru")
+    void testPunKonstruktorBacaZaPraznuSifru(String sifra) {
+        IllegalArgumentException ex = assertThrows(IllegalArgumentException.class,
+                () -> new Konobar(1, "Petar", "Petrovic", "ppetrovic", sifra));
+        assertEquals("Sifra konobara ne sme biti prazna.", ex.getMessage());
+    }
+
     @Test
     @DisplayName("Setter i getter za idKonobar rade ispravno")
     void testSetGetIdKonobar() {
         Konobar k = new Konobar();
         k.setIdKonobar(10);
         assertEquals(10, k.getIdKonobar());
+    }
+
+    @ParameterizedTest
+    @ValueSource(ints = {0, 1, 100})
+    @DisplayName("setIdKonobar prihvata validne vrednosti")
+    void testSetIdKonobarPrihvataValidneVrednosti(int id) {
+        Konobar k = new Konobar();
+        k.setIdKonobar(id);
+        assertEquals(id, k.getIdKonobar());
+    }
+
+    @ParameterizedTest
+    @ValueSource(ints = {-1, -5, -100})
+    @DisplayName("setIdKonobar baca izuzetak za negativan id")
+    void testSetIdKonobarBacaZaNegativanId(int id) {
+        Konobar k = new Konobar();
+        IllegalArgumentException ex = assertThrows(IllegalArgumentException.class,
+                () -> k.setIdKonobar(id));
+        assertEquals("Id konobara ne sme biti negativan.", ex.getMessage());
     }
 
     @Test
@@ -52,12 +132,67 @@ class KonobarTest {
         assertEquals("Jovan", k.getIme());
     }
 
+    @ParameterizedTest
+    @ValueSource(strings = {"An", "Ana", "Petar"})
+    @DisplayName("setIme prihvata validne vrednosti")
+    void testSetImePrihvataValidneVrednosti(String ime) {
+        Konobar k = new Konobar();
+        k.setIme(ime);
+        assertEquals(ime, k.getIme());
+    }
+
+    @ParameterizedTest
+    @NullSource
+    @ValueSource(strings = {"", "a"})
+    @DisplayName("setIme baca izuzetak za nevalidno ime")
+    void testSetImeBacaZaNevalidnoIme(String ime) {
+        Konobar k = new Konobar();
+        IllegalArgumentException ex = assertThrows(IllegalArgumentException.class,
+                () -> k.setIme(ime));
+        assertEquals("Ime konobara mora imati najmanje 2 karaktera.", ex.getMessage());
+    }
+
     @Test
     @DisplayName("Setter i getter za prezime rade ispravno")
     void testSetGetPrezime() {
         Konobar k = new Konobar();
         k.setPrezime("Jovic");
         assertEquals("Jovic", k.getPrezime());
+    }
+
+    @ParameterizedTest
+    @ValueSource(strings = {"An", "Anic", "Petrovic"})
+    @DisplayName("setPrezime prihvata validne vrednosti")
+    void testSetPrezimePrihvataValidneVrednosti(String prezime) {
+        Konobar k = new Konobar();
+        k.setPrezime(prezime);
+        assertEquals(prezime, k.getPrezime());
+    }
+
+    @ParameterizedTest
+    @NullSource
+    @ValueSource(strings = {"", "a"})
+    @DisplayName("setPrezime baca izuzetak za nevalidno prezime")
+    void testSetPrezimeBacaZaNevalidnoPrezime(String prezime) {
+        Konobar k = new Konobar();
+        IllegalArgumentException ex = assertThrows(IllegalArgumentException.class,
+                () -> k.setPrezime(prezime));
+        assertEquals("Prezime konobara mora imati najmanje 2 karaktera.", ex.getMessage());
+    }
+
+    @ParameterizedTest
+    @CsvSource({
+            "Ana, Anic",
+            "Petar, Petrovic",
+            "Jo, Jo"
+    })
+    @DisplayName("setIme i setPrezime zajedno prihvataju validne kombinacije")
+    void testSetImeIPrezimeValidneKombinacije(String ime, String prezime) {
+        Konobar k = new Konobar();
+        k.setIme(ime);
+        k.setPrezime(prezime);
+        assertEquals(ime, k.getIme());
+        assertEquals(prezime, k.getPrezime());
     }
 
     @Test
@@ -68,12 +203,50 @@ class KonobarTest {
         assertEquals("jjovic", k.getKorisnickoIme());
     }
 
+    @ParameterizedTest
+    @ValueSource(strings = {"a", "ppetrovic", "user1"})
+    @DisplayName("setKorisnickoIme prihvata validne vrednosti")
+    void testSetKorisnickoImePrihvataValidneVrednosti(String korisnickoIme) {
+        Konobar k = new Konobar();
+        k.setKorisnickoIme(korisnickoIme);
+        assertEquals(korisnickoIme, k.getKorisnickoIme());
+    }
+
+    @ParameterizedTest
+    @NullAndEmptySource
+    @DisplayName("setKorisnickoIme baca izuzetak za null ili prazno")
+    void testSetKorisnickoImeBacaZaPrazno(String korisnickoIme) {
+        Konobar k = new Konobar();
+        IllegalArgumentException ex = assertThrows(IllegalArgumentException.class,
+                () -> k.setKorisnickoIme(korisnickoIme));
+        assertEquals("Korisnicko ime konobara ne sme biti prazno.", ex.getMessage());
+    }
+
     @Test
     @DisplayName("Setter i getter za sifru rade ispravno")
     void testSetGetSifra() {
         Konobar k = new Konobar();
         k.setSifra("novaSifra");
         assertEquals("novaSifra", k.getSifra());
+    }
+
+    @ParameterizedTest
+    @ValueSource(strings = {"x", "pass", "sifra123"})
+    @DisplayName("setSifra prihvata validne vrednosti")
+    void testSetSifraPrihvataValidneVrednosti(String sifra) {
+        Konobar k = new Konobar();
+        k.setSifra(sifra);
+        assertEquals(sifra, k.getSifra());
+    }
+
+    @ParameterizedTest
+    @NullAndEmptySource
+    @DisplayName("setSifra baca izuzetak za null ili praznu šifru")
+    void testSetSifraBacaZaPraznuSifru(String sifra) {
+        Konobar k = new Konobar();
+        IllegalArgumentException ex = assertThrows(IllegalArgumentException.class,
+                () -> k.setSifra(sifra));
+        assertEquals("Sifra konobara ne sme biti prazna.", ex.getMessage());
     }
 
     @Test
@@ -120,18 +293,28 @@ class KonobarTest {
         assertFalse(konobar.equals("nije konobar"));
     }
 
-    @Test
-    @DisplayName("Dva konobara sa istim identifikatorom su jednaka i ako se ostala polja razlikuju")
-    void testEqualsIstiIdRazlicitaOstalaPolja() {
-        Konobar drugi = new Konobar(1, "DrugoIme", "DrugoPrezime", "drugi", "druga");
-        assertTrue(konobar.equals(drugi));
+    static Stream<Arguments> equalsIdBasedProvider() {
+        return Stream.of(
+                Arguments.of(
+                        new Konobar(1, "Petar", "Petrovic", "ppetrovic", "sifra123"),
+                        new Konobar(1, "DrugoIme", "DrugoPrezime", "drugi", "druga"),
+                        true),
+                Arguments.of(
+                        new Konobar(1, "Petar", "Petrovic", "ppetrovic", "sifra123"),
+                        new Konobar(2, "Petar", "Petrovic", "ppetrovic", "sifra123"),
+                        false),
+                Arguments.of(
+                        new Konobar(5, "Ana", "Anic", "aanic", "pass"),
+                        new Konobar(5, "Jovan", "Jovic", "jjovic", "xyz"),
+                        true)
+        );
     }
 
-    @Test
-    @DisplayName("Dva konobara sa različitim identifikatorom nisu jednaka")
-    void testEqualsRazlicitId() {
-        Konobar drugi = new Konobar(2, "Petar", "Petrovic", "ppetrovic", "sifra123");
-        assertFalse(konobar.equals(drugi));
+    @ParameterizedTest
+    @MethodSource("equalsIdBasedProvider")
+    @DisplayName("equals poredi konobare po identifikatoru")
+    void testEqualsPoIdentifikatoru(Konobar k1, Konobar k2, boolean expected) {
+        assertEquals(expected, k1.equals(k2));
     }
 
     @Test

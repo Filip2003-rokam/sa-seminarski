@@ -2,6 +2,7 @@ package operacija.smena;
 
 import domen.Smena;
 import java.time.LocalTime;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -25,6 +26,13 @@ class ObrisiSmenuSOTest {
         doNothing().when(broker).rollback();
         so = new ObrisiSmenuSO(broker);
         validnaSmena = new Smena(1, "Jutarnja", LocalTime.of(8, 0), LocalTime.of(16, 0));
+    }
+
+    @AfterEach
+    void tearDown() {
+        broker = null;
+        so = null;
+        validnaSmena = null;
     }
 
     @Test
@@ -60,21 +68,5 @@ class ObrisiSmenuSOTest {
     void testPogresanTipParametaraBacaGresku() {
         Exception ex = assertThrows(Exception.class, () -> so.izvrsi("nije smena", null));
         assertEquals("Sistem nije mogao da obriše smenu - neispravan parametar.", ex.getMessage());
-    }
-
-    @Test
-    @DisplayName("ID smene nula baca grešku o ID-u")
-    void testIdNulaBacaGresku() {
-        validnaSmena.setIdSmena(0);
-        Exception ex = assertThrows(Exception.class, () -> so.izvrsi(validnaSmena, null));
-        assertEquals("Smena nema ispravan ID i ne može biti obrisana.", ex.getMessage());
-    }
-
-    @Test
-    @DisplayName("Negativan ID smene baca grešku o ID-u")
-    void testNegativanIdBacaGresku() {
-        validnaSmena.setIdSmena(-1);
-        Exception ex = assertThrows(Exception.class, () -> so.izvrsi(validnaSmena, null));
-        assertEquals("Smena nema ispravan ID i ne može biti obrisana.", ex.getMessage());
     }
 }

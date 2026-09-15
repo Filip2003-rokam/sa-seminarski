@@ -5,6 +5,7 @@ import domen.KonobarSmena;
 import domen.Smena;
 import java.time.LocalDate;
 import java.time.LocalTime;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -30,6 +31,13 @@ class ObrisiRasporedSOTest {
         Konobar k = new Konobar(1, "Marko", "Markovic", "mmarkovic", "sifra123");
         Smena s = new Smena(1, "Jutarnja", LocalTime.of(8, 0), LocalTime.of(16, 0));
         validanRaspored = new KonobarSmena(k, s, LocalDate.of(2026, 3, 15));
+    }
+
+    @AfterEach
+    void tearDown() {
+        broker = null;
+        so = null;
+        validanRaspored = null;
     }
 
     @Test
