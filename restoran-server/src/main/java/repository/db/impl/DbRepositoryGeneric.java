@@ -27,6 +27,13 @@ import java.sql.PreparedStatement;
 public class DbRepositoryGeneric implements DbRepository<ApstraktniDomenskiObjekat> {
 
     /**
+     * Kreira genericki repozitorijum koji radi nad MySQL bazom
+     * preko {@link DbConnectionFactory}.
+     */
+    public DbRepositoryGeneric() {
+    }
+
+    /**
      * Ucitava sve redove iz tabele koju odredjuje {@code param.vratiNazivTabele()}.
      * Ako je {@code uslov} razlicit od null, nadovezuje se na SELECT upit
      * (npr. WHERE / JOIN klauzule koje isporucuje sistemska operacija).

@@ -10,6 +10,12 @@ import cordinator.Cordinator;
  * @version 1.0
  */
 public class Main {
+
+    /**
+     * Kreira ulaznu tacku klijentske aplikacije.
+     */
+    public Main() {
+    }
     
     /**
      * Pokrece klijentsku aplikaciju.

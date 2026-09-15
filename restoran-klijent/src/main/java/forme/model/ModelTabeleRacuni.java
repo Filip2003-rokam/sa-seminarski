@@ -19,9 +19,11 @@ import komunikacija.Komunikacija;
  */
 public class ModelTabeleRacuni extends AbstractTableModel {
 
+    /** Lista racuna prikazanih u tabeli. */
     private List<Racun> racuni;
     //private final String[] kolone = {"ID", "Datum", "Vreme", "Ukupan iznos", "Izdat", "Gost", "Konobar"};
 
+    /** Nazivi kolona tabele. */
     private final String[] kolone = {"Datum", "Vreme", "Ukupan iznos", "Izdat", "Gost", "Konobar"};
 
     

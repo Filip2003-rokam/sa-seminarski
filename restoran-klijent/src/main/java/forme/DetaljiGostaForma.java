@@ -361,26 +361,47 @@ public class DetaljiGostaForma extends javax.swing.JFrame {
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    /** Swing komponenta. */
     private javax.swing.JLabel jLabel1;
+    /** Swing komponenta. */
     private javax.swing.JLabel jLabel10;
+    /** Swing komponenta. */
     private javax.swing.JLabel jLabel2;
+    /** Swing komponenta. */
     private javax.swing.JLabel jLabel3;
+    /** Swing komponenta. */
     private javax.swing.JLabel jLabel4;
+    /** Swing komponenta. */
     private javax.swing.JLabel jLabel5;
+    /** Swing komponenta. */
     private javax.swing.JLabel jLabel6;
+    /** Swing komponenta. */
     private javax.swing.JLabel jLabel7;
+    /** Swing komponenta. */
     private javax.swing.JLabel jLabel8;
+    /** Swing komponenta. */
     private javax.swing.JLabel jLabel9;
+    /** Swing komponenta. */
     private javax.swing.JScrollPane jScrollPane1;
+    /** Swing komponenta. */
     private javax.swing.JTable jTableRacuni;
+    /** Swing komponenta. */
     private javax.swing.JTextField jTextFieldDug;
+    /** Swing komponenta. */
     private javax.swing.JTextField jTextFieldId;
+    /** Swing komponenta. */
     private javax.swing.JTextField jTextFieldIme;
+    /** Swing komponenta. */
     private javax.swing.JTextField jTextFieldKategorija;
+    /** Swing komponenta. */
     private javax.swing.JTextField jTextFieldNeplacenih;
+    /** Swing komponenta. */
     private javax.swing.JTextField jTextFieldPlaceni;
+    /** Swing komponenta. */
     private javax.swing.JTextField jTextFieldPopust;
+    /** Swing komponenta. */
     private javax.swing.JTextField jTextFieldPrezime;
+    /** Swing komponenta. */
     private javax.swing.JTextField jTextFieldUkupno;
     // End of variables declaration//GEN-END:variables
 }

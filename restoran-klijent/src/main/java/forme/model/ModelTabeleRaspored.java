@@ -17,9 +17,12 @@ import javax.swing.table.AbstractTableModel;
  */
 public class ModelTabeleRaspored extends AbstractTableModel {
 
+    /** Lista rasporeda (konobar-smena) prikazanih u tabeli. */
     private List<KonobarSmena> lista;
+    /** Nazivi kolona tabele. */
     private final String[] kolone = {"Konobar", "Smena", "Datum smene"};
 
+    /** Kopija originalne liste radi resetovanja filtera. */
     private List<KonobarSmena> originalnaLista; // za reset
 
     /**

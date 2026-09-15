@@ -14,7 +14,9 @@ import javax.swing.table.AbstractTableModel;
  */
 public class ModelTabeleKonobar extends AbstractTableModel {
 
+    /** Lista konobara prikazanih u tabeli. */
     private List<Konobar> lista;
+    /** Nazivi kolona tabele. */
     private final String[] kolone = {"ID", "Ime", "Prezime", "Username"};
 
     /**

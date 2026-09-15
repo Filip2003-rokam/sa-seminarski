@@ -13,7 +13,9 @@ import javax.swing.table.AbstractTableModel;
  */
 public class ModelTabeleStavkeRacuna extends AbstractTableModel {
 
+    /** Lista stavki racuna prikazanih u tabeli. */
     private List<StavkaRacuna> stavke;
+    /** Nazivi kolona tabele. */
     private final String[] kolone = {"RB", "Naziv", "Količina", "Cena", "Ukupan iznos"};
 
     /**

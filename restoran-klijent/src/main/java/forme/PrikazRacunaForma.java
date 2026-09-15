@@ -475,25 +475,45 @@ public class PrikazRacunaForma extends javax.swing.JFrame {
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    /** Swing komponenta. */
     private javax.swing.JButton jButtonIzmeni;
+    /** Swing komponenta. */
     private javax.swing.JButton jButtonIzmeniStavku;
+    /** Swing komponenta. */
     private javax.swing.JButton jButtonObrisi;
+    /** Swing komponenta. */
     private javax.swing.JButton jButtonObrisiStavku;
+    /** Swing komponenta. */
     private javax.swing.JButton jButtonPretrazi;
+    /** Swing komponenta. */
     private javax.swing.JButton jButtonResetuj;
+    /** Swing komponenta. */
     private javax.swing.JComboBox<Gost> jComboBoxGost;
+    /** Swing komponenta. */
     private javax.swing.JComboBox<Konobar> jComboBoxKonobar;
+    /** Swing komponenta. */
     private javax.swing.JComboBox<Smena> jComboBoxSmena;
+    /** Swing komponenta. */
     private javax.swing.JLabel jLabel1;
+    /** Swing komponenta. */
     private javax.swing.JLabel jLabel2;
+    /** Swing komponenta. */
     private javax.swing.JLabel jLabel3;
+    /** Swing komponenta. */
     private javax.swing.JLabel jLabel4;
+    /** Swing komponenta. */
     private javax.swing.JLabel jLabel5;
+    /** Swing komponenta. */
     private javax.swing.JLabel jLabel6;
+    /** Swing komponenta. */
     private javax.swing.JScrollPane jScrollPane1;
+    /** Swing komponenta. */
     private javax.swing.JScrollPane jScrollPane2;
+    /** Swing komponenta. */
     private javax.swing.JTable jTableRacuni;
+    /** Swing komponenta. */
     private javax.swing.JTable jTableStavkaRacuna;
+    /** Swing komponenta. */
     private javax.swing.JTextField jTextFieldDatum;
     // End of variables declaration//GEN-END:variables
 

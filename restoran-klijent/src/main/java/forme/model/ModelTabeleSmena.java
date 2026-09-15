@@ -15,8 +15,11 @@ import javax.swing.table.AbstractTableModel;
  */
 public class ModelTabeleSmena extends AbstractTableModel {
 
+    /** Lista smena prikazanih u tabeli. */
     private List<Smena> smene;
+    /** Nazivi kolona tabele. */
     private final String[] kolone = {"Naziv", "Početak", "Kraj"};
+    /** Format za prikaz vremena pocetka i kraja smene. */
     private final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm");
 
     /**

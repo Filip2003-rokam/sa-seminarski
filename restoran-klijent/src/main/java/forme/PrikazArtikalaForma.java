@@ -252,15 +252,25 @@ public class PrikazArtikalaForma extends javax.swing.JFrame {
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    /** Swing komponenta. */
     private javax.swing.JButton jButtonIzmeni;
+    /** Swing komponenta. */
     private javax.swing.JButton jButtonObrisi;
+    /** Swing komponenta. */
     private javax.swing.JButton jButtonPretrazi;
+    /** Swing komponenta. */
     private javax.swing.JButton jButtonResetuj;
+    /** Swing komponenta. */
     private javax.swing.JLabel jLabel1;
+    /** Swing komponenta. */
     private javax.swing.JLabel jLabel2;
+    /** Swing komponenta. */
     private javax.swing.JScrollPane jScrollPane1;
+    /** Swing komponenta. */
     private javax.swing.JTable jTableArtikal;
+    /** Swing komponenta. */
     private javax.swing.JTextField jTextFieldCena;
+    /** Swing komponenta. */
     private javax.swing.JTextField jTextFieldNaziv;
     // End of variables declaration//GEN-END:variables
 

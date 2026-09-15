@@ -12,6 +12,12 @@ import forme.ServerskaForma;
 public class Main {
 
     /**
+     * Kreira ulaznu tacku serverske aplikacije.
+     */
+    public Main() {
+    }
+
+    /**
      * Pokretacka metoda – kreira i prikazuje serversku formu.
      *
      * @param args argumenti komandne linije (ne koriste se)

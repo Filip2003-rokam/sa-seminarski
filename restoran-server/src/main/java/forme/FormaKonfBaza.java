@@ -132,12 +132,19 @@ public class FormaKonfBaza extends javax.swing.JDialog {
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    /** Swing komponenta. */
     private javax.swing.JButton jButton1;
+    /** Swing komponenta. */
     private javax.swing.JLabel jLabel1;
+    /** Swing komponenta. */
     private javax.swing.JLabel jLabel2;
+    /** Swing komponenta. */
     private javax.swing.JLabel jLabel3;
+    /** Swing komponenta. */
     private javax.swing.JPasswordField jPasswordField1;
+    /** Swing komponenta. */
     private javax.swing.JTextField jTextFieldURL;
+    /** Swing komponenta. */
     private javax.swing.JTextField jTextFieldUsername;
     // End of variables declaration//GEN-END:variables
 }

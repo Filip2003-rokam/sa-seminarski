@@ -196,13 +196,21 @@ public class DodajRasporedForma extends javax.swing.JFrame {
     
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    /** Swing komponenta. */
     private javax.swing.JButton jButtonDodaj;
+    /** Swing komponenta. */
     private javax.swing.JButton jButtonIzmeni;
+    /** Swing komponenta. */
     private javax.swing.JComboBox<Konobar> jComboBoxKonobar;
+    /** Swing komponenta. */
     private javax.swing.JComboBox<Smena> jComboBoxSmena;
+    /** Swing komponenta. */
     private javax.swing.JLabel jLabel1;
+    /** Swing komponenta. */
     private javax.swing.JLabel jLabel2;
+    /** Swing komponenta. */
     private javax.swing.JLabel jLabel3;
+    /** Swing komponenta. */
     private javax.swing.JTextField jTextFieldDatum;
     // End of variables declaration//GEN-END:variables
 

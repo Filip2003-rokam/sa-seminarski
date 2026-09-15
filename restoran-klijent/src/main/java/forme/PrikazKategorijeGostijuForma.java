@@ -292,15 +292,25 @@ public class PrikazKategorijeGostijuForma extends javax.swing.JFrame {
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    /** Swing komponenta. */
     private javax.swing.JButton jButtonIzmeni;
+    /** Swing komponenta. */
     private javax.swing.JButton jButtonObrisi;
+    /** Swing komponenta. */
     private javax.swing.JButton jButtonPretrazi;
+    /** Swing komponenta. */
     private javax.swing.JButton jButtonResetuj;
+    /** Swing komponenta. */
     private javax.swing.JLabel jLabel1;
+    /** Swing komponenta. */
     private javax.swing.JLabel jLabel2;
+    /** Swing komponenta. */
     private javax.swing.JScrollPane jScrollPane1;
+    /** Swing komponenta. */
     private javax.swing.JTable jTableKategorijaGostiju;
+    /** Swing komponenta. */
     private javax.swing.JTextField jTextFieldOpis;
+    /** Swing komponenta. */
     private javax.swing.JTextField jTextFieldPopust;
     // End of variables declaration//GEN-END:variables
 

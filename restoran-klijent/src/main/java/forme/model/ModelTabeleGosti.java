@@ -15,7 +15,9 @@ import javax.swing.table.AbstractTableModel;
  */
 public class ModelTabeleGosti extends AbstractTableModel {
 
+    /** Lista gostiju prikazanih u tabeli. */
     private List<Gost> gosti;
+    /** Nazivi kolona tabele. */
     private final String[] kolone = {"Ime", "Prezime", "Kategorija"};
 
     /**

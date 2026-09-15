@@ -161,15 +161,25 @@ public class ServerskaForma extends javax.swing.JFrame {
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    /** Swing komponenta. */
     private javax.swing.JButton jButtonPokreni;
+    /** Swing komponenta. */
     private javax.swing.JButton jButtonZaustavi;
+    /** Swing komponenta. */
     private javax.swing.JLabel jLabel2;
+    /** Swing komponenta. */
     private javax.swing.JLabel jLabelKonobari;
+    /** Swing komponenta. */
     private javax.swing.JLabel jLabelStatus;
+    /** Swing komponenta. */
     private javax.swing.JMenu jMenu1;
+    /** Swing komponenta. */
     private javax.swing.JMenuBar jMenuBar1;
+    /** Swing komponenta. */
     private javax.swing.JMenuItem jMenuItem4;
+    /** Swing komponenta. */
     private javax.swing.JMenuItem jMenuItem5;
+    /** Swing komponenta. */
     private javax.swing.JMenuItem jMenuItem6;
     // End of variables declaration//GEN-END:variables
 

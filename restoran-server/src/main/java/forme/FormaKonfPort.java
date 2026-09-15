@@ -99,8 +99,11 @@ public class FormaKonfPort extends javax.swing.JDialog {
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    /** Swing komponenta. */
     private javax.swing.JButton jButton1;
+    /** Swing komponenta. */
     private javax.swing.JLabel jLabel1;
+    /** Swing komponenta. */
     private javax.swing.JTextField jTextFieldPort;
     // End of variables declaration//GEN-END:variables
 }

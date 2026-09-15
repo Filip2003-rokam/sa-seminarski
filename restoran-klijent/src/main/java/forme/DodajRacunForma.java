@@ -590,31 +590,57 @@ public class DodajRacunForma extends javax.swing.JFrame {
     
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    /** Swing komponenta. */
     private javax.swing.JButton jButtonDodajStavku;
+    /** Swing komponenta. */
     private javax.swing.JButton jButtonIzmeniRacun;
+    /** Swing komponenta. */
     private javax.swing.JButton jButtonKreirajRacun;
+    /** Swing komponenta. */
     private javax.swing.JButton jButtonObrisiStavku;
+    /** Swing komponenta. */
     private javax.swing.JCheckBox jCheckBoxJeIzdat;
+    /** Swing komponenta. */
     private javax.swing.JComboBox<Gost> jComboBoxGost;
+    /** Swing komponenta. */
     private javax.swing.JComboBox<Artikal> jComboBoxArtikal;
+    /** Swing komponenta. */
     private javax.swing.JComboBox<Konobar> jComboBoxKonobar;
+    /** Swing komponenta. */
     private javax.swing.JLabel jLabel1;
+    /** Swing komponenta. */
     private javax.swing.JLabel jLabel2;
+    /** Swing komponenta. */
     private javax.swing.JLabel jLabel3;
+    /** Swing komponenta. */
     private javax.swing.JLabel jLabel4;
+    /** Swing komponenta. */
     private javax.swing.JLabel jLabel5;
+    /** Swing komponenta. */
     private javax.swing.JLabel jLabel6;
+    /** Swing komponenta. */
     private javax.swing.JLabel jLabel7;
+    /** Swing komponenta. */
     private javax.swing.JLabel jLabel8;
+    /** Swing komponenta. */
     private javax.swing.JLabel jLabel9;
+    /** Swing komponenta. */
     private javax.swing.JPanel jPanel1;
+    /** Swing komponenta. */
     private javax.swing.JScrollPane jScrollPane1;
+    /** Swing komponenta. */
     private javax.swing.JTable jTableStavke;
+    /** Swing komponenta. */
     private javax.swing.JTextField jTextFieldDatum;
+    /** Swing komponenta. */
     private javax.swing.JTextField jTextFieldId;
+    /** Swing komponenta. */
     private javax.swing.JTextField jTextFieldKolicina;
+    /** Swing komponenta. */
     private javax.swing.JTextField jTextFieldPopust;
+    /** Swing komponenta. */
     private javax.swing.JTextField jTextFieldUkupanIznos;
+    /** Swing komponenta. */
     private javax.swing.JTextField jTextFieldVreme;
     // End of variables declaration//GEN-END:variables
 }

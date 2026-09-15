@@ -226,15 +226,25 @@ public class DodajArtikalForma extends javax.swing.JFrame {
     
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    /** Swing komponenta. */
     private javax.swing.JButton jButtonDodaj;
+    /** Swing komponenta. */
     private javax.swing.JButton jButtonIzmeni;
+    /** Swing komponenta. */
     private javax.swing.JLabel jLabel1;
+    /** Swing komponenta. */
     private javax.swing.JLabel jLabel2;
+    /** Swing komponenta. */
     private javax.swing.JLabel jLabel3;
+    /** Swing komponenta. */
     private javax.swing.JLabel jLabel4;
+    /** Swing komponenta. */
     private javax.swing.JTextField jTextFieldCena;
+    /** Swing komponenta. */
     private javax.swing.JTextField jTextFieldId;
+    /** Swing komponenta. */
     private javax.swing.JTextField jTextFieldNaziv;
+    /** Swing komponenta. */
     private javax.swing.JTextField jTextFieldTip;
     // End of variables declaration//GEN-END:variables
 

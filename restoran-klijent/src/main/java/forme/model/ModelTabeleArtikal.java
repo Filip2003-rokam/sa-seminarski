@@ -14,7 +14,9 @@ import javax.swing.table.AbstractTableModel;
  */
 public class ModelTabeleArtikal extends AbstractTableModel {
     
+    /** Lista artikala prikazanih u tabeli. */
     private List<Artikal> lista;
+    /** Nazivi kolona tabele. */
     private final String[] kolone = {"ID", "Naziv", "Tip", "Cena"};
 
     /**
