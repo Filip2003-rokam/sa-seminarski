@@ -36,17 +36,19 @@ public class Smena implements ApstraktniDomenskiObjekat{
 
     /**
      * Konstruktor koji kreira smenu sa svim atributima.
+     * Validacija se vrsi preko setera.
      *
      * @param idSmena jedinstveni identifikator smene
      * @param naziv naziv smene
      * @param vremePocetka vreme pocetka smene
-     * @param vremeKraja vreme kraja smene (moze biti null)
+     * @param vremeKraja vreme kraja smene
+     * @throws IllegalArgumentException ako bilo koja prosledjena vrednost ne zadovoljava pravila settera
      */
     public Smena(int idSmena, String naziv, LocalTime vremePocetka, LocalTime vremeKraja) {
-        this.idSmena = idSmena;
-        this.naziv = naziv;
-        this.vremePocetka = vremePocetka;
-        this.vremeKraja = vremeKraja;
+        setIdSmena(idSmena);
+        setNaziv(naziv);
+        setVremePocetka(vremePocetka);
+        setVremeKraja(vremeKraja);
     }
 
     /**
@@ -59,9 +61,15 @@ public class Smena implements ApstraktniDomenskiObjekat{
     /**
      * Postavlja jedinstveni identifikator smene.
      *
-     * @param idSmena novi id (pozitivan broj koji odgovara PK u bazi)
+     * @param idSmena novi id (ne sme biti negativan)
+     * @throws IllegalArgumentException ako je idSmena negativan
      */
-    public void setIdSmena(int idSmena) { this.idSmena = idSmena; }
+    public void setIdSmena(int idSmena) {
+        if (idSmena < 0) {
+            throw new IllegalArgumentException("Id smene ne sme biti negativan.");
+        }
+        this.idSmena = idSmena;
+    }
 
     /**
      * Vraca naziv smene kao String.
@@ -73,9 +81,15 @@ public class Smena implements ApstraktniDomenskiObjekat{
     /**
      * Postavlja naziv smene.
      *
-     * @param naziv novi naziv (ne bi trebalo da bude null ili prazan string)
+     * @param naziv novi naziv (minimum 3 karaktera)
+     * @throws IllegalArgumentException ako je naziv null ili ako ima manje od 3 karaktera
      */
-    public void setNaziv(String naziv) { this.naziv = naziv; }
+    public void setNaziv(String naziv) {
+        if (naziv == null || naziv.length() < 3) {
+            throw new IllegalArgumentException("Naziv smene mora imati najmanje 3 karaktera.");
+        }
+        this.naziv = naziv;
+    }
 
     /**
      * Vraca vreme pocetka smene kao {@link LocalTime}.
@@ -86,10 +100,21 @@ public class Smena implements ApstraktniDomenskiObjekat{
 
     /**
      * Postavlja vreme pocetka smene.
+     * Ako je vreme kraja vec postavljeno, proverava se da li je kraj posle pocetka.
      *
-     * @param vremePocetka vreme pocetka (ne bi trebalo da bude null)
+     * @param vremePocetka vreme pocetka (ne sme biti null)
+     * @throws IllegalArgumentException ako je vremePocetka null ili ako je vreme kraja
+     *         vec postavljeno i nije posle novog vremena pocetka
      */
-    public void setVremePocetka(LocalTime vremePocetka) { this.vremePocetka = vremePocetka; }
+    public void setVremePocetka(LocalTime vremePocetka) {
+        if (vremePocetka == null) {
+            throw new IllegalArgumentException("Vreme pocetka smene ne sme biti null.");
+        }
+        if (this.vremeKraja != null && !this.vremeKraja.isAfter(vremePocetka)) {
+            throw new IllegalArgumentException("Kraj smene mora biti posle pocetka.");
+        }
+        this.vremePocetka = vremePocetka;
+    }
 
     /**
      * Vraca vreme kraja smene kao {@link LocalTime}.
@@ -100,11 +125,21 @@ public class Smena implements ApstraktniDomenskiObjekat{
 
     /**
      * Postavlja vreme kraja smene.
+     * Ako je vreme pocetka vec postavljeno, proverava se da li je kraj posle pocetka.
      *
-     * @param vremeKraja vreme kraja (moze biti null; ako je postavljeno,
-     *        ocekivano je posle vremena pocetka)
+     * @param vremeKraja vreme kraja (ne sme biti null)
+     * @throws IllegalArgumentException ako je vremeKraja null ili ako je vreme pocetka
+     *         vec postavljeno i kraj nije posle pocetka
      */
-    public void setVremeKraja(LocalTime vremeKraja) { this.vremeKraja = vremeKraja; }
+    public void setVremeKraja(LocalTime vremeKraja) {
+        if (vremeKraja == null) {
+            throw new IllegalArgumentException("Vreme kraja smene ne sme biti null.");
+        }
+        if (this.vremePocetka != null && !vremeKraja.isAfter(this.vremePocetka)) {
+            throw new IllegalArgumentException("Kraj smene mora biti posle pocetka.");
+        }
+        this.vremeKraja = vremeKraja;
+    }
 
     /**
      * Poredi smene po identifikatoru {@code idSmena}.
@@ -160,12 +195,13 @@ public String vratiNazivTabele() {
 public List<ApstraktniDomenskiObjekat> vratiListu(ResultSet rs) throws Exception {
     List<ApstraktniDomenskiObjekat> lista = new ArrayList<>();
     while (rs.next()) {
-        Smena s = new Smena(
-            rs.getInt("idSmena"),
-            rs.getString("naziv"),
-            rs.getTime("vremePocetka").toLocalTime(),
-            rs.getTime("vremeKraja") != null ? rs.getTime("vremeKraja").toLocalTime() : null
-        );
+        Smena s = new Smena();
+        s.setIdSmena(rs.getInt("idSmena"));
+        s.setNaziv(rs.getString("naziv"));
+        s.setVremePocetka(rs.getTime("vremePocetka").toLocalTime());
+        if (rs.getTime("vremeKraja") != null) {
+            s.setVremeKraja(rs.getTime("vremeKraja").toLocalTime());
+        }
         lista.add(s);
     }
     return lista;
@@ -212,12 +248,14 @@ public String vratiPrimarniKljuc() {
  */
 @Override
 public ApstraktniDomenskiObjekat vratiObjekatIzRS(ResultSet rs) throws Exception {
-    return new Smena(
-        rs.getInt("idSmena"),
-        rs.getString("naziv"),
-        rs.getTime("vremePocetka").toLocalTime(),
-        rs.getTime("vremeKraja") != null ? rs.getTime("vremeKraja").toLocalTime() : null
-    );
+    Smena s = new Smena();
+    s.setIdSmena(rs.getInt("idSmena"));
+    s.setNaziv(rs.getString("naziv"));
+    s.setVremePocetka(rs.getTime("vremePocetka").toLocalTime());
+    if (rs.getTime("vremeKraja") != null) {
+        s.setVremeKraja(rs.getTime("vremeKraja").toLocalTime());
+    }
+    return s;
 }
 
 /**

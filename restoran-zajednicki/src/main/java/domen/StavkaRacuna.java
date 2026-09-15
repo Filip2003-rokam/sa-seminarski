@@ -42,21 +42,23 @@ public class StavkaRacuna implements ApstraktniDomenskiObjekat{
 
     /**
      * Konstruktor koji kreira stavku racuna sa svim atributima.
+     * Validacija se vrsi preko setera.
      *
      * @param idRacun identifikator racuna kojem stavka pripada
      * @param rb redni broj stavke unutar racuna (ocekivano &gt; 0)
      * @param kolicina kolicina artikla (ocekivano &gt; 0)
-     * @param ukupanIznos ukupan iznos stavke (ocekivano &gt;= 0)
+     * @param ukupanIznos ukupan iznos stavke (ocekivano &gt; 0)
      * @param cena jedinicna cena (ocekivano &gt; 0)
      * @param artikal artikal na koji se stavka odnosi
+     * @throws IllegalArgumentException ako bilo koja prosledjena vrednost ne zadovoljava pravila settera
      */
     public StavkaRacuna(int idRacun, int rb, int kolicina, double ukupanIznos, double cena, Artikal artikal) {
-        this.idRacun = idRacun;
-        this.rb = rb;
-        this.kolicina = kolicina;
-        this.ukupanIznos = ukupanIznos;
-        this.cena = cena;
-        this.artikal = artikal;
+        setIdRacun(idRacun);
+        setRb(rb);
+        setKolicina(kolicina);
+        setUkupanIznos(ukupanIznos);
+        setCena(cena);
+        setArtikal(artikal);
     }
 
     /**
@@ -69,9 +71,15 @@ public class StavkaRacuna implements ApstraktniDomenskiObjekat{
     /**
      * Postavlja identifikator racuna kojem stavka pripada.
      *
-     * @param idRacun id postojeceg racuna u bazi
+     * @param idRacun id postojeceg racuna u bazi (ne sme biti negativan)
+     * @throws IllegalArgumentException ako je idRacun negativan
      */
-    public void setIdRacun(int idRacun) { this.idRacun = idRacun; }
+    public void setIdRacun(int idRacun) {
+        if (idRacun < 0) {
+            throw new IllegalArgumentException("Id racuna na stavci ne sme biti negativan.");
+        }
+        this.idRacun = idRacun;
+    }
 
     /**
      * Vraca redni broj stavke unutar racuna kao int.
@@ -83,9 +91,15 @@ public class StavkaRacuna implements ApstraktniDomenskiObjekat{
     /**
      * Postavlja redni broj stavke unutar racuna.
      *
-     * @param rb redni broj (ocekivano &gt; 0, jedinstven unutar istog racuna)
+     * @param rb redni broj (ne sme biti negativan)
+     * @throws IllegalArgumentException ako je rb negativan
      */
-    public void setRb(int rb) { this.rb = rb; }
+    public void setRb(int rb) {
+        if (rb < 0) {
+            throw new IllegalArgumentException("Redni broj stavke ne sme biti negativan.");
+        }
+        this.rb = rb;
+    }
 
     /**
      * Vraca kolicinu artikla na stavci kao int.
@@ -97,9 +111,15 @@ public class StavkaRacuna implements ApstraktniDomenskiObjekat{
     /**
      * Postavlja kolicinu artikla na stavci.
      *
-     * @param kolicina nova kolicina (za poslovne operacije ocekivano &gt; 0)
+     * @param kolicina nova kolicina (mora biti &gt; 0)
+     * @throws IllegalArgumentException ako je kolicina manja ili jednaka nuli
      */
-    public void setKolicina(int kolicina) { this.kolicina = kolicina; }
+    public void setKolicina(int kolicina) {
+        if (kolicina <= 0) {
+            throw new IllegalArgumentException("Kolicina stavke mora biti veca od nule.");
+        }
+        this.kolicina = kolicina;
+    }
 
     /**
      * Vraca ukupan iznos stavke kao double.
@@ -111,9 +131,15 @@ public class StavkaRacuna implements ApstraktniDomenskiObjekat{
     /**
      * Postavlja ukupan iznos stavke.
      *
-     * @param ukupanIznos novi iznos (ocekivano &gt;= 0; tipicno kolicina * cena)
+     * @param ukupanIznos novi iznos (mora biti &gt; 0)
+     * @throws IllegalArgumentException ako je ukupanIznos manji ili jednak nuli
      */
-    public void setUkupanIznos(double ukupanIznos) { this.ukupanIznos = ukupanIznos; }
+    public void setUkupanIznos(double ukupanIznos) {
+        if (ukupanIznos <= 0) {
+            throw new IllegalArgumentException("Ukupan iznos stavke mora biti veci od nule.");
+        }
+        this.ukupanIznos = ukupanIznos;
+    }
 
     /**
      * Vraca jedinicnu cenu stavke kao double.
@@ -125,9 +151,15 @@ public class StavkaRacuna implements ApstraktniDomenskiObjekat{
     /**
      * Postavlja jedinicnu cenu stavke.
      *
-     * @param cena nova cena (za poslovne operacije ocekivano &gt; 0)
+     * @param cena nova cena (mora biti &gt; 0)
+     * @throws IllegalArgumentException ako je cena manja ili jednaka nuli
      */
-    public void setCena(double cena) { this.cena = cena; }
+    public void setCena(double cena) {
+        if (cena <= 0) {
+            throw new IllegalArgumentException("Cena stavke mora biti veca od nule.");
+        }
+        this.cena = cena;
+    }
 
     /**
      * Vraca artikal stavke kao objekat tipa {@link Artikal}.
@@ -139,9 +171,15 @@ public class StavkaRacuna implements ApstraktniDomenskiObjekat{
     /**
      * Postavlja artikal stavke.
      *
-     * @param artikal artikal sa validnim idArtikal (potreban za INSERT/UPDATE)
+     * @param artikal artikal sa validnim idArtikal (ne sme biti null)
+     * @throws IllegalArgumentException ako je artikal null
      */
-    public void setArtikal(Artikal artikal) { this.artikal = artikal; }
+    public void setArtikal(Artikal artikal) {
+        if (artikal == null) {
+            throw new IllegalArgumentException("Artikal stavke ne sme biti null.");
+        }
+        this.artikal = artikal;
+    }
 
     /**
      * Poredi stavke po kompozitnom kljucu {@code idRacun} i {@code rb}.
@@ -270,16 +308,16 @@ public String vratiPrimarniKljuc() {
  * @throws Exception ako dodje do greske pri citanju kolona
  */
 @Override
-public ApstraktniDomenskiObjekat vratiObjekatIzRS(ResultSet rs) throws Exception {
-    return new StavkaRacuna(
-        rs.getInt("idRacun"),
-        rs.getInt("rb"),
-        rs.getInt("kolicina"),
-        rs.getDouble("ukupanIznos"),
-        rs.getDouble("cena"),
-        null
-    );
-}
+    public ApstraktniDomenskiObjekat vratiObjekatIzRS(ResultSet rs) throws Exception {
+        StavkaRacuna sr = new StavkaRacuna();
+        sr.setIdRacun(rs.getInt("idRacun"));
+        sr.setRb(rs.getInt("rb"));
+        sr.setKolicina(rs.getInt("kolicina"));
+        sr.setUkupanIznos(rs.getDouble("ukupanIznos"));
+        sr.setCena(rs.getDouble("cena"));
+        // artikal se ne ucitava ovde
+        return sr;
+    }
 
 /**
  * Vraca SQL SET fragment za UPDATE: kolicina, cena, ukupanIznos i idArtikal.

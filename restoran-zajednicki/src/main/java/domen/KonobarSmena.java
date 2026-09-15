@@ -32,15 +32,17 @@ public class KonobarSmena implements ApstraktniDomenskiObjekat {
 
     /**
      * Konstruktor koji kreira vezu konobara, smene i datuma.
+     * Validacija se vrsi preko setera.
      *
      * @param konobar konobar koji se rasporedjuje (mora imati validan idKonobar)
      * @param smena smena na koju se rasporedjuje (mora imati validan idSmena)
      * @param datumSmene datum vazenja rasporeda
+     * @throws IllegalArgumentException ako bilo koja prosledjena vrednost ne zadovoljava pravila settera
      */
     public KonobarSmena(Konobar konobar, Smena smena, LocalDate datumSmene) {
-        this.konobar = konobar;
-        this.smena = smena;
-        this.datumSmene = datumSmene;
+        setKonobar(konobar);
+        setSmena(smena);
+        setDatumSmene(datumSmene);
     }
 
     /**
@@ -55,9 +57,13 @@ public class KonobarSmena implements ApstraktniDomenskiObjekat {
     /**
      * Postavlja konobara za ovaj raspored.
      *
-     * @param konobar konobar sa validnim idKonobar (potreban za INSERT/PK)
+     * @param konobar konobar sa validnim idKonobar (ne sme biti null)
+     * @throws IllegalArgumentException ako je konobar null
      */
     public void setKonobar(Konobar konobar) {
+        if (konobar == null) {
+            throw new IllegalArgumentException("Konobar u rasporedu ne sme biti null.");
+        }
         this.konobar = konobar;
     }
 
@@ -73,9 +79,13 @@ public class KonobarSmena implements ApstraktniDomenskiObjekat {
     /**
      * Postavlja smenu za ovaj raspored.
      *
-     * @param smena smena sa validnim idSmena (potrebna za INSERT/PK)
+     * @param smena smena sa validnim idSmena (ne sme biti null)
+     * @throws IllegalArgumentException ako je smena null
      */
     public void setSmena(Smena smena) {
+        if (smena == null) {
+            throw new IllegalArgumentException("Smena u rasporedu ne sme biti null.");
+        }
         this.smena = smena;
     }
 
@@ -91,9 +101,13 @@ public class KonobarSmena implements ApstraktniDomenskiObjekat {
     /**
      * Postavlja datum smene.
      *
-     * @param datumSmene datum vazenja rasporeda (ne bi trebalo da bude null)
+     * @param datumSmene datum vazenja rasporeda (ne sme biti null)
+     * @throws IllegalArgumentException ako je datumSmene null
      */
     public void setDatumSmene(LocalDate datumSmene) {
+        if (datumSmene == null) {
+            throw new IllegalArgumentException("Datum smene ne sme biti null.");
+        }
         this.datumSmene = datumSmene;
     }
 

@@ -36,17 +36,19 @@ public class Gost implements ApstraktniDomenskiObjekat{
 
     /**
      * Konstruktor koji kreira gosta sa svim atributima.
+     * Validacija se vrsi preko setera.
      *
      * @param idGost jedinstveni identifikator gosta
      * @param ime ime gosta
      * @param prezime prezime gosta
      * @param kategorijaGosta kategorija kojoj gost pripada (moze uticati na popust)
+     * @throws IllegalArgumentException ako bilo koja prosledjena vrednost ne zadovoljava pravila settera
      */
     public Gost(int idGost, String ime, String prezime, KategorijaGosta kategorijaGosta) {
-        this.idGost = idGost;
-        this.ime = ime;
-        this.prezime = prezime;
-        this.kategorijaGosta = kategorijaGosta;
+        setIdGost(idGost);
+        setIme(ime);
+        setPrezime(prezime);
+        setKategorijaGosta(kategorijaGosta);
     }
 
     /**
@@ -59,9 +61,15 @@ public class Gost implements ApstraktniDomenskiObjekat{
     /**
      * Postavlja jedinstveni identifikator gosta.
      *
-     * @param idGost novi id gosta (pozitivan broj koji odgovara PK u bazi)
+     * @param idGost novi id gosta (ne sme biti negativan)
+     * @throws IllegalArgumentException ako je idGost negativan
      */
-    public void setIdGost(int idGost) { this.idGost = idGost; }
+    public void setIdGost(int idGost) {
+        if (idGost < 0) {
+            throw new IllegalArgumentException("Id gosta ne sme biti negativan.");
+        }
+        this.idGost = idGost;
+    }
 
     /**
      * Vraca ime gosta kao String.
@@ -73,9 +81,15 @@ public class Gost implements ApstraktniDomenskiObjekat{
     /**
      * Postavlja ime gosta.
      *
-     * @param ime novo ime (ne bi trebalo da bude null ili prazan string)
+     * @param ime novo ime (minimum 3 karaktera)
+     * @throws IllegalArgumentException ako je ime null ili ako ima manje od 3 karaktera
      */
-    public void setIme(String ime) { this.ime = ime; }
+    public void setIme(String ime) {
+        if (ime == null || ime.length() < 3) {
+            throw new IllegalArgumentException("Ime gosta mora imati najmanje 3 karaktera.");
+        }
+        this.ime = ime;
+    }
 
     /**
      * Vraca prezime gosta kao String.
@@ -87,9 +101,15 @@ public class Gost implements ApstraktniDomenskiObjekat{
     /**
      * Postavlja prezime gosta.
      *
-     * @param prezime novo prezime (ne bi trebalo da bude null ili prazan string)
+     * @param prezime novo prezime (minimum 3 karaktera)
+     * @throws IllegalArgumentException ako je prezime null ili ako ima manje od 3 karaktera
      */
-    public void setPrezime(String prezime) { this.prezime = prezime; }
+    public void setPrezime(String prezime) {
+        if (prezime == null || prezime.length() < 3) {
+            throw new IllegalArgumentException("Prezime gosta mora imati najmanje 3 karaktera.");
+        }
+        this.prezime = prezime;
+    }
 
     /**
      * Vraca kategoriju gosta kao objekat tipa {@link KategorijaGosta}.
@@ -102,7 +122,7 @@ public class Gost implements ApstraktniDomenskiObjekat{
      * Postavlja kategoriju gosta.
      *
      * @param kategorijaGosta kategorija sa validnim idKategorijaGosta
-     *        (potrebna za INSERT/UPDATE jer se koristi FK)
+     *        (potrebna za INSERT/UPDATE jer se koristi FK); null je dozvoljen
      */
     public void setKategorijaGosta(KategorijaGosta kategorijaGosta) { 
         this.kategorijaGosta = kategorijaGosta; 
