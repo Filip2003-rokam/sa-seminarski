@@ -28,6 +28,7 @@ import operacija.konobar.UcitajKonobareSO;
 import operacija.login.LoginOperacija;
 import operacija.racuni.DodajRacunSO;
 import operacija.racuni.IzmeniRacunSO;
+import operacija.racuni.IzveziRacuneUJsonSO;
 import operacija.racuni.ObrisiRacunSO;
 import operacija.racuni.UcitajRacuneSO;
 import operacija.stavke.ObrisiStavkuRacunaSO;
@@ -502,6 +503,21 @@ public class Controller {
         operacija.izvrsi(r,null);
 
     }
+
+    /**
+     * Izvozi listu racuna u JSON fajl.
+     * Poziva sistemsku operaciju {@link IzveziRacuneUJsonSO}.
+     *
+     * @param racuni lista racuna za izvoz
+     * @return apsolutna putanja kreiranog JSON fajla
+     * @throws Exception ako dodje do greske pri izvrsavanju operacije
+     */
+    public String izveziRacune(List<Racun> racuni) throws Exception {
+        IzveziRacuneUJsonSO operacija = new IzveziRacuneUJsonSO();
+        operacija.izvrsi(racuni, null);
+        return operacija.getPutanjaFajla();
+    }
+
 
 
 
