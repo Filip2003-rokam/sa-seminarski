@@ -993,10 +993,31 @@ public class Komunikacija {
         
     }
 
+    /**
+     * Salje zahtev serveru za izvoz liste racuna u JSON fajl.
+     * <ul>
+     *   <li>Operacija: {@link Operacija#IZVEZI_RACUNE}</li>
+     *   <li>Parametar: lista racuna za izvoz</li>
+     *   <li>Odgovor: apsolutna putanja kreiranog JSON fajla ({@link String})</li>
+     * </ul>
+     *
+     * @param racuni lista racuna koja se izvozi
+     * @return putanja kreiranog fajla na serveru
+     * @throws Exception ako server vrati gresku ili izvoz ne uspe
+     */
+    public String izveziRacune(List<Racun> racuni) throws Exception {
+        Zahtev zahtev = new Zahtev(Operacija.IZVEZI_RACUNE, racuni);
+        posiljalac.posalji(zahtev);
 
+        Odgovor odg = (Odgovor) primalac.primi();
+        if (odg == null) {
+            throw new Exception("Server nije poslao odgovor.");
+        }
+        Object rezultat = odg.getOdgovor();
+        if (rezultat instanceof Exception) {
+            throw (Exception) rezultat;
+        }
+        return (String) rezultat;
+    }
 
-
-
-
-    
 }

@@ -101,7 +101,8 @@ public class PrikazRacunaController {
     }
 
     /**
-     * Registruje listenere: pretrazi, resetuj, obrisi racun, izmeni racun, obrisi stavku.
+     * Registruje listenere: pretrazi, resetuj, obrisi racun, izmeni racun,
+     * izvezi u JSON, obrisi stavku.
      */
     private void addActionListener() {
 
@@ -188,7 +189,7 @@ public class PrikazRacunaController {
                 } else {
                     ModelTabeleRacuni mtr = (ModelTabeleRacuni) prf.getjTableRacuni().getModel();
                     Racun r = mtr.getRacunAt(red);
-                    
+
                     List<StavkaRacuna> stavke = Komunikacija.getInstance().ucitajStavke(r);
                     r.setStavke(stavke);
 
@@ -198,8 +199,32 @@ public class PrikazRacunaController {
             }
         });
 
-        
-        
+        prf.addBtnIzveziActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                ModelTabeleRacuni mtr = (ModelTabeleRacuni) prf.getjTableRacuni().getModel();
+                List<Racun> racuni = mtr.getRacuni();
+                if (racuni == null || racuni.isEmpty()) {
+                    JOptionPane.showMessageDialog(prf,
+                            "Nema računa za izvoz.",
+                            "Upozorenje", JOptionPane.WARNING_MESSAGE);
+                    return;
+                }
+                try {
+                    String putanja = Komunikacija.getInstance().izveziRacune(racuni);
+                    JOptionPane.showMessageDialog(prf,
+                            "Računi su uspešno izvezeni u fajl:\n" + putanja,
+                            "Uspeh", JOptionPane.INFORMATION_MESSAGE);
+                } catch (Exception ex) {
+                    JOptionPane.showMessageDialog(prf,
+                            "Sistem ne može da izveze račune u JSON.\n" + ex.getMessage(),
+                            "Greška", JOptionPane.ERROR_MESSAGE);
+                }
+            }
+        });
+
+
+
         prf.addBtnObrisiStavkuActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {

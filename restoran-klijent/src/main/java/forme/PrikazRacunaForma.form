@@ -30,6 +30,8 @@
                       <Component id="jButtonIzmeni" min="-2" pref="93" max="-2" attributes="0"/>
                       <EmptySpace type="separate" max="-2" attributes="0"/>
                       <Component id="jButtonObrisi" min="-2" pref="93" max="-2" attributes="0"/>
+                      <EmptySpace type="separate" max="-2" attributes="0"/>
+                      <Component id="jButtonIzvezi" min="-2" max="-2" attributes="0"/>
                       <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                   </Group>
                   <Group type="102" attributes="0">
@@ -124,6 +126,7 @@
                       <Group type="103" groupAlignment="3" attributes="0">
                           <Component id="jButtonIzmeni" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="jButtonObrisi" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="jButtonIzvezi" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace pref="7" max="32767" attributes="0"/>
                   </Group>
@@ -218,6 +221,11 @@
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButtonIzmeniActionPerformed"/>
       </Events>
+    </Component>
+    <Component class="javax.swing.JButton" name="jButtonIzvezi">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Izvezi u JSON"/>
+      </Properties>
     </Component>
     <Component class="javax.swing.JButton" name="jButtonPretrazi">
       <Properties>

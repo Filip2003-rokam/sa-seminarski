@@ -46,6 +46,7 @@ public class PrikazRacunaForma extends javax.swing.JFrame {
         jLabel2 = new javax.swing.JLabel();
         jButtonObrisi = new javax.swing.JButton();
         jButtonIzmeni = new javax.swing.JButton();
+        jButtonIzvezi = new javax.swing.JButton();
         jButtonPretrazi = new javax.swing.JButton();
         jButtonResetuj = new javax.swing.JButton();
         jLabel3 = new javax.swing.JLabel();
@@ -115,6 +116,8 @@ public class PrikazRacunaForma extends javax.swing.JFrame {
             }
         });
 
+        jButtonIzvezi.setText("Izvezi u JSON");
+
         jButtonPretrazi.setText("pretrazi");
         jButtonPretrazi.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -152,6 +155,8 @@ public class PrikazRacunaForma extends javax.swing.JFrame {
                         .addComponent(jButtonIzmeni, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addComponent(jButtonObrisi, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(jButtonIzvezi)
                         .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -222,7 +227,8 @@ public class PrikazRacunaForma extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jButtonIzmeni)
-                            .addComponent(jButtonObrisi))
+                            .addComponent(jButtonObrisi)
+                            .addComponent(jButtonIzvezi))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 7, Short.MAX_VALUE)))
                 .addGap(0, 39, Short.MAX_VALUE)
                 .addComponent(jLabel2)
@@ -480,6 +486,8 @@ public class PrikazRacunaForma extends javax.swing.JFrame {
     /** Swing komponenta. */
     private javax.swing.JButton jButtonIzmeniStavku;
     /** Swing komponenta. */
+    private javax.swing.JButton jButtonIzvezi;
+    /** Swing komponenta. */
     private javax.swing.JButton jButtonObrisi;
     /** Swing komponenta. */
     private javax.swing.JButton jButtonObrisiStavku;
@@ -551,6 +559,15 @@ public class PrikazRacunaForma extends javax.swing.JFrame {
          */
         public void addBtnIzmeniActionListener(ActionListener actionListener) {
             jButtonIzmeni.addActionListener(actionListener);
+        }
+
+        /**
+         * Dodaje ActionListener na dugme za izvoz racuna u JSON.
+         *
+         * @param actionListener osluskivac koji se poziva pri kliku na dugme za izvoz
+         */
+        public void addBtnIzveziActionListener(ActionListener actionListener) {
+            jButtonIzvezi.addActionListener(actionListener);
         }
 
         /**

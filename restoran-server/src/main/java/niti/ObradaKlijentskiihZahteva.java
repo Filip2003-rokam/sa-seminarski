@@ -368,9 +368,15 @@ public class ObradaKlijentskiihZahteva extends Thread {
                             odgovor.setOdgovor(null);
                             break;
 
-
-
-
+                        case IZVEZI_RACUNE:
+                            try {
+                                List<Racun> racuniZaIzvoz = (List<Racun>) zahtev.getParametar();
+                                String putanja = Controller.getInstance().izveziRacune(racuniZaIzvoz);
+                                odgovor.setOdgovor(putanja);
+                            } catch (Exception e) {
+                                odgovor.setOdgovor(e);
+                            }
+                            break;
 
                     default:
                         System.out.println("GRESKA");

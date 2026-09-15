@@ -74,6 +74,8 @@ public enum Operacija implements Serializable {
     /** Brisanje stavke racuna. */
     OBRISI_STAVKU,
     /** Izmena postojeceg racuna. */
-    IZMENI_RACUN
+    IZMENI_RACUN,
+    /** Izvoz liste racuna u JSON fajl. */
+    IZVEZI_RACUNE
 
 }

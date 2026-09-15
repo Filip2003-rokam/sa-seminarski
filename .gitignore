@@ -29,3 +29,6 @@ PROJEKAT_OPIS.md
 
 # Maven
 dependency-reduced-pom.xml
+# Generisani JSON izvestaji
+izvestaji/
+**/izvestaji/
