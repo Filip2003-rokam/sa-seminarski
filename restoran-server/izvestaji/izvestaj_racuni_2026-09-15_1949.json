@@ -1,0 +1,59 @@
+[
+  {
+    "idRacun": 1,
+    "datumIzdavanja": "2026-09-09",
+    "vremeIzdavanja": "12:10:00",
+    "ukupanIznos": 1490.0,
+    "jeIzdat": true,
+    "konobar": {
+      "idKonobar": 1,
+      "ime": "Filip",
+      "prezime": "Oketić",
+      "korisnickoIme": "admin",
+      "sifra": "admin"
+    },
+    "gost": {
+      "idGost": 1,
+      "ime": "Marko",
+      "prezime": "Marković"
+    }
+  },
+  {
+    "idRacun": 2,
+    "datumIzdavanja": "2026-09-09",
+    "vremeIzdavanja": "13:00:00",
+    "ukupanIznos": 620.0,
+    "jeIzdat": true,
+    "konobar": {
+      "idKonobar": 2,
+      "ime": "Petar",
+      "prezime": "Peric",
+      "korisnickoIme": "konobar1",
+      "sifra": "1"
+    },
+    "gost": {
+      "idGost": 3,
+      "ime": "Ivan",
+      "prezime": "Ivic"
+    }
+  },
+  {
+    "idRacun": 3,
+    "datumIzdavanja": "2026-09-09",
+    "vremeIzdavanja": "13:45:00",
+    "ukupanIznos": 2690.0,
+    "jeIzdat": true,
+    "konobar": {
+      "idKonobar": 3,
+      "ime": "Marta",
+      "prezime": "Jankovic",
+      "korisnickoIme": "konobar2",
+      "sifra": "1"
+    },
+    "gost": {
+      "idGost": 4,
+      "ime": "Luka",
+      "prezime": "Jovanovic"
+    }
+  }
+]

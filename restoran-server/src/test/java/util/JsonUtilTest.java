@@ -92,6 +92,19 @@ class JsonUtilTest {
         assertTrue(json.contains("Marko"));
         assertTrue(json.contains("\"stavke\""));
         assertTrue(json.contains("Pizza"));
+        assertFalse(json.contains("\"sifra\""));
+    }
+
+    @Test
+    @DisplayName("Serijalizovan Konobar ne sadrzi sifru")
+    void testKonobarBezSifreUJson() {
+        Konobar konobar = new Konobar(1, "Petar", "Petrovic", "ppetar", "tajnaSifra123");
+        String json = gson.toJson(konobar);
+
+        assertTrue(json.contains("Petar"));
+        assertTrue(json.contains("ppetar"));
+        assertFalse(json.contains("sifra"));
+        assertFalse(json.contains("tajnaSifra123"));
     }
 
     @Test
