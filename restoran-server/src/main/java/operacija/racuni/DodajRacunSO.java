@@ -9,10 +9,9 @@ import repository.db.DbRepository;
 /**
  * Sistemska operacija za dodavanje novog racuna u bazu podataka.
  * Radi nad domenom {@link Racun} i njegovim stavkama {@link StavkaRacuna}.
- * Poslovna pravila zahtevaju validan objekat tipa Racun, izabranog gosta i
- * konobara, unet datum i vreme izdavanja, listu sa barem jednom stavkom,
- * za svaku stavku artikal i vrednosti kolicine, cene i ukupnog iznosa vece
- * od nule, kao i ukupan iznos racuna veci od nule.
+ * Preduslovi zahtevaju validan objekat tipa Racun i listu sa barem jednom stavkom.
+ * Validacija atributa (gost, konobar, datum, vreme, ukupanIznos, stavke) je u
+ * setterima domen klase.
  *
  * @author Filip Oketic
  * @version 1.0
@@ -41,16 +40,7 @@ public class DodajRacunSO extends ApstraktnaGenerickaOperacija {
      *
      * @param param objekat koji mora biti instanca klase {@link Racun}
      * @throws Exception ako je param null ili nije Racun,
-     *         ako racun nema izabranog gosta,
-     *         ako racun nema izabranog konobara,
-     *         ako nije unet datum izdavanja,
-     *         ako nije uneto vreme izdavanja,
-     *         ako lista stavki ne postoji ili je prazna,
-     *         ako neka stavka nema izabran artikal,
-     *         ako je kolicina neke stavke manja ili jednaka nuli,
-     *         ako je cena neke stavke manja ili jednaka nuli,
-     *         ako je ukupan iznos neke stavke manji ili jednak nuli,
-     *         ako je ukupan iznos racuna manji ili jednak nuli
+     *         ako lista stavki ne postoji ili je prazna
      */
     @Override
     protected void preduslovi(Object param) throws Exception {
@@ -61,48 +51,9 @@ public class DodajRacunSO extends ApstraktnaGenerickaOperacija {
 
         Racun r = (Racun) param;
 
-        // 🔹 Provera gosta
-        if (r.getGost() == null) {
-            throw new Exception("Račun mora imati izabranog gosta.");
-        }
-
-        // 🔹 Provera konobara
-        if (r.getKonobar() == null) {
-            throw new Exception("Račun mora imati izabranog konobara.");
-        }
-
-        // 🔹 Provera datuma i vremena
-        if (r.getDatumIzdavanja() == null) {
-            throw new Exception("Račun mora imati unet datum izdavanja.");
-        }
-        if (r.getVremeIzdavanja() == null) {
-            throw new Exception("Račun mora imati uneto vreme izdavanja.");
-        }
-
         // 🔹 Provera liste stavki
         if (r.getStavke() == null || r.getStavke().isEmpty()) {
             throw new Exception("Račun mora sadržati barem jednu stavku.");
-        }
-
-        // 🔹 Provera svake stavke ponaosob
-        for (StavkaRacuna sr : r.getStavke()) {
-            if (sr.getArtikal() == null) {
-                throw new Exception("Svaka stavka mora imati izabran artikal.");
-            }
-            if (sr.getKolicina() <= 0) {
-                throw new Exception("Količina svake stavke mora biti veća od nule.");
-            }
-            if (sr.getCena() <= 0) {
-                throw new Exception("Cena svake stavke mora biti veća od nule.");
-            }
-            if (sr.getUkupanIznos() <= 0) {
-                throw new Exception("Ukupan iznos stavke mora biti veći od nule.");
-            }
-        }
-
-        // 🔹 Provera ukupnog iznosa računa
-        if (r.getUkupanIznos() <= 0) {
-            throw new Exception("Račun mora imati ukupan iznos veći od nule.");
         }
     }
 

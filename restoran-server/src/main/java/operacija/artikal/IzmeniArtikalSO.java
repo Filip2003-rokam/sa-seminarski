@@ -7,8 +7,7 @@ import repository.db.DbRepository;
 /**
  * Sistemska operacija za izmenu postojeceg artikla u sistemu.
  * Radi nad domen klasom {@link Artikal}. Preduslovi zahtevaju da objekat bude
- * tipa Artikal, da naziv ima najmanje 2 karaktera, da tip nije prazan
- * i da cena bude veca od nule.
+ * tipa Artikal. Validacija atributa (naziv, tip, cena) je u setterima domen klase.
  *
  * @author Filip Oketic
  * @version 1.0
@@ -37,28 +36,13 @@ public class IzmeniArtikalSO extends ApstraktnaGenerickaOperacija {
      * Proverava preduslove za izmenu artikla.
      *
      * @param param objekat koji mora biti tipa {@link Artikal}
-     * @throws Exception ako objekat nije Artikal, ako naziv ima manje od 2 karaktera,
-     *         ako tip nije unet, ako cena nije veca od nule
+     * @throws Exception ako je param null ili nije tipa {@link Artikal}
      */
     @Override
     protected void preduslovi(Object param) throws Exception {
         // mora da postoji objekat i da je tipa Artikal
         if (param == null || !(param instanceof Artikal)) {
             throw new Exception("Sistem nije mogao da izmeni artikal");
-        }
-
-        Artikal artikal = (Artikal) param;
-
-        if (artikal.getNaziv() == null || artikal.getNaziv().isEmpty() || artikal.getNaziv().length() < 2) {
-            throw new Exception("GRESKA NAZIV");
-        }
-
-        if (artikal.getTip() == null || artikal.getTip().isEmpty()) {
-            throw new Exception("GRESKA TIP");
-        }
-
-        if (artikal.getCena() <= 0) {
-            throw new Exception("GRESKA CENA");
         }
     }
 
