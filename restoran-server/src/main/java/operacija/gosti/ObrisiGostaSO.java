@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package operacija.gosti;
 
 import domen.Gost;
@@ -9,21 +5,39 @@ import operacija.ApstraktnaGenerickaOperacija;
 import repository.db.DbRepository;
 
 /**
+ * Sistemska operacija za brisanje gosta iz sistema.
+ * Radi nad domen klasom {@link Gost}. Preduslov je da prosledjeni objekat
+ * nije null i da je tipa Gost.
  *
- * @author Cofara
+ * @author Filip Oketic
+ * @version 1.0
  */
 public class ObrisiGostaSO extends ApstraktnaGenerickaOperacija {
 
     
 
+    /**
+     * Kreira operaciju sa podrazumevanim repozitorijumom.
+     */
     public ObrisiGostaSO() {
         super();
     }
 
+    /**
+     * Kreira operaciju sa prosledjenim repozitorijumom (za testiranje).
+     *
+     * @param broker repozitorijum za pristup podacima
+     */
     public ObrisiGostaSO(DbRepository broker) {
         super(broker);
     }
 
+    /**
+     * Proverava preduslove za brisanje gosta.
+     *
+     * @param param objekat koji mora biti tipa {@link Gost}
+     * @throws Exception ako je param null ili nije tipa Gost
+     */
     @Override
     protected void preduslovi(Object param) throws Exception {
         
@@ -33,6 +47,13 @@ public class ObrisiGostaSO extends ApstraktnaGenerickaOperacija {
         
     }
 
+    /**
+     * Brise gosta iz baze podataka.
+     *
+     * @param param objekat tipa {@link Gost} koji se brise
+     * @param kljuc dodatni uslov, nije koriscen
+     * @throws Exception ako brisanje iz baze ne uspe
+     */
     @Override
     protected void izvrsiOperaciju(Object param, String kljuc) throws Exception {
         

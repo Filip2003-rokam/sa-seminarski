@@ -1,20 +1,24 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package main;
 
 import forme.ServerskaForma;
 
 /**
+ * Ulazna tacka serverske aplikacije.
+ * Pokrece glavnu {@link ServerskaForma} i prikazuje je korisniku.
  *
- * @author Cofara
+ * @author Filip Oketic
+ * @version 1.0
  */
 public class Main {
-    
+
+    /**
+     * Pokretacka metoda – kreira i prikazuje serversku formu.
+     *
+     * @param args argumenti komandne linije (ne koriste se)
+     */
     public static void main(String[] args) {
         ServerskaForma sf = new ServerskaForma();
         sf.setVisible(true);
     }
-    
+
 }

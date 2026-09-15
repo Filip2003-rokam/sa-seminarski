@@ -22,13 +22,29 @@ import java.util.logging.Logger;
  */
 public class Konfiguracija {
 
+    /**
+     * Jedina instanca konfiguracije (singleton).
+     */
     private static Konfiguracija instanca;
 
+    /**
+     * Ucitane konfiguracione vrednosti (url, username, password, port, ...).
+     */
     private final Properties konfiguracija;
 
+    /**
+     * Naziv classpath resursa sa podrazumevanom konfiguracijom.
+     */
     private static final String RESURS = "config.properties";
+
+    /**
+     * Putnja do spoljnog fajla u koji se cuvaju izmene.
+     */
     private static final String SPOLJNI_FAJL = "config/config.properties";
 
+    /**
+     * Privatni konstruktor – ucitava resurs pa eventualni spoljni fajl.
+     */
     private Konfiguracija() {
         konfiguracija = new Properties();
         ucitajIzResursa();
