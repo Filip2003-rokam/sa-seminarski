@@ -18,21 +18,42 @@ import java.util.List;
 import javax.swing.JOptionPane;
 import komunikacija.Komunikacija;
 
+/**
+ * Kontroler forme za prikaz racuna ({@link forme.PrikazRacunaForma}).
+ * U klijentskom MVC-u ucitava racune, filtere (konobar, gost, smena, datum),
+ * omogucava brisanje i otvaranje forme za izmenu, kao i rad sa stavkama.
+ *
+ * @author Filip Oketic
+ * @version 1.0
+ */
 public class PrikazRacunaController {
 
+    /** Forma za prikaz racuna kojom ovaj kontroler upravlja. */
     private final PrikazRacunaForma prf;
 
+    /**
+     * Kreira kontroler i registruje listenere korisnickih akcija.
+     *
+     * @param prf forma za prikaz racuna
+     */
     public PrikazRacunaController(PrikazRacunaForma prf) {
         this.prf = prf;
         addActionListener();
     }
 
+    /**
+     * Priprema podatke, centrira i prikazuje formu.
+     */
     public void otvoriFormu() {
         pripremiFormu();
         prf.setVisible(true);
         prf.setLocationRelativeTo(null);
     }
 
+    /**
+     * Ucitava konobare, goste, smene i racune; postavlja modele tabela
+     * i sakriva dugmad za izmenu/brisanje stavke (izmena ide zasebnom formom).
+     */
     public void pripremiFormu() {
         try {
             // 🔹 Učitaj konobare
@@ -79,6 +100,9 @@ public class PrikazRacunaController {
         }
     }
 
+    /**
+     * Registruje listenere: pretrazi, resetuj, obrisi racun, izmeni racun, obrisi stavku.
+     */
     private void addActionListener() {
 
         // 🔹 Pretraga (po konobaru, gostu, datumu i smeni)
@@ -221,6 +245,9 @@ public class PrikazRacunaController {
 
     
 
+    /**
+     * Osvezava prikaz racuna (ponovo ucitava podatke sa servera).
+     */
     public void osveziGlavnuFormu() {
         pripremiFormu();
     }

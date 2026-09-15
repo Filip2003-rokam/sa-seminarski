@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
- */
 package forme;
 
 import java.awt.event.ActionListener;
@@ -9,13 +5,17 @@ import javax.swing.JButton;
 import javax.swing.JTextField;
 
 /**
+ * Forma za dodavanje nove ili izmenu postojece smene.
+ * Omogucava unos identifikatora, naziva, vremena pocetka i vremena kraja.
+ * Koristi se u dva moda koje kontroler postavlja pre prikaza.
  *
- * @author Cofara
+ * @author Filip Oketic
+ * @version 1.0
  */
 public class DodajSmenuForma extends javax.swing.JFrame {
 
     /**
-     * Creates new form DodajSmenuForma
+     * Kreira formu i inicijalizuje Swing komponente.
      */
     public DodajSmenuForma() {
         initComponents();
@@ -158,50 +158,110 @@ public class DodajSmenuForma extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jTextFieldKrajActionPerformed
 
+    /**
+     * Vraca dugme za dodavanje.
+     *
+     * @return dugme za dodavanje
+     */
     public JButton getjButtonDodaj() {
         return jButtonDodaj;
     }
 
+    /**
+     * Postavlja dugme za dodavanje.
+     *
+     * @param jButtonDodaj dugme za dodavanje
+     */
     public void setjButtonDodaj(JButton jButtonDodaj) {
         this.jButtonDodaj = jButtonDodaj;
     }
 
+    /**
+     * Vraca dugme za izmenu.
+     *
+     * @return dugme za izmenu
+     */
     public JButton getjButtonIzmeni() {
         return jButtonIzmeni;
     }
 
+    /**
+     * Postavlja dugme za izmenu.
+     *
+     * @param jButtonIzmeni dugme za izmenu
+     */
     public void setjButtonIzmeni(JButton jButtonIzmeni) {
         this.jButtonIzmeni = jButtonIzmeni;
     }
 
+    /**
+     * Vraca tekstualno polje za identifikator.
+     *
+     * @return tekstualno polje za identifikator
+     */
     public JTextField getjTextFieldId() {
         return jTextFieldId;
     }
 
+    /**
+     * Postavlja tekstualno polje za identifikator.
+     *
+     * @param jTextFieldId tekstualno polje za identifikator
+     */
     public void setjTextFieldId(JTextField jTextFieldId) {
         this.jTextFieldId = jTextFieldId;
     }
 
+    /**
+     * Vraca tekstualno polje za vreme kraja.
+     *
+     * @return tekstualno polje za vreme kraja
+     */
     public JTextField getjTextFieldKraj() {
         return jTextFieldKraj;
     }
 
+    /**
+     * Postavlja tekstualno polje za vreme kraja.
+     *
+     * @param jTextFieldKraj tekstualno polje za vreme kraja
+     */
     public void setjTextFieldKraj(JTextField jTextFieldKraj) {
         this.jTextFieldKraj = jTextFieldKraj;
     }
 
+    /**
+     * Vraca tekstualno polje za naziv.
+     *
+     * @return tekstualno polje za naziv
+     */
     public JTextField getjTextFieldNaziv() {
         return jTextFieldNaziv;
     }
 
+    /**
+     * Postavlja tekstualno polje za naziv.
+     *
+     * @param jTextFieldNaziv tekstualno polje za naziv
+     */
     public void setjTextFieldNaziv(JTextField jTextFieldNaziv) {
         this.jTextFieldNaziv = jTextFieldNaziv;
     }
 
+    /**
+     * Vraca tekstualno polje za vreme pocetka.
+     *
+     * @return tekstualno polje za vreme pocetka
+     */
     public JTextField getjTextFieldPocetak() {
         return jTextFieldPocetak;
     }
 
+    /**
+     * Postavlja tekstualno polje za vreme pocetka.
+     *
+     * @param jTextFieldPocetak tekstualno polje za vreme pocetka
+     */
     public void setjTextFieldPocetak(JTextField jTextFieldPocetak) {
         this.jTextFieldPocetak = jTextFieldPocetak;
     }
@@ -210,23 +270,43 @@ public class DodajSmenuForma extends javax.swing.JFrame {
     
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    /** Swing komponenta. */
     private javax.swing.JButton jButtonDodaj;
+    /** Swing komponenta. */
     private javax.swing.JButton jButtonIzmeni;
+    /** Swing komponenta. */
     private javax.swing.JLabel jLabel1;
+    /** Swing komponenta. */
     private javax.swing.JLabel jLabel3;
+    /** Swing komponenta. */
     private javax.swing.JLabel jLabel4;
+    /** Swing komponenta. */
     private javax.swing.JLabel jLabel5;
+    /** Swing komponenta. */
     private javax.swing.JTextField jTextFieldId;
+    /** Swing komponenta. */
     private javax.swing.JTextField jTextFieldKraj;
+    /** Swing komponenta. */
     private javax.swing.JTextField jTextFieldNaziv;
+    /** Swing komponenta. */
     private javax.swing.JTextField jTextFieldPocetak;
     // End of variables declaration//GEN-END:variables
 
 
+        /**
+         * Dodaje ActionListener na dugme za dodavanje.
+         *
+         * @param actionListener osluskivac koji se poziva pri kliku na dugme za dodavanje
+         */
         public void dodajAddActionListener(ActionListener actionListener) {
             jButtonDodaj.addActionListener(actionListener);
         }
 
+        /**
+         * Dodaje ActionListener na dugme za izmenu.
+         *
+         * @param actionListener osluskivac koji se poziva pri kliku na dugme za izmenu
+         */
         public void izmeniAddActionListener(ActionListener actionListener) {
             jButtonIzmeni.addActionListener(actionListener);
         }

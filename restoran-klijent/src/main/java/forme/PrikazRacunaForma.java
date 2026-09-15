@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
- */
 package forme;
 
 import domen.Gost;
@@ -20,12 +16,19 @@ import javax.swing.JTextField;
 import komunikacija.Komunikacija;
 
 /**
+ * Forma za pregled, pretragu, izmenu i brisanje racuna i njihovih stavki.
+ * Prikazuje tabele racuna i stavki, sa filterima po gostu, konobaru,
+ * smeni i datumu. Kontroler vezuje akcije dugmadi.
  *
- * @author Cofara
+ * @author Filip Oketic
+ * @version 1.0
  */
 public class PrikazRacunaForma extends javax.swing.JFrame {
 
     
+    /**
+     * Kreira formu i inicijalizuje Swing komponente.
+     */
     public PrikazRacunaForma() {
         initComponents();
     }
@@ -252,90 +255,200 @@ public class PrikazRacunaForma extends javax.swing.JFrame {
         jTableStavkaRacuna.setModel(mts);
     }//GEN-LAST:event_jTableRacuniMouseClicked
 
+    /**
+     * Vraca dugme za izmenu.
+     *
+     * @return dugme za izmenu
+     */
     public JButton getjButtonIzmeni() {
         return jButtonIzmeni;
     }
 
+    /**
+     * Postavlja dugme za izmenu.
+     *
+     * @param jButtonIzmeni dugme za izmenu
+     */
     public void setjButtonIzmeni(JButton jButtonIzmeni) {
         this.jButtonIzmeni = jButtonIzmeni;
     }
 
+    /**
+     * Vraca dugme za brisanje.
+     *
+     * @return dugme za brisanje
+     */
     public JButton getjButtonObrisi() {
         return jButtonObrisi;
     }
 
+    /**
+     * Postavlja dugme za brisanje.
+     *
+     * @param jButtonObrisi dugme za brisanje
+     */
     public void setjButtonObrisi(JButton jButtonObrisi) {
         this.jButtonObrisi = jButtonObrisi;
     }
 
+    /**
+     * Vraca dugme za pretragu.
+     *
+     * @return dugme za pretragu
+     */
     public JButton getjButtonPretrazi() {
         return jButtonPretrazi;
     }
 
+    /**
+     * Postavlja dugme za pretragu.
+     *
+     * @param jButtonPretrazi dugme za pretragu
+     */
     public void setjButtonPretrazi(JButton jButtonPretrazi) {
         this.jButtonPretrazi = jButtonPretrazi;
     }
 
+    /**
+     * Vraca dugme za resetovanje filtera.
+     *
+     * @return dugme za resetovanje filtera
+     */
     public JButton getjButtonResetuj() {
         return jButtonResetuj;
     }
 
+    /**
+     * Postavlja dugme za resetovanje filtera.
+     *
+     * @param jButtonResetuj dugme za resetovanje filtera
+     */
     public void setjButtonResetuj(JButton jButtonResetuj) {
         this.jButtonResetuj = jButtonResetuj;
     }
 
+    /**
+     * Vraca combo box za gosta.
+     *
+     * @return combo box za gosta
+     */
     public JComboBox<Gost> getjComboBoxGost() {
         return jComboBoxGost;
     }
 
+    /**
+     * Postavlja combo box za gosta.
+     *
+     * @param jComboBoxGost combo box za gosta
+     */
     public void setjComboBoxGost(JComboBox<Gost> jComboBoxGost) {
         this.jComboBoxGost = jComboBoxGost;
     }
 
+    /**
+     * Vraca combo box za konobara.
+     *
+     * @return combo box za konobara
+     */
     public JComboBox<Konobar> getjComboBoxKonobar() {
         return jComboBoxKonobar;
     }
 
+    /**
+     * Postavlja combo box za konobara.
+     *
+     * @param jComboBoxKonobar combo box za konobara
+     */
     public void setjComboBoxKonobar(JComboBox<Konobar> jComboBoxKonobar) {
         this.jComboBoxKonobar = jComboBoxKonobar;
     }
 
+    /**
+     * Vraca combo box za smenu.
+     *
+     * @return combo box za smenu
+     */
     public JComboBox<Smena> getjComboBoxSmena() {
         return jComboBoxSmena;
     }
 
+    /**
+     * Postavlja combo box za smenu.
+     *
+     * @param jComboBoxSmena combo box za smenu
+     */
     public void setjComboBoxSmena(JComboBox<Smena> jComboBoxSmena) {
         this.jComboBoxSmena = jComboBoxSmena;
     }
 
+    /**
+     * Vraca tabelu stavki racuna.
+     *
+     * @return tabela stavki racuna
+     */
     public JTable getjTableStavkaRacuna() {
         return jTableStavkaRacuna;
     }
 
+    /**
+     * Postavlja tabelu stavki racuna.
+     *
+     * @param jTableStavkaRacuna tabela stavki racuna
+     */
     public void setjTableStavkaRacuna(JTable jTableStavkaRacuna) {
         this.jTableStavkaRacuna = jTableStavkaRacuna;
     }
 
+    /**
+     * Vraca tekstualno polje za datum.
+     *
+     * @return tekstualno polje za datum
+     */
     public JTextField getjTextFieldDatum() {
         return jTextFieldDatum;
     }
 
+    /**
+     * Postavlja tekstualno polje za datum.
+     *
+     * @param jTextFieldDatum tekstualno polje za datum
+     */
     public void setjTextFieldDatum(JTextField jTextFieldDatum) {
         this.jTextFieldDatum = jTextFieldDatum;
     }
 
+    /**
+     * Vraca dugme za izmenu stavke.
+     *
+     * @return dugme za izmenu stavke
+     */
     public JButton getjButtonIzmeniStavku() {
         return jButtonIzmeniStavku;
     }
 
+    /**
+     * Postavlja dugme za izmenu stavke.
+     *
+     * @param jButtonIzmeniStavku dugme za izmenu stavke
+     */
     public void setjButtonIzmeniStavku(JButton jButtonIzmeniStavku) {
         this.jButtonIzmeniStavku = jButtonIzmeniStavku;
     }
 
+    /**
+     * Vraca dugme za brisanje stavke.
+     *
+     * @return dugme za brisanje stavke
+     */
     public JButton getjButtonObrisiStavku() {
         return jButtonObrisiStavku;
     }
 
+    /**
+     * Postavlja dugme za brisanje stavke.
+     *
+     * @param jButtonObrisiStavku dugme za brisanje stavke
+     */
     public void setjButtonObrisiStavku(JButton jButtonObrisiStavku) {
         this.jButtonObrisiStavku = jButtonObrisiStavku;
     }
@@ -362,56 +475,116 @@ public class PrikazRacunaForma extends javax.swing.JFrame {
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    /** Swing komponenta. */
     private javax.swing.JButton jButtonIzmeni;
+    /** Swing komponenta. */
     private javax.swing.JButton jButtonIzmeniStavku;
+    /** Swing komponenta. */
     private javax.swing.JButton jButtonObrisi;
+    /** Swing komponenta. */
     private javax.swing.JButton jButtonObrisiStavku;
+    /** Swing komponenta. */
     private javax.swing.JButton jButtonPretrazi;
+    /** Swing komponenta. */
     private javax.swing.JButton jButtonResetuj;
+    /** Swing komponenta. */
     private javax.swing.JComboBox<Gost> jComboBoxGost;
+    /** Swing komponenta. */
     private javax.swing.JComboBox<Konobar> jComboBoxKonobar;
+    /** Swing komponenta. */
     private javax.swing.JComboBox<Smena> jComboBoxSmena;
+    /** Swing komponenta. */
     private javax.swing.JLabel jLabel1;
+    /** Swing komponenta. */
     private javax.swing.JLabel jLabel2;
+    /** Swing komponenta. */
     private javax.swing.JLabel jLabel3;
+    /** Swing komponenta. */
     private javax.swing.JLabel jLabel4;
+    /** Swing komponenta. */
     private javax.swing.JLabel jLabel5;
+    /** Swing komponenta. */
     private javax.swing.JLabel jLabel6;
+    /** Swing komponenta. */
     private javax.swing.JScrollPane jScrollPane1;
+    /** Swing komponenta. */
     private javax.swing.JScrollPane jScrollPane2;
+    /** Swing komponenta. */
     private javax.swing.JTable jTableRacuni;
+    /** Swing komponenta. */
     private javax.swing.JTable jTableStavkaRacuna;
+    /** Swing komponenta. */
     private javax.swing.JTextField jTextFieldDatum;
     // End of variables declaration//GEN-END:variables
 
+    /**
+     * Vraca tabelu racuna.
+     *
+     * @return tabela racuna
+     */
     public JTable getjTableRacuni() {
         return jTableRacuni;
     }
 
+    /**
+     * Postavlja tabelu racuna.
+     *
+     * @param jTableRacuni tabela racuna
+     */
     public void setjTableRacuni(JTable jTableRacuni) {
         this.jTableRacuni = jTableRacuni;
     }
 
+        /**
+         * Dodaje ActionListener na dugme za brisanje.
+         *
+         * @param actionListener osluskivac koji se poziva pri kliku na dugme za brisanje
+         */
         public void addBtnObrisiActionListener(ActionListener actionListener) {
             jButtonObrisi.addActionListener(actionListener);
         }
 
+        /**
+         * Dodaje ActionListener na dugme za izmenu.
+         *
+         * @param actionListener osluskivac koji se poziva pri kliku na dugme za izmenu
+         */
         public void addBtnIzmeniActionListener(ActionListener actionListener) {
             jButtonIzmeni.addActionListener(actionListener);
         }
 
+        /**
+         * Dodaje ActionListener na dugme za pretragu.
+         *
+         * @param actionListener osluskivac koji se poziva pri kliku na dugme za pretragu
+         */
         public void addBtnPretraziActionListener(ActionListener actionListener) {
             jButtonPretrazi.addActionListener(actionListener);
         }
 
+        /**
+         * Dodaje ActionListener na dugme za resetovanje filtera.
+         *
+         * @param actionListener osluskivac koji se poziva pri kliku na dugme za resetovanje
+         */
         public void addBtnResetujActionListener(ActionListener actionListener) {
             jButtonResetuj.addActionListener(actionListener);
         }
         
+        /**
+         * Dodaje ActionListener na dugme za brisanje stavke.
+         *
+         * @param actionListener osluskivac koji se poziva pri kliku na dugme za brisanje stavke
+         */
         public void addBtnObrisiStavkuActionListener(ActionListener actionListener) {
             jButtonObrisiStavku.addActionListener(actionListener);
         }
 
+        /**
+         * Dodaje ActionListener na dugme za izmenu stavke.
+         *
+         * @param actionListener osluskivac koji se poziva pri kliku na dugme za izmenu stavke
+         */
         public void addBtnIzmeniStavkuActionListener(ActionListener actionListener) {
             jButtonIzmeniStavku.addActionListener(actionListener);
         }

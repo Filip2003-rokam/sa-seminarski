@@ -20,15 +20,34 @@ import java.util.List;
 import javax.swing.JOptionPane;
 import komunikacija.Komunikacija;
 
+/**
+ * Kontroler forme za dodavanje i izmenu racuna ({@link forme.DodajRacunForma}).
+ * U klijentskom MVC-u upravlja stavkama racuna (dodavanje/brisanje u tabeli),
+ * primenom popusta po kategoriji gosta i slanjem kompletnog racuna na server.
+ *
+ * @author Filip Oketic
+ * @version 1.0
+ */
 public class DodajRacunController {
     
+    /** Forma za dodavanje/izmenu racuna kojom ovaj kontroler upravlja. */
     private final DodajRacunForma drf;
 
+    /**
+     * Kreira kontroler i registruje listenere za stavke i racun.
+     *
+     * @param drf forma za racun
+     */
     public DodajRacunController(DodajRacunForma drf) {
         this.drf = drf;
         addActionListener();
     }
 
+    /**
+     * Priprema formu prema datom modu i prikazuje je.
+     *
+     * @param mod rezim rada forme (dodavanje ili izmena)
+     */
     public void otvoriFormu(FormaMod mod){
         pripremiFormu(mod);
         
@@ -50,6 +69,9 @@ public class DodajRacunController {
         drf.setVisible(true);
     }
     
+    /**
+     * Registruje listenere: dodaj/obrisi stavku, kreiraj i izmeni racun.
+     */
     private void addActionListener() {
         
         
@@ -286,6 +308,12 @@ public class DodajRacunController {
 
     }
 
+    /**
+     * Podesava UI prema modu: za dodavanje prazna tabela i trenutni datum/vreme;
+     * za izmenu ucitava racun iz parametra <code>racun_za_izmenu</code>.
+     *
+     * @param mod rezim rada forme
+     */
     private void pripremiFormu(FormaMod mod) {
         
         switch (mod) {
@@ -363,6 +391,10 @@ public class DodajRacunController {
         }
     }
 
+    /**
+     * Ucitava goste, konobare i artikle u combo boxeve i postavlja
+     * listener za prikaz popusta pri promeni gosta.
+     */
     private void popuniComboBoxeve() {
         
         // 🔹 Popunjavanje ComboBoxeva za gosta i konobara

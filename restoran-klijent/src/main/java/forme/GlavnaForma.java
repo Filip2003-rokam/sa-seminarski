@@ -1,19 +1,19 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
- */
 package forme;
 
 import javax.swing.JLabel;
 
 /**
+ * Glavna forma klijentske aplikacije koja se prikazuje nakon uspesne prijave.
+ * Sadrzi menije za upravljanje gostima, kategorijama, konobarima, artiklima,
+ * smenama, rasporedima i racunima. Prikazuje i podatke o ulogovanom konobaru.
  *
- * @author Cofara
+ * @author Filip Oketic
+ * @version 1.0
  */
 public class GlavnaForma extends javax.swing.JFrame {
 
     /**
-     * Creates new form GlavnaForma
+     * Kreira formu i inicijalizuje Swing komponente.
      */
     public GlavnaForma() {
         initComponents();
@@ -306,6 +306,11 @@ public class GlavnaForma extends javax.swing.JFrame {
         cordinator.Cordinator.getInstance().otvoriDodajRacunFormu();
     }//GEN-LAST:event_jMenuItem14ActionPerformed
 
+    /**
+     * Vraca labelu sa podacima ulogovanog konobara.
+     *
+     * @return labela sa podacima ulogovanog konobara
+     */
     public JLabel getjLabelUlogovani() {
         return jLabelUlogovani;
     }
@@ -314,36 +319,67 @@ public class GlavnaForma extends javax.swing.JFrame {
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    /** Swing komponenta. */
     private javax.swing.JLabel jLabel1;
+    /** Swing komponenta. */
     private javax.swing.JLabel jLabelUlogovani;
+    /** Swing komponenta. */
     private javax.swing.JMenu jMenu1;
+    /** Swing komponenta. */
     private javax.swing.JMenu jMenu10;
+    /** Swing komponenta. */
     private javax.swing.JMenu jMenu11;
+    /** Swing komponenta. */
     private javax.swing.JMenu jMenu2;
+    /** Swing komponenta. */
     private javax.swing.JMenu jMenu3;
+    /** Swing komponenta. */
     private javax.swing.JMenu jMenu4;
+    /** Swing komponenta. */
     private javax.swing.JMenu jMenu5;
+    /** Swing komponenta. */
     private javax.swing.JMenu jMenu6;
+    /** Swing komponenta. */
     private javax.swing.JMenu jMenu7;
+    /** Swing komponenta. */
     private javax.swing.JMenu jMenu8;
+    /** Swing komponenta. */
     private javax.swing.JMenu jMenu9;
+    /** Swing komponenta. */
     private javax.swing.JMenuBar jMenuBar1;
+    /** Swing komponenta. */
     private javax.swing.JMenuBar jMenuBar2;
+    /** Swing komponenta. */
     private javax.swing.JMenuBar jMenuBar3;
+    /** Swing komponenta. */
     private javax.swing.JMenuItem jMenuItem1;
+    /** Swing komponenta. */
     private javax.swing.JMenuItem jMenuItem10;
+    /** Swing komponenta. */
     private javax.swing.JMenuItem jMenuItem11;
+    /** Swing komponenta. */
     private javax.swing.JMenuItem jMenuItem12;
+    /** Swing komponenta. */
     private javax.swing.JMenuItem jMenuItem13;
+    /** Swing komponenta. */
     private javax.swing.JMenuItem jMenuItem14;
+    /** Swing komponenta. */
     private javax.swing.JMenuItem jMenuItem15;
+    /** Swing komponenta. */
     private javax.swing.JMenuItem jMenuItem2;
+    /** Swing komponenta. */
     private javax.swing.JMenuItem jMenuItem3;
+    /** Swing komponenta. */
     private javax.swing.JMenuItem jMenuItem4;
+    /** Swing komponenta. */
     private javax.swing.JMenuItem jMenuItem5;
+    /** Swing komponenta. */
     private javax.swing.JMenuItem jMenuItem6;
+    /** Swing komponenta. */
     private javax.swing.JMenuItem jMenuItem7;
+    /** Swing komponenta. */
     private javax.swing.JMenuItem jMenuItem8;
+    /** Swing komponenta. */
     private javax.swing.JMenuItem jMenuItem9;
     // End of variables declaration//GEN-END:variables
 }

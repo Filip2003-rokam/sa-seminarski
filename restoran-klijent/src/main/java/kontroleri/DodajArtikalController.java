@@ -10,23 +10,42 @@ import javax.swing.JOptionPane;
 import komunikacija.Komunikacija;
 
 /**
+ * Kontroler forme za dodavanje i izmenu artikla ({@link forme.DodajArtikalForma}).
+ * U klijentskom MVC-u prikuplja podatke sa forme, salje zahteve serveru
+ * preko {@link komunikacija.Komunikacija} i prilagodjava UI prema modu
+ * ({@link forme.FormaMod#DODAJ} ili {@link forme.FormaMod#IZMENI}).
  *
- * @author Cofara
+ * @author Filip Oketic
+ * @version 1.0
  */
 public class DodajArtikalController {
     
+    /** Forma za dodavanje/izmenu artikla kojom ovaj kontroler upravlja. */
     private final DodajArtikalForma djpf;
 
+    /**
+     * Kreira kontroler i registruje listenere za dodavanje i izmenu.
+     *
+     * @param djpf forma za artikal
+     */
     public DodajArtikalController(DodajArtikalForma djpf) {
         this.djpf = djpf;
         addActionListener();
     }
 
+    /**
+     * Priprema formu prema datom modu i prikazuje je.
+     *
+     * @param mod rezim rada forme (dodavanje ili izmena)
+     */
     public void otvoriFormu(FormaMod mod){
         pripremiFormu(mod); 
         djpf.setVisible(true);
     }
     
+    /**
+     * Registruje listenere za dugmad Dodaj i Izmeni.
+     */
     private void addActionListener() {
         
         djpf.dodajAddActionListener(new ActionListener(){
@@ -85,6 +104,12 @@ public class DodajArtikalController {
         });
     }
 
+    /**
+     * Podesava vidljivost dugmadi i popunjava polja u zavisnosti od moda.
+     * Za izmenu artikal se cita iz parametra koordinatora <code>artikal</code>.
+     *
+     * @param mod rezim rada forme
+     */
     private void pripremiFormu(FormaMod mod) {
         
         switch (mod) {

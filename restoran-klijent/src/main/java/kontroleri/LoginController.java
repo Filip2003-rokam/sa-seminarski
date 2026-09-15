@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package kontroleri;
 
 import cordinator.Cordinator;
@@ -13,18 +9,32 @@ import javax.swing.JOptionPane;
 import komunikacija.Komunikacija;
 
 /**
+ * Kontroler forme za prijavu na sistem ({@link forme.LoginForma}).
+ * U klijentskom MVC-u povezuje login formu sa komunikacionim slojem:
+ * ucitava korisnicko ime i lozinku, salje zahtev za prijavu i
+ * po uspehu otvara glavnu formu preko {@link cordinator.Cordinator}-a.
  *
- * @author Cofara
+ * @author Filip Oketic
+ * @version 1.0
  */
 public class LoginController {
     
+    /** Forma za prijavu kojom ovaj kontroler upravlja. */
     private final LoginForma lf;
 
+    /**
+     * Kreira kontroler i registruje listenere na formi.
+     *
+     * @param lf forma za prijavu
+     */
     public LoginController(LoginForma lf) {
         this.lf = lf;
         addActionListeners();
     }
 
+    /**
+     * Registruje listener za dugme prijave.
+     */
     private void addActionListeners() {
 
         lf.loginActionListener(new ActionListener(){
@@ -61,6 +71,9 @@ public class LoginController {
         
     }
 
+    /**
+     * Prikazuje formu za prijavu.
+     */
     public void otvoriFormu() {
         
         lf.setVisible(true);

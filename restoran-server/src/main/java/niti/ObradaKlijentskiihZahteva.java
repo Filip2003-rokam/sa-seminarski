@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package niti;
 
 import controller.Controller;
@@ -30,18 +26,52 @@ import komunikacija.Zahtev;
 import server.Server;
 
 /**
+ * Nit koja obradjuje zahteve jednog povezanog klijenta.
+ * U petlji prima {@link Zahtev}, poziva odgovarajucu metodu
+ * {@link Controller}-a i salje {@link Odgovor}. Ako je primljeni
+ * zahtev {@code null} (prekida se konekcija), petlja se zavrsava.
  *
- * @author Cofara
+ * @author Filip Oketic
+ * @version 1.0
  */
 public class ObradaKlijentskiihZahteva extends Thread {
-    
+
+    /**
+     * Soket ka klijentu.
+     */
     Socket socket;
+
+    /**
+     * Objekat za slanje odgovora klijentu.
+     */
     Posiljalac posiljalac;
+
+    /**
+     * Objekat za prijem zahteva od klijenta.
+     */
     Primalac primalac;
+
+    /**
+     * Referenca na server koji je pokrenuo ovu nit.
+     */
     private Server server;
+
+    /**
+     * Trenutno ulogovani konobar na ovoj sesiji (postavlja se pri LOGIN).
+     */
     Konobar k;
+
+    /**
+     * Flag za prekid petlje obrade.
+     */
     boolean kraj = false;
 
+    /**
+     * Kreira nit za obradu zahteva datog klijentskog soketa.
+     *
+     * @param s soket ka klijentu
+     * @param server server koji upravlja listom klijenata i UI-jem
+     */
     public ObradaKlijentskiihZahteva(Socket s, Server server) {
         this.socket = s;
         this.server = server;
@@ -49,13 +79,17 @@ public class ObradaKlijentskiihZahteva extends Thread {
         primalac = new Primalac(socket);
     }
 
-    
-    
+
+
+    /**
+     * Glavna petlja: prima zahteve dok {@code kraj} nije true.
+     * Ako je zahtev null, postavlja {@code kraj} i izlazi iz petlje.
+     */
     @Override
     public void run() {
-    
+
         while(!kraj){
-            
+
             try {
                 Zahtev zahtev = (Zahtev) primalac.primi();
                 if (zahtev == null) {
@@ -76,7 +110,7 @@ public class ObradaKlijentskiihZahteva extends Thread {
                         odgovor.setOdgovor(gosti);
                         break;
                     case OBRISI_GOSTA:
-                        
+
                         try{
                             Gost g = (Gost) zahtev.getParametar();
                             Controller.getInstance().obrisiGosta(g);
@@ -84,32 +118,32 @@ public class ObradaKlijentskiihZahteva extends Thread {
                         }catch(Exception e){
                             odgovor.setOdgovor(e);
                         }
-                        
-                        
+
+
                         break;
-                        
+
                     case DODAJ_GOSTA:
                         Gost g = (Gost) zahtev.getParametar();
                         Controller.getInstance().dodajGosta(g);
                         odgovor.setOdgovor(null);
                         break;
-                        
+
                     case IZMENI_GOSTA:
                         Gost g1 = (Gost) zahtev.getParametar();
                         Controller.getInstance().izmeniGosta(g1);
                         odgovor.setOdgovor(null);
                         odgovor.setUspeh(true);
                         break;
-                        
+
                     case UCITAJ_RACUNE:
                         List<Racun> racuni = Controller.getInstance().ucitajRacune();
-                        
+
                         System.out.println("KLASA OBZ: ");
                         System.out.println(racuni);
-                        
+
                         odgovor.setOdgovor(racuni);
                         break;
-                    
+
                     case UCITAJ_ARTIKLE:
                         List<Artikal> artikli = Controller.getInstance().ucitajArtikle();
                         odgovor.setOdgovor(artikli);
@@ -120,7 +154,7 @@ public class ObradaKlijentskiihZahteva extends Thread {
                         Controller.getInstance().dodajArtikal(p);
                         odgovor.setOdgovor(null);
                         break;
-                        
+
                     case IZMENI_ARTIKAL:
                         Artikal p1 = (Artikal) zahtev.getParametar();
                         Controller.getInstance().izmeniArtikal(p1);
@@ -129,7 +163,7 @@ public class ObradaKlijentskiihZahteva extends Thread {
                         System.out.println("Odgovor koji saljem: " + odgovor.getOdgovor());
 
                         break;
-                        
+
                      case OBRISI_ARTIKAL:
                          // ne radi brisanje jer ima u racunu
                         try{
@@ -140,12 +174,12 @@ public class ObradaKlijentskiihZahteva extends Thread {
                             odgovor.setOdgovor(e);
                         }
                         break;
-                        
+
                     case UCITAJ_KATEGORIJE_GOSTIJU:
                         List<KategorijaGosta> kg = Controller.getInstance().ucitajKategorijeGostiju();
                         odgovor.setOdgovor(kg);
                         break;
-                        
+
                     case DODAJ_KATEGORIJU_GOSTA:
                         KategorijaGosta kg1 = (KategorijaGosta) zahtev.getParametar();
                         Controller.getInstance().dodajKategorijuGosta(kg1);
@@ -167,7 +201,7 @@ public class ObradaKlijentskiihZahteva extends Thread {
                             odgovor.setOdgovor(e);
                         }
                         break;
-                        
+
                     case UCITAJ_KONOBARA:
                         List<Konobar> konobari = Controller.getInstance().ucitajKonobare();
                         odgovor.setOdgovor(konobari);
@@ -199,10 +233,10 @@ public class ObradaKlijentskiihZahteva extends Thread {
                         Racun r = (Racun) zahtev.getParametar();
                         List<StavkaRacuna> stavke = Controller.getInstance().ucitajStavke(r);
                         odgovor.setOdgovor(stavke);
-                    
+
                         break;
-                        
-                    
+
+
                     case UCITAJ_SMENE:
                         List<Smena> smene = Controller.getInstance().ucitajSmene();
 
@@ -211,7 +245,7 @@ public class ObradaKlijentskiihZahteva extends Thread {
 
                         odgovor.setOdgovor(smene);
                         break;
-                        
+
                     case DODAJ_SMENU:
                         System.out.println("[SERVER] Primljen zahtev za dodavanje smene!");
                         try {
@@ -248,7 +282,7 @@ public class ObradaKlijentskiihZahteva extends Thread {
                             odgovor.setOdgovor(e);
                         }
                         break;
-                        
+
                     case UCITAJ_RASPORED:
                         try {
                             System.out.println("[SERVER] Primljen zahtev za učitavanje rasporeda...");
@@ -261,7 +295,7 @@ public class ObradaKlijentskiihZahteva extends Thread {
                             odgovor.setOdgovor(e);
                         }
                         break;
-                        
+
                         case DODAJ_RASPORED:
                             try {
                                 KonobarSmena ks1 = (KonobarSmena) zahtev.getParametar();
@@ -283,7 +317,7 @@ public class ObradaKlijentskiihZahteva extends Thread {
                             } catch (Exception e) {
                                 System.out.println("[SERVER] Sistem ne može da izmeni raspored: " + e.getMessage());
                                 odgovor.setOdgovor(e);
-                                
+
                             }
                             break;
 
@@ -292,16 +326,16 @@ public class ObradaKlijentskiihZahteva extends Thread {
                                 KonobarSmena ks = (KonobarSmena) zahtev.getParametar();
                                 Controller.getInstance().obrisiRaspored(ks);
                                 odgovor.setOdgovor(null);
-                                System.out.println("[SERVER] Raspored uspešno obrisan: " 
+                                System.out.println("[SERVER] Raspored uspešno obrisan: "
                                         + ks.getKonobar().getIme() + " " + ks.getKonobar().getPrezime()
-                                        + " - " + ks.getSmena().getNaziv() 
+                                        + " - " + ks.getSmena().getNaziv()
                                         + " (" + ks.getDatumSmene() + ")");
                             } catch (Exception e) {
                                 System.out.println("[SERVER] Greška prilikom brisanja rasporeda: " + e.getMessage());
                                 odgovor.setOdgovor(e);
                             }
                             break;
-                            
+
                         case OBRISI_RACUN:
                             try{
                                 Racun r1 = (Racun) zahtev.getParametar();
@@ -311,13 +345,13 @@ public class ObradaKlijentskiihZahteva extends Thread {
                                 odgovor.setOdgovor(e);
                             }
                             break;
-                            
+
                         case DODAJ_RACUN:
                             Racun r2 = (Racun) zahtev.getParametar();
                             Controller.getInstance().dodajRacun(r2);
                             odgovor.setOdgovor(null);
                             break;
-                            
+
                         case OBRISI_STAVKU:
                             try{
                                 StavkaRacuna sr = (StavkaRacuna) zahtev.getParametar();
@@ -327,7 +361,7 @@ public class ObradaKlijentskiihZahteva extends Thread {
                                 odgovor.setOdgovor(e);
                             }
                             break;
-                            
+
                         case IZMENI_RACUN:
                             Racun r3 = (Racun) zahtev.getParametar();
                             Controller.getInstance().izmeniRacun(r3);
@@ -350,9 +384,12 @@ public class ObradaKlijentskiihZahteva extends Thread {
 
             }
 
-        
+
     }
-    
+
+    /**
+     * Prekida obradu zahteva: postavlja flag kraj, zatvara soket i prekida nit.
+     */
     public void prekini(){
         kraj = true;
         try {
@@ -363,17 +400,28 @@ public class ObradaKlijentskiihZahteva extends Thread {
         interrupt();
     }
 
+    /**
+     * Vraca ulogovanog konobara na ovoj sesiji.
+     *
+     * @return ulogovani konobar ili null ako nije prijavljen
+     */
     public Konobar getK() {
         return k;
     }
 
+    /**
+     * Postavlja ulogovanog konobara na ovoj sesiji.
+     *
+     * @param k konobar koji se vezuje za sesiju
+     */
     public void setK(Konobar k) {
         this.k = k;
     }
-    
-    
-    
-    
 
-    
+
+
+
+
+
+
 }

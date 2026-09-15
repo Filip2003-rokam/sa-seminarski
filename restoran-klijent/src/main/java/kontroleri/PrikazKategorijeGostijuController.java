@@ -11,30 +11,50 @@ import javax.swing.JOptionPane;
 import komunikacija.Komunikacija;
 
 /**
+ * Kontroler forme za prikaz kategorija gostiju
+ * ({@link forme.PrikazKategorijeGostijuForma}).
+ * U klijentskom MVC-u ucitava kategorije sa servera i omogucava pretragu,
+ * brisanje i otvaranje forme za izmenu.
  *
- * @author Cofara
+ * @author Filip Oketic
+ * @version 1.0
  */
 public class PrikazKategorijeGostijuController {
 
+    /** Forma za prikaz kategorija gostiju kojom ovaj kontroler upravlja. */
     private final PrikazKategorijeGostijuForma pkf;
 
+    /**
+     * Kreira kontroler i registruje listenere korisnickih akcija.
+     *
+     * @param pkf forma za prikaz kategorija gostiju
+     */
     public PrikazKategorijeGostijuController(PrikazKategorijeGostijuForma pkf) {
         this.pkf = pkf;
         addActionListeners();
     }
 
+    /**
+     * Priprema podatke, centrira i prikazuje formu.
+     */
     public void otvoriFormu() {
         pripremiFormu();
         pkf.setVisible(true);
         pkf.setLocationRelativeTo(null);
     }
 
+    /**
+     * Ucitava kategorije gostiju sa servera i postavlja model tabele.
+     */
     private void pripremiFormu() {
         List<KategorijaGosta> kategorije = Komunikacija.getInstance().ucitajKategorijeGostiju();
         ModelTabeleKategorijaGosta mtk = new ModelTabeleKategorijaGosta(kategorije);
         pkf.getjTableKategorijaGostiju().setModel(mtk);
     }
 
+    /**
+     * Registruje listenere: obrisi, izmeni, pretrazi, resetuj.
+     */
     private void addActionListeners() {
 
         
@@ -112,6 +132,9 @@ public class PrikazKategorijeGostijuController {
         
     }
 
+    /**
+     * Osvezava prikaz kategorija gostiju (ponovo ucitava podatke sa servera).
+     */
     public void osveziPrikazKategorijaGostijuFormu() {
         pripremiFormu();
     }

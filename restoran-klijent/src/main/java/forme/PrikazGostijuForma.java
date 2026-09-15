@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
- */
 package forme;
 
 import domen.Gost;
@@ -13,13 +9,17 @@ import javax.swing.JTable;
 import javax.swing.JTextField;
 
 /**
+ * Forma za pregled, pretragu, izmenu i brisanje gostiju u klijentskoj aplikaciji.
+ * Prikazuje tabelu gostiju i omogucava filtriranje po imenu, prezimenu i
+ * kategoriji, kao i otvaranje detalja izabranog gosta.
  *
- * @author Cofara
+ * @author Filip Oketic
+ * @version 1.0
  */
 public class PrikazGostijuForma extends javax.swing.JFrame {
 
     /**
-     * Creates new form PrikazGostijuForma
+     * Kreira formu i inicijalizuje Swing komponente.
      */
     public PrikazGostijuForma() {
         initComponents();
@@ -181,103 +181,221 @@ public class PrikazGostijuForma extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jButtonIzmeniActionPerformed
 
+    /**
+     * Vraca tabelu gostiju.
+     *
+     * @return tabela gostiju
+     */
     public JTable getjTableGosti() {
         return jTableGosti;
     }
 
+    /**
+     * Vraca dugme za brisanje.
+     *
+     * @return dugme za brisanje
+     */
     public JButton getjButtonObrisi() {
         return jButtonObrisi;
     }
 
+    /**
+     * Vraca dugme za pretragu.
+     *
+     * @return dugme za pretragu
+     */
     public JButton getjButtonPretrazi() {
         return jButtonPretrazi;
     }
 
+    /**
+     * Postavlja dugme za pretragu.
+     *
+     * @param jButtonPretrazi dugme za pretragu
+     */
     public void setjButtonPretrazi(JButton jButtonPretrazi) {
         this.jButtonPretrazi = jButtonPretrazi;
     }
 
+    /**
+     * Vraca tekstualno polje za ime.
+     *
+     * @return tekstualno polje za ime
+     */
     public JTextField getjTextFieldIme() {
         return jTextFieldIme;
     }
 
+    /**
+     * Postavlja tekstualno polje za ime.
+     *
+     * @param jTextFieldIme tekstualno polje za ime
+     */
     public void setjTextFieldIme(JTextField jTextFieldIme) {
         this.jTextFieldIme = jTextFieldIme;
     }
 
+    /**
+     * Vraca tekstualno polje za prezime.
+     *
+     * @return tekstualno polje za prezime
+     */
     public JTextField getjTextFieldPrezime() {
         return jTextFieldPrezime;
     }
 
+    /**
+     * Postavlja tekstualno polje za prezime.
+     *
+     * @param jTextFieldPrezime tekstualno polje za prezime
+     */
     public void setjTextFieldPrezime(JTextField jTextFieldPrezime) {
         this.jTextFieldPrezime = jTextFieldPrezime;
     }
 
+    /**
+     * Vraca dugme za izmenu.
+     *
+     * @return dugme za izmenu
+     */
     public JButton getjButtonIzmeni() {
         return jButtonIzmeni;
     }
 
+    /**
+     * Postavlja dugme za izmenu.
+     *
+     * @param jButtonIzmeni dugme za izmenu
+     */
     public void setjButtonIzmeni(JButton jButtonIzmeni) {
         this.jButtonIzmeni = jButtonIzmeni;
     }
 
+    /**
+     * Vraca dugme za resetovanje filtera.
+     *
+     * @return dugme za resetovanje filtera
+     */
     public JButton getjButtonResetuj() {
         return jButtonResetuj;
     }
 
+    /**
+     * Postavlja dugme za resetovanje filtera.
+     *
+     * @param jButtonResetuj dugme za resetovanje filtera
+     */
     public void setjButtonResetuj(JButton jButtonResetuj) {
         this.jButtonResetuj = jButtonResetuj;
     }
 
+    /**
+     * Vraca combo box za kategoriju gosta.
+     *
+     * @return combo box za kategoriju gosta
+     */
     public JComboBox<KategorijaGosta> getjComboBoxKategorijaGosta() {
         return jComboBoxKategorijaGosta;
     }
 
+    /**
+     * Postavlja combo box za kategoriju gosta.
+     *
+     * @param jComboBoxKategorijaGosta combo box za kategoriju gosta
+     */
     public void setjComboBoxKategorijaGosta(JComboBox<KategorijaGosta> jComboBoxKategorijaGosta) {
         this.jComboBoxKategorijaGosta = jComboBoxKategorijaGosta;
     }
 
+    /**
+     * Vraca dugme za prikaz detalja.
+     *
+     * @return dugme za prikaz detalja
+     */
     public JButton getjButtonDetalji() {
         return jButtonDetalji;
     }
 
+    /**
+     * Postavlja dugme za prikaz detalja.
+     *
+     * @param jButtonDetalji dugme za prikaz detalja
+     */
     public void setjButtonDetalji(JButton jButtonDetalji) {
         this.jButtonDetalji = jButtonDetalji;
     }
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    /** Swing komponenta. */
     private javax.swing.JButton jButtonDetalji;
+    /** Swing komponenta. */
     private javax.swing.JButton jButtonIzmeni;
+    /** Swing komponenta. */
     private javax.swing.JButton jButtonObrisi;
+    /** Swing komponenta. */
     private javax.swing.JButton jButtonPretrazi;
+    /** Swing komponenta. */
     private javax.swing.JButton jButtonResetuj;
+    /** Swing komponenta. */
     private javax.swing.JComboBox<KategorijaGosta> jComboBoxKategorijaGosta;
+    /** Swing komponenta. */
     private javax.swing.JLabel jLabel1;
+    /** Swing komponenta. */
     private javax.swing.JLabel jLabel2;
+    /** Swing komponenta. */
     private javax.swing.JLabel jLabel6;
+    /** Swing komponenta. */
     private javax.swing.JScrollPane jScrollPane1;
+    /** Swing komponenta. */
     private javax.swing.JTable jTableGosti;
+    /** Swing komponenta. */
     private javax.swing.JTextField jTextFieldIme;
+    /** Swing komponenta. */
     private javax.swing.JTextField jTextFieldPrezime;
     // End of variables declaration//GEN-END:variables
 
+    /**
+     * Dodaje ActionListener na dugme za brisanje.
+     *
+     * @param actionListener osluskivac koji se poziva pri kliku na dugme za brisanje
+     */
     public void addBtnObrisiActionListener(ActionListener actionListener) {
         jButtonObrisi.addActionListener(actionListener);
     }
     
+    /**
+     * Dodaje ActionListener na dugme za izmenu.
+     *
+     * @param actionListener osluskivac koji se poziva pri kliku na dugme za izmenu
+     */
     public void addBtnIzmeniActionListener(ActionListener actionListener) {
         jButtonIzmeni.addActionListener(actionListener);
     }
     
+    /**
+     * Dodaje ActionListener na dugme za pretragu.
+     *
+     * @param actionListener osluskivac koji se poziva pri kliku na dugme za pretragu
+     */
     public void addBtnPretraziActionListener(ActionListener actionListener) {
         jButtonPretrazi.addActionListener(actionListener);
     }
     
+    /**
+     * Dodaje ActionListener na dugme za resetovanje filtera.
+     *
+     * @param actionListener osluskivac koji se poziva pri kliku na dugme za resetovanje
+     */
     public void addBtnResetujActionListener(ActionListener actionListener) {
         jButtonResetuj.addActionListener(actionListener);
     }
     
+    /**
+     * Dodaje ActionListener na dugme za prikaz detalja.
+     *
+     * @param actionListener osluskivac koji se poziva pri kliku na dugme za detalje
+     */
     public void addBtnDetaljiActionListener(ActionListener actionListener) {
         jButtonDetalji.addActionListener(actionListener);
     }

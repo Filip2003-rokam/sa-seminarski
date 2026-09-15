@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package kontroleri;
 
 import cordinator.Cordinator;
@@ -19,23 +15,40 @@ import javax.swing.JOptionPane;
 import komunikacija.Komunikacija;
 
 /**
+ * Kontroler forme za prikaz detalja gosta ({@link forme.DetaljiGostaForma}).
+ * U klijentskom MVC-u ucitava gosta iz parametara koordinatora, prikazuje
+ * njegove podatke (samo za citanje) i statistiku racuna (placeni, neplaceni, dug, popust).
  *
- * @author Cofara
+ * @author Filip Oketic
+ * @version 1.0
  */
 public class DetaljiGostaController {
     
+    /** Forma za detalje gosta kojom ovaj kontroler upravlja. */
      private final DetaljiGostaForma dgf;
 
+    /**
+     * Kreira kontroler za formu detalja gosta.
+     *
+     * @param dgf forma za detalje gosta
+     */
     public DetaljiGostaController(DetaljiGostaForma dgf) {
         this.dgf = dgf;
     }
     
+    /**
+     * Priprema i prikazuje formu sa detaljima izabranog gosta.
+     */
     public void otvoriFormu() {
         pripremiFormu();
         //ppf.show(true);
         dgf.setVisible(true);
     }
     
+    /**
+     * Popunjava polja forme podacima o gostu i filtriranim racunima.
+     * Gost se cita iz parametra koordinatora <code>gost_za_detalje</code>.
+     */
     private void pripremiFormu() {
 
     Gost g = (Gost) Cordinator.getInstance().vratiParam("gost_za_detalje");

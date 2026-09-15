@@ -12,24 +12,42 @@ import javax.swing.JOptionPane;
 import komunikacija.Komunikacija;
 
 /**
- * Kontroler za dodavanje i izmenu smene.
- * @author Cofara
+ * Kontroler forme za dodavanje i izmenu smene ({@link forme.DodajSmenuForma}).
+ * U klijentskom MVC-u validira naziv i vremena pocetka/kraja, zatim salje
+ * zahteve serveru preko {@link komunikacija.Komunikacija}.
+ *
+ * @author Filip Oketic
+ * @version 1.0
  */
 public class DodajSmenuController {
 
+    /** Forma za dodavanje/izmenu smene kojom ovaj kontroler upravlja. */
     private final DodajSmenuForma dsf;
 
+    /**
+     * Kreira kontroler i registruje listenere za dodavanje i izmenu.
+     *
+     * @param dsf forma za smenu
+     */
     public DodajSmenuController(DodajSmenuForma dsf) {
         this.dsf = dsf;
         addActionListeners();
     }
 
+    /**
+     * Priprema formu prema datom modu i prikazuje je.
+     *
+     * @param mod rezim rada forme (dodavanje ili izmena)
+     */
     public void otvoriFormu(FormaMod mod) {
         pripremiFormu(mod);
         dsf.setVisible(true);
         //dsf.setLocationRelativeTo(null);
     }
 
+    /**
+     * Registruje listenere za dugmad Dodaj i Izmeni.
+     */
     private void addActionListeners() {
 
         // 🔹 DODAJ SMENU
@@ -102,6 +120,12 @@ public class DodajSmenuController {
         });
     }
 
+    /**
+     * Podesava vidljivost dugmadi i popunjava polja u zavisnosti od moda.
+     * Za izmenu smena se cita iz parametra koordinatora <code>smena</code>.
+     *
+     * @param mod rezim rada forme
+     */
     private void pripremiFormu(FormaMod mod) {
         switch (mod) {
             case DODAJ:

@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
- */
 package forme;
 
 import java.awt.event.ActionListener;
@@ -10,13 +6,17 @@ import javax.swing.JTable;
 import javax.swing.JTextField;
 
 /**
+ * Forma za pregled, pretragu, izmenu i brisanje konobara.
+ * Prikazuje tabelu konobara i omogucava filtriranje po imenu, prezimenu
+ * i korisnickom imenu. Kontroler vezuje akcije dugmadi.
  *
- * @author Cofara
+ * @author Filip Oketic
+ * @version 1.0
  */
 public class PrikazKonobaraForma extends javax.swing.JFrame {
 
     /**
-     * Creates new form PrikazKonobara
+     * Kreira formu i inicijalizuje Swing komponente.
      */
     public PrikazKonobaraForma() {
         initComponents();
@@ -174,66 +174,146 @@ public class PrikazKonobaraForma extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jButtonResetujActionPerformed
 
+    /**
+     * Vraca dugme za izmenu.
+     *
+     * @return dugme za izmenu
+     */
     public JButton getjButtonIzmeni() {
         return jButtonIzmeni;
     }
 
+    /**
+     * Postavlja dugme za izmenu.
+     *
+     * @param jButtonIzmeni dugme za izmenu
+     */
     public void setjButtonIzmeni(JButton jButtonIzmeni) {
         this.jButtonIzmeni = jButtonIzmeni;
     }
 
+    /**
+     * Vraca dugme za brisanje.
+     *
+     * @return dugme za brisanje
+     */
     public JButton getjButtonObrisi() {
         return jButtonObrisi;
     }
 
+    /**
+     * Postavlja dugme za brisanje.
+     *
+     * @param jButtonObrisi dugme za brisanje
+     */
     public void setjButtonObrisi(JButton jButtonObrisi) {
         this.jButtonObrisi = jButtonObrisi;
     }
 
+    /**
+     * Vraca dugme za pretragu.
+     *
+     * @return dugme za pretragu
+     */
     public JButton getjButtonPretrazi() {
         return jButtonPretrazi;
     }
 
+    /**
+     * Postavlja dugme za pretragu.
+     *
+     * @param jButtonPretrazi dugme za pretragu
+     */
     public void setjButtonPretrazi(JButton jButtonPretrazi) {
         this.jButtonPretrazi = jButtonPretrazi;
     }
 
+    /**
+     * Vraca dugme za resetovanje filtera.
+     *
+     * @return dugme za resetovanje filtera
+     */
     public JButton getjButtonResetuj() {
         return jButtonResetuj;
     }
 
+    /**
+     * Postavlja dugme za resetovanje filtera.
+     *
+     * @param jButtonResetuj dugme za resetovanje filtera
+     */
     public void setjButtonResetuj(JButton jButtonResetuj) {
         this.jButtonResetuj = jButtonResetuj;
     }
 
+    /**
+     * Vraca tabelu konobara.
+     *
+     * @return tabela konobara
+     */
     public JTable getjTableKonobari() {
         return jTableKonobari;
     }
 
+    /**
+     * Postavlja tabelu konobara.
+     *
+     * @param jTableKonobari tabela konobara
+     */
     public void setjTableKonobari(JTable jTableKonobari) {
         this.jTableKonobari = jTableKonobari;
     }
 
+    /**
+     * Vraca tekstualno polje za ime.
+     *
+     * @return tekstualno polje za ime
+     */
     public JTextField getjTextFieldIme() {
         return jTextFieldIme;
     }
 
+    /**
+     * Postavlja tekstualno polje za ime.
+     *
+     * @param jTextFieldIme tekstualno polje za ime
+     */
     public void setjTextFieldIme(JTextField jTextFieldIme) {
         this.jTextFieldIme = jTextFieldIme;
     }
 
+    /**
+     * Vraca tekstualno polje za prezime.
+     *
+     * @return tekstualno polje za prezime
+     */
     public JTextField getjTextFieldPrezime() {
         return jTextFieldPrezime;
     }
 
+    /**
+     * Postavlja tekstualno polje za prezime.
+     *
+     * @param jTextFieldPrezime tekstualno polje za prezime
+     */
     public void setjTextFieldPrezime(JTextField jTextFieldPrezime) {
         this.jTextFieldPrezime = jTextFieldPrezime;
     }
 
+    /**
+     * Vraca tekstualno polje za korisnicko ime.
+     *
+     * @return tekstualno polje za korisnicko ime
+     */
     public JTextField getjTextFieldUsername() {
         return jTextFieldUsername;
     }
 
+    /**
+     * Postavlja tekstualno polje za korisnicko ime.
+     *
+     * @param jTextFieldUsername tekstualno polje za korisnicko ime
+     */
     public void setjTextFieldUsername(JTextField jTextFieldUsername) {
         this.jTextFieldUsername = jTextFieldUsername;
     }
@@ -243,33 +323,65 @@ public class PrikazKonobaraForma extends javax.swing.JFrame {
     
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    /** Swing komponenta. */
     private javax.swing.JButton jButtonIzmeni;
+    /** Swing komponenta. */
     private javax.swing.JButton jButtonObrisi;
+    /** Swing komponenta. */
     private javax.swing.JButton jButtonPretrazi;
+    /** Swing komponenta. */
     private javax.swing.JButton jButtonResetuj;
+    /** Swing komponenta. */
     private javax.swing.JLabel jLabel1;
+    /** Swing komponenta. */
     private javax.swing.JLabel jLabel2;
+    /** Swing komponenta. */
     private javax.swing.JLabel jLabel3;
+    /** Swing komponenta. */
     private javax.swing.JScrollPane jScrollPane1;
+    /** Swing komponenta. */
     private javax.swing.JTable jTableKonobari;
+    /** Swing komponenta. */
     private javax.swing.JTextField jTextFieldIme;
+    /** Swing komponenta. */
     private javax.swing.JTextField jTextFieldPrezime;
+    /** Swing komponenta. */
     private javax.swing.JTextField jTextFieldUsername;
     // End of variables declaration//GEN-END:variables
 
 
+        /**
+         * Dodaje ActionListener na dugme za brisanje.
+         *
+         * @param actionListener osluskivac koji se poziva pri kliku na dugme za brisanje
+         */
         public void addBtnObrisiActionListener(ActionListener actionListener) {
             jButtonObrisi.addActionListener(actionListener);
         }
 
+        /**
+         * Dodaje ActionListener na dugme za izmenu.
+         *
+         * @param actionListener osluskivac koji se poziva pri kliku na dugme za izmenu
+         */
         public void addBtnIzmeniActionListener(ActionListener actionListener) {
             jButtonIzmeni.addActionListener(actionListener);
         }
 
+        /**
+         * Dodaje ActionListener na dugme za pretragu.
+         *
+         * @param actionListener osluskivac koji se poziva pri kliku na dugme za pretragu
+         */
         public void addBtnPretraziActionListener(ActionListener actionListener) {
             jButtonPretrazi.addActionListener(actionListener);
         }
 
+        /**
+         * Dodaje ActionListener na dugme za resetovanje filtera.
+         *
+         * @param actionListener osluskivac koji se poziva pri kliku na dugme za resetovanje
+         */
         public void addBtnResetujActionListener(ActionListener actionListener) {
             jButtonResetuj.addActionListener(actionListener);
         }

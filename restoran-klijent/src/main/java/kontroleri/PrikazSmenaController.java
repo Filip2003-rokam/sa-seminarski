@@ -11,30 +11,49 @@ import javax.swing.JOptionPane;
 import komunikacija.Komunikacija;
 
 /**
+ * Kontroler forme za prikaz smena ({@link forme.PrikazSmenaForma}).
+ * U klijentskom MVC-u ucitava listu smena sa servera, omogucava pretragu,
+ * brisanje i otvaranje forme za izmenu preko {@link cordinator.Cordinator}-a.
  *
- * @author Cofara
+ * @author Filip Oketic
+ * @version 1.0
  */
 public class PrikazSmenaController {
 
+    /** Forma za prikaz smena kojom ovaj kontroler upravlja. */
     private final PrikazSmenaForma psf;
 
+    /**
+     * Kreira kontroler i registruje listenere korisnickih akcija.
+     *
+     * @param psf forma za prikaz smena
+     */
     public PrikazSmenaController(PrikazSmenaForma psf) {
         this.psf = psf;
         addActionListeners();
     }
 
+    /**
+     * Priprema podatke, centrira i prikazuje formu.
+     */
     public void otvoriFormu() {
         pripremiFormu();
         psf.setVisible(true);
         psf.setLocationRelativeTo(null);
     }
 
+    /**
+     * Ucitava smene sa servera i postavlja model tabele.
+     */
     private void pripremiFormu() {
         List<Smena> smene = Komunikacija.getInstance().ucitajSmene();
         ModelTabeleSmena mts = new ModelTabeleSmena(smene);
         psf.getjTableSmene().setModel(mts);
     }
 
+    /**
+     * Registruje listenere: obrisi, izmeni, pretrazi, resetuj.
+     */
     private void addActionListeners() {
 
         
@@ -107,6 +126,9 @@ public class PrikazSmenaController {
         });
     }
 
+    /**
+     * Osvezava prikaz smena (ponovo ucitava podatke sa servera).
+     */
     public void osveziPrikazSmenaFormu() {
         pripremiFormu();
     }

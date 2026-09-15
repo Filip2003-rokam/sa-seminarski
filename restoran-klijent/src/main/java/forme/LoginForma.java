@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
- */
 package forme;
 
 import java.awt.event.ActionListener;
@@ -10,13 +6,17 @@ import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
 /**
+ * Forma za prijavu konobara na klijentsku aplikaciju restorana.
+ * Omogucava unos korisnickog imena i lozinke i pokretanje autentifikacije
+ * preko kontrolera. Nakon uspesne prijave otvara se glavna forma.
  *
- * @author Cofara
+ * @author Filip Oketic
+ * @version 1.0
  */
 public class LoginForma extends javax.swing.JFrame {
 
     /**
-     * Creates new form LoginForma
+     * Kreira formu i inicijalizuje Swing komponente.
      */
     public LoginForma() {
         initComponents();
@@ -104,26 +104,56 @@ public class LoginForma extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jButtonLoginActionPerformed
 
+    /**
+     * Vraca dugme za prijavu.
+     *
+     * @return dugme za prijavu
+     */
     public JButton getjButtonLogin() {
         return jButtonLogin;
     }
 
+    /**
+     * Postavlja dugme za prijavu.
+     *
+     * @param jButtonLogin dugme za prijavu
+     */
     public void setjButtonLogin(JButton jButtonLogin) {
         this.jButtonLogin = jButtonLogin;
     }
 
+    /**
+     * Vraca polje za lozinku.
+     *
+     * @return polje za lozinku
+     */
     public JPasswordField getjPasswordField1() {
         return jPasswordField1;
     }
 
+    /**
+     * Postavlja polje za lozinku.
+     *
+     * @param jPasswordField1 polje za lozinku
+     */
     public void setjPasswordField1(JPasswordField jPasswordField1) {
         this.jPasswordField1 = jPasswordField1;
     }
 
+    /**
+     * Vraca tekstualno polje za korisnicko ime.
+     *
+     * @return tekstualno polje za korisnicko ime
+     */
     public JTextField getjTextFieldUsername() {
         return jTextFieldUsername;
     }
 
+    /**
+     * Postavlja tekstualno polje za korisnicko ime.
+     *
+     * @param jTextFieldUsername tekstualno polje za korisnicko ime
+     */
     public void setjTextFieldUsername(JTextField jTextFieldUsername) {
         this.jTextFieldUsername = jTextFieldUsername;
     }
@@ -132,13 +162,23 @@ public class LoginForma extends javax.swing.JFrame {
     
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    /** Swing komponenta. */
     private javax.swing.JButton jButtonLogin;
+    /** Swing komponenta. */
     private javax.swing.JLabel jLabel1;
+    /** Swing komponenta. */
     private javax.swing.JLabel jLabel2;
+    /** Swing komponenta. */
     private javax.swing.JPasswordField jPasswordField1;
+    /** Swing komponenta. */
     private javax.swing.JTextField jTextFieldUsername;
     // End of variables declaration//GEN-END:variables
 
+    /**
+     * Dodaje ActionListener na dugme za prijavu.
+     *
+     * @param actionListener osluskivac koji se poziva pri kliku na dugme za prijavu
+     */
     public void loginActionListener(ActionListener actionListener) {
         
         jButtonLogin.addActionListener(actionListener);

@@ -1,23 +1,28 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
- */
 package forme;
 
-import java.io.IOException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JLabel;
 import server.Server;
 
 /**
+ * Glavna serverska forma (JFrame).
+ * Omogucava pokretanje i zaustavljanje servera, prikaz statusa
+ * i liste ulogovanih konobara, kao i otvaranje formi za konfiguraciju
+ * baze i porta.
  *
- * @author Cofara
+ * @author Filip Oketic
+ * @version 1.0
  */
 public class ServerskaForma extends javax.swing.JFrame {
 
+    /**
+     * Serverska nit koja prihvata klijente.
+     */
     Server server;
-    
+
+    /**
+     * Kreira formu, inicijalizuje komponente i priprema {@link Server}.
+     * Dugme za zaustavljanje je inicijalno onemoguceno.
+     */
     public ServerskaForma() {
         initComponents();
         server = new Server(this);
@@ -156,22 +161,42 @@ public class ServerskaForma extends javax.swing.JFrame {
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    /** Swing komponenta. */
     private javax.swing.JButton jButtonPokreni;
+    /** Swing komponenta. */
     private javax.swing.JButton jButtonZaustavi;
+    /** Swing komponenta. */
     private javax.swing.JLabel jLabel2;
+    /** Swing komponenta. */
     private javax.swing.JLabel jLabelKonobari;
+    /** Swing komponenta. */
     private javax.swing.JLabel jLabelStatus;
+    /** Swing komponenta. */
     private javax.swing.JMenu jMenu1;
+    /** Swing komponenta. */
     private javax.swing.JMenuBar jMenuBar1;
+    /** Swing komponenta. */
     private javax.swing.JMenuItem jMenuItem4;
+    /** Swing komponenta. */
     private javax.swing.JMenuItem jMenuItem5;
+    /** Swing komponenta. */
     private javax.swing.JMenuItem jMenuItem6;
     // End of variables declaration//GEN-END:variables
 
+    /**
+     * Vraca labelu na kojoj se prikazuju ulogovani konobari.
+     *
+     * @return JLabel sa listom ulogovanih konobara
+     */
     public JLabel getjLabelKonobari() {
         return jLabelKonobari;
     }
 
+    /**
+     * Postavlja labelu za prikaz ulogovanih konobara.
+     *
+     * @param jLabelKonobari nova labela
+     */
     public void setjLabelKonobari(JLabel jLabelKonobari) {
         this.jLabelKonobari = jLabelKonobari;
     }

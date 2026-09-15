@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
- */
 package forme;
 
 import java.awt.event.ActionListener;
@@ -10,70 +6,144 @@ import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
 /**
+ * Forma za dodavanje novog ili izmenu postojeceg konobara.
+ * Omogucava unos identifikatora, imena, prezimena, korisnickog imena
+ * i lozinke. Koristi se u dva moda koje kontroler postavlja pre prikaza.
  *
- * @author Cofara
+ * @author Filip Oketic
+ * @version 1.0
  */
 public class DodajKonobaraForma extends javax.swing.JFrame {
 
     /**
-     * Creates new form DodajKonobaraForma
+     * Kreira formu i inicijalizuje Swing komponente.
      */
     public DodajKonobaraForma() {
         initComponents();
     }
 
+    /**
+     * Vraca dugme za dodavanje.
+     *
+     * @return dugme za dodavanje
+     */
     public JButton getjButtonDodaj() {
         return jButtonDodaj;
     }
 
+    /**
+     * Postavlja dugme za dodavanje.
+     *
+     * @param jButtonDodaj dugme za dodavanje
+     */
     public void setjButtonDodaj(JButton jButtonDodaj) {
         this.jButtonDodaj = jButtonDodaj;
     }
 
+    /**
+     * Vraca dugme za izmenu.
+     *
+     * @return dugme za izmenu
+     */
     public JButton getjButtonIzmeni() {
         return jButtonIzmeni;
     }
 
+    /**
+     * Postavlja dugme za izmenu.
+     *
+     * @param jButtonIzmeni dugme za izmenu
+     */
     public void setjButtonIzmeni(JButton jButtonIzmeni) {
         this.jButtonIzmeni = jButtonIzmeni;
     }
 
+    /**
+     * Vraca tekstualno polje za identifikator.
+     *
+     * @return tekstualno polje za identifikator
+     */
     public JTextField getjTextFieldId() {
         return jTextFieldId;
     }
 
+    /**
+     * Postavlja tekstualno polje za identifikator.
+     *
+     * @param jTextFieldId tekstualno polje za identifikator
+     */
     public void setjTextFieldId(JTextField jTextFieldId) {
         this.jTextFieldId = jTextFieldId;
     }
 
+    /**
+     * Vraca tekstualno polje za ime.
+     *
+     * @return tekstualno polje za ime
+     */
     public JTextField getjTextFieldIme() {
         return jTextFieldIme;
     }
 
+    /**
+     * Postavlja tekstualno polje za ime.
+     *
+     * @param jTextFieldIme tekstualno polje za ime
+     */
     public void setjTextFieldIme(JTextField jTextFieldIme) {
         this.jTextFieldIme = jTextFieldIme;
     }
 
+    /**
+     * Vraca tekstualno polje za prezime.
+     *
+     * @return tekstualno polje za prezime
+     */
     public JTextField getjTextFieldPrezime() {
         return jTextFieldPrezime;
     }
 
+    /**
+     * Postavlja tekstualno polje za prezime.
+     *
+     * @param jTextFieldPrezime tekstualno polje za prezime
+     */
     public void setjTextFieldPrezime(JTextField jTextFieldPrezime) {
         this.jTextFieldPrezime = jTextFieldPrezime;
     }
 
+    /**
+     * Vraca tekstualno polje za korisnicko ime.
+     *
+     * @return tekstualno polje za korisnicko ime
+     */
     public JTextField getjTextFieldUsername() {
         return jTextFieldUsername;
     }
 
+    /**
+     * Postavlja tekstualno polje za korisnicko ime.
+     *
+     * @param jTextFieldUsername tekstualno polje za korisnicko ime
+     */
     public void setjTextFieldUsername(JTextField jTextFieldUsername) {
         this.jTextFieldUsername = jTextFieldUsername;
     }
 
+    /**
+     * Vraca polje za lozinku.
+     *
+     * @return polje za lozinku
+     */
     public JPasswordField getjPasswordField1() {
         return jPasswordField1;
     }
 
+    /**
+     * Postavlja polje za lozinku.
+     *
+     * @param jPasswordField1 polje za lozinku
+     */
     public void setjPasswordField1(JPasswordField jPasswordField1) {
         this.jPasswordField1 = jPasswordField1;
     }
@@ -198,25 +268,47 @@ public class DodajKonobaraForma extends javax.swing.JFrame {
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    /** Swing komponenta. */
     private javax.swing.JButton jButtonDodaj;
+    /** Swing komponenta. */
     private javax.swing.JButton jButtonIzmeni;
+    /** Swing komponenta. */
     private javax.swing.JLabel jLabel1;
+    /** Swing komponenta. */
     private javax.swing.JLabel jLabel2;
+    /** Swing komponenta. */
     private javax.swing.JLabel jLabel3;
+    /** Swing komponenta. */
     private javax.swing.JLabel jLabel4;
+    /** Swing komponenta. */
     private javax.swing.JLabel jLabel5;
+    /** Swing komponenta. */
     private javax.swing.JPasswordField jPasswordField1;
+    /** Swing komponenta. */
     private javax.swing.JTextField jTextFieldId;
+    /** Swing komponenta. */
     private javax.swing.JTextField jTextFieldIme;
+    /** Swing komponenta. */
     private javax.swing.JTextField jTextFieldPrezime;
+    /** Swing komponenta. */
     private javax.swing.JTextField jTextFieldUsername;
     // End of variables declaration//GEN-END:variables
 
 
+    /**
+     * Dodaje ActionListener na dugme za dodavanje.
+     *
+     * @param actionListener osluskivac koji se poziva pri kliku na dugme za dodavanje
+     */
     public void dodajAddActionListener(ActionListener actionListener) {
         jButtonDodaj.addActionListener(actionListener);
     }
     
+    /**
+     * Dodaje ActionListener na dugme za izmenu.
+     *
+     * @param actionListener osluskivac koji se poziva pri kliku na dugme za izmenu
+     */
     public void izmeniAddActionListener(ActionListener actionListener) {
         jButtonIzmeni.addActionListener(actionListener);
     }

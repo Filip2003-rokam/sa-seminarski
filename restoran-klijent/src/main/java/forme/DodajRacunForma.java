@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
- */
 package forme;
 
 import domen.Gost;
@@ -15,13 +11,17 @@ import javax.swing.JTable;
 import javax.swing.JTextField;
 
 /**
+ * Forma za kreiranje novog ili izmenu postojeceg racuna.
+ * Omogucava unos zaglavlja racuna (gost, konobar, datum, vreme, popust)
+ * i upravljanje stavkama racuna (dodavanje i brisanje artikala).
  *
- * @author Cofara
+ * @author Filip Oketic
+ * @version 1.0
  */
 public class DodajRacunForma extends javax.swing.JFrame {
 
     /**
-     * Creates new form DodajRacunForma
+     * Kreira formu i inicijalizuje Swing komponente.
      */
     public DodajRacunForma() {
         initComponents();
@@ -253,131 +253,291 @@ public class DodajRacunForma extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jTextFieldPopustActionPerformed
 
+    /**
+     * Vraca dugme za dodavanje stavke.
+     *
+     * @return dugme za dodavanje stavke
+     */
     public JButton getjButtonDodajStavku() {
         return jButtonDodajStavku;
     }
 
+    /**
+     * Postavlja dugme za dodavanje stavke.
+     *
+     * @param jButtonDodajStavku dugme za dodavanje stavke
+     */
     public void setjButtonDodajStavku(JButton jButtonDodajStavku) {
         this.jButtonDodajStavku = jButtonDodajStavku;
     }
 
+    /**
+     * Vraca dugme za izmenu racuna.
+     *
+     * @return dugme za izmenu racuna
+     */
     public JButton getjButtonIzmeniRacun() {
         return jButtonIzmeniRacun;
     }
 
+    /**
+     * Postavlja dugme za izmenu racuna.
+     *
+     * @param jButtonIzmeniRacun dugme za izmenu racuna
+     */
     public void setjButtonIzmeniRacun(JButton jButtonIzmeniRacun) {
         this.jButtonIzmeniRacun = jButtonIzmeniRacun;
     }
 
+    /**
+     * Vraca dugme za kreiranje racuna.
+     *
+     * @return dugme za kreiranje racuna
+     */
     public JButton getjButtonKreirajRacun1() {
         return jButtonKreirajRacun;
     }
 
+    /**
+     * Postavlja dugme za kreiranje racuna.
+     *
+     * @param jButtonKreirajRacun1 dugme za kreiranje racuna
+     */
     public void setjButtonKreirajRacun1(JButton jButtonKreirajRacun1) {
         this.jButtonKreirajRacun = jButtonKreirajRacun1;
     }
 
+    /**
+     * Vraca dugme za brisanje stavke.
+     *
+     * @return dugme za brisanje stavke
+     */
     public JButton getjButtonObrisiStavku() {
         return jButtonObrisiStavku;
     }
 
+    /**
+     * Postavlja dugme za brisanje stavke.
+     *
+     * @param jButtonObrisiStavku dugme za brisanje stavke
+     */
     public void setjButtonObrisiStavku(JButton jButtonObrisiStavku) {
         this.jButtonObrisiStavku = jButtonObrisiStavku;
     }
 
 
+    /**
+     * Vraca tekstualno polje za datum.
+     *
+     * @return tekstualno polje za datum
+     */
     public JTextField getjTextFieldDatum() {
         return jTextFieldDatum;
     }
 
+    /**
+     * Postavlja tekstualno polje za datum.
+     *
+     * @param jTextFieldDatum tekstualno polje za datum
+     */
     public void setjTextFieldDatum(JTextField jTextFieldDatum) {
         this.jTextFieldDatum = jTextFieldDatum;
     }
 
+    /**
+     * Vraca tekstualno polje za identifikator.
+     *
+     * @return tekstualno polje za identifikator
+     */
     public JTextField getjTextFieldId() {
         return jTextFieldId;
     }
 
+    /**
+     * Postavlja tekstualno polje za identifikator.
+     *
+     * @param jTextFieldId tekstualno polje za identifikator
+     */
     public void setjTextFieldId(JTextField jTextFieldId) {
         this.jTextFieldId = jTextFieldId;
     }
 
+    /**
+     * Vraca tekstualno polje za kolicinu.
+     *
+     * @return tekstualno polje za kolicinu
+     */
     public JTextField getjTextFieldKolicina() {
         return jTextFieldKolicina;
     }
 
+    /**
+     * Postavlja tekstualno polje za kolicinu.
+     *
+     * @param jTextFieldKolicina tekstualno polje za kolicinu
+     */
     public void setjTextFieldKolicina(JTextField jTextFieldKolicina) {
         this.jTextFieldKolicina = jTextFieldKolicina;
     }
 
+    /**
+     * Vraca combo box za gosta.
+     *
+     * @return combo box za gosta
+     */
     public JComboBox<Gost> getjComboBoxGost() {
         return jComboBoxGost;
     }
 
+    /**
+     * Postavlja combo box za gosta.
+     *
+     * @param jComboBoxGost combo box za gosta
+     */
     public void setjComboBoxGost(JComboBox<Gost> jComboBoxGost) {
         this.jComboBoxGost = jComboBoxGost;
     }
 
+    /**
+     * Vraca combo box za artikal.
+     *
+     * @return combo box za artikal
+     */
     public JComboBox<Artikal> getjComboBoxArtikal() {
         return jComboBoxArtikal;
     }
 
+    /**
+     * Postavlja combo box za artikal.
+     *
+     * @param jComboBoxArtikal combo box za artikal
+     */
     public void setjComboBoxArtikal(JComboBox<Artikal> jComboBoxArtikal) {
         this.jComboBoxArtikal = jComboBoxArtikal;
     }
 
+    /**
+     * Vraca combo box za konobara.
+     *
+     * @return combo box za konobara
+     */
     public JComboBox<Konobar> getjComboBoxKonobar() {
         return jComboBoxKonobar;
     }
 
+    /**
+     * Postavlja combo box za konobara.
+     *
+     * @param jComboBoxKonobar combo box za konobara
+     */
     public void setjComboBoxKonobar(JComboBox<Konobar> jComboBoxKonobar) {
         this.jComboBoxKonobar = jComboBoxKonobar;
     }
 
+    /**
+     * Vraca dugme za kreiranje racuna.
+     *
+     * @return dugme za kreiranje racuna
+     */
     public JButton getjButtonKreirajRacun() {
         return jButtonKreirajRacun;
     }
 
+    /**
+     * Postavlja dugme za kreiranje racuna.
+     *
+     * @param jButtonKreirajRacun dugme za kreiranje racuna
+     */
     public void setjButtonKreirajRacun(JButton jButtonKreirajRacun) {
         this.jButtonKreirajRacun = jButtonKreirajRacun;
     }
 
+    /**
+     * Vraca check box da li je racun izdat.
+     *
+     * @return check box da li je racun izdat
+     */
     public JCheckBox getjCheckBoxJeIzdat() {
         return jCheckBoxJeIzdat;
     }
 
+    /**
+     * Postavlja check box da li je racun izdat.
+     *
+     * @param jCheckBoxJeIzdat check box da li je racun izdat
+     */
     public void setjCheckBoxJeIzdat(JCheckBox jCheckBoxJeIzdat) {
         this.jCheckBoxJeIzdat = jCheckBoxJeIzdat;
     }
 
+    /**
+     * Vraca tekstualno polje za ukupan iznos.
+     *
+     * @return tekstualno polje za ukupan iznos
+     */
     public JTextField getjTextFieldUkupanIznos() {
         return jTextFieldUkupanIznos;
     }
 
+    /**
+     * Postavlja tekstualno polje za ukupan iznos.
+     *
+     * @param jTextFieldUkupanIznos tekstualno polje za ukupan iznos
+     */
     public void setjTextFieldUkupanIznos(JTextField jTextFieldUkupanIznos) {
         this.jTextFieldUkupanIznos = jTextFieldUkupanIznos;
     }
 
+    /**
+     * Vraca tekstualno polje za vreme.
+     *
+     * @return tekstualno polje za vreme
+     */
     public JTextField getjTextFieldVreme() {
         return jTextFieldVreme;
     }
 
+    /**
+     * Postavlja tekstualno polje za vreme.
+     *
+     * @param jTextFieldVreme tekstualno polje za vreme
+     */
     public void setjTextFieldVreme(JTextField jTextFieldVreme) {
         this.jTextFieldVreme = jTextFieldVreme;
     }
 
+    /**
+     * Vraca tabelu stavki racuna.
+     *
+     * @return tabela stavki racuna
+     */
     public JTable getjTableStavke() {
         return jTableStavke;
     }
 
+    /**
+     * Postavlja tabelu stavki racuna.
+     *
+     * @param jTableStavke tabela stavki racuna
+     */
     public void setjTableStavke(JTable jTableStavke) {
         this.jTableStavke = jTableStavke;
     }
 
+    /**
+     * Vraca tekstualno polje za popust.
+     *
+     * @return tekstualno polje za popust
+     */
     public JTextField getjTextFieldPopust() {
         return jTextFieldPopust;
     }
 
+    /**
+     * Postavlja tekstualno polje za popust.
+     *
+     * @param jTextFieldPopust tekstualno polje za popust
+     */
     public void setjTextFieldPopust(JTextField jTextFieldPopust) {
         this.jTextFieldPopust = jTextFieldPopust;
     }
@@ -387,21 +547,41 @@ public class DodajRacunForma extends javax.swing.JFrame {
 
     
     // 🔹 Dugme: Kreiraj Račun
+    /**
+     * Dodaje ActionListener na dugme za kreiranje racuna.
+     *
+     * @param al osluskivac koji se poziva pri kliku na dugme za kreiranje racuna
+     */
     public void addKreirajRacunActionListener(ActionListener al) {
         jButtonKreirajRacun.addActionListener(al);
     }
 
     // 🔹 Dugme: Dodaj Stavku
+    /**
+     * Dodaje ActionListener na dugme za dodavanje stavke.
+     *
+     * @param al osluskivac koji se poziva pri kliku na dugme za dodavanje stavke
+     */
     public void addDodajStavkuActionListener(ActionListener al) {
         jButtonDodajStavku.addActionListener(al);
     }
 
     // 🔹 Dugme: Obriši Stavku
+    /**
+     * Dodaje ActionListener na dugme za brisanje stavke.
+     *
+     * @param al osluskivac koji se poziva pri kliku na dugme za brisanje stavke
+     */
     public void addObrisiStavkuActionListener(ActionListener al) {
         jButtonObrisiStavku.addActionListener(al);
     }
 
     // 🔹 Dugme: Izmeni Račun
+    /**
+     * Dodaje ActionListener na dugme za izmenu racuna.
+     *
+     * @param al osluskivac koji se poziva pri kliku na dugme za izmenu racuna
+     */
     public void addIzmeniRacunActionListener(ActionListener al) {
         jButtonIzmeniRacun.addActionListener(al);
     }
@@ -410,31 +590,57 @@ public class DodajRacunForma extends javax.swing.JFrame {
     
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    /** Swing komponenta. */
     private javax.swing.JButton jButtonDodajStavku;
+    /** Swing komponenta. */
     private javax.swing.JButton jButtonIzmeniRacun;
+    /** Swing komponenta. */
     private javax.swing.JButton jButtonKreirajRacun;
+    /** Swing komponenta. */
     private javax.swing.JButton jButtonObrisiStavku;
+    /** Swing komponenta. */
     private javax.swing.JCheckBox jCheckBoxJeIzdat;
+    /** Swing komponenta. */
     private javax.swing.JComboBox<Gost> jComboBoxGost;
+    /** Swing komponenta. */
     private javax.swing.JComboBox<Artikal> jComboBoxArtikal;
+    /** Swing komponenta. */
     private javax.swing.JComboBox<Konobar> jComboBoxKonobar;
+    /** Swing komponenta. */
     private javax.swing.JLabel jLabel1;
+    /** Swing komponenta. */
     private javax.swing.JLabel jLabel2;
+    /** Swing komponenta. */
     private javax.swing.JLabel jLabel3;
+    /** Swing komponenta. */
     private javax.swing.JLabel jLabel4;
+    /** Swing komponenta. */
     private javax.swing.JLabel jLabel5;
+    /** Swing komponenta. */
     private javax.swing.JLabel jLabel6;
+    /** Swing komponenta. */
     private javax.swing.JLabel jLabel7;
+    /** Swing komponenta. */
     private javax.swing.JLabel jLabel8;
+    /** Swing komponenta. */
     private javax.swing.JLabel jLabel9;
+    /** Swing komponenta. */
     private javax.swing.JPanel jPanel1;
+    /** Swing komponenta. */
     private javax.swing.JScrollPane jScrollPane1;
+    /** Swing komponenta. */
     private javax.swing.JTable jTableStavke;
+    /** Swing komponenta. */
     private javax.swing.JTextField jTextFieldDatum;
+    /** Swing komponenta. */
     private javax.swing.JTextField jTextFieldId;
+    /** Swing komponenta. */
     private javax.swing.JTextField jTextFieldKolicina;
+    /** Swing komponenta. */
     private javax.swing.JTextField jTextFieldPopust;
+    /** Swing komponenta. */
     private javax.swing.JTextField jTextFieldUkupanIznos;
+    /** Swing komponenta. */
     private javax.swing.JTextField jTextFieldVreme;
     // End of variables declaration//GEN-END:variables
 }

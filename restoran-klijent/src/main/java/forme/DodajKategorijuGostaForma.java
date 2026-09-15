@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
- */
 package forme;
 
 import java.awt.event.ActionListener;
@@ -9,13 +5,17 @@ import javax.swing.JButton;
 import javax.swing.JTextField;
 
 /**
+ * Forma za dodavanje nove ili izmenu postojece kategorije gosta.
+ * Omogucava unos identifikatora, naziva i procenta popusta.
+ * Koristi se u dva moda koje kontroler postavlja pre prikaza.
  *
- * @author Cofara
+ * @author Filip Oketic
+ * @version 1.0
  */
 public class DodajKategorijuGostaForma extends javax.swing.JFrame {
 
     /**
-     * Creates new form DodajKategorjuGostaForma
+     * Kreira formu i inicijalizuje Swing komponente.
      */
     public DodajKategorijuGostaForma() {
         initComponents();
@@ -104,50 +104,110 @@ public class DodajKategorijuGostaForma extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    /**
+     * Dodaje ActionListener na dugme za dodavanje.
+     *
+     * @param actionListener osluskivac koji se poziva pri kliku na dugme za dodavanje
+     */
     public void dodajAddActionListener(ActionListener actionListener) {
         jButtonDodaj.addActionListener(actionListener);
     }
     
+    /**
+     * Dodaje ActionListener na dugme za izmenu.
+     *
+     * @param actionListener osluskivac koji se poziva pri kliku na dugme za izmenu
+     */
     public void izmeniAddActionListener(ActionListener actionListener) {
         jButtonIzmeni.addActionListener(actionListener);
     }
 
+    /**
+     * Vraca dugme za dodavanje.
+     *
+     * @return dugme za dodavanje
+     */
     public JButton getjButtonDodaj() {
         return jButtonDodaj;
     }
 
+    /**
+     * Postavlja dugme za dodavanje.
+     *
+     * @param jButtonDodaj dugme za dodavanje
+     */
     public void setjButtonDodaj(JButton jButtonDodaj) {
         this.jButtonDodaj = jButtonDodaj;
     }
 
+    /**
+     * Vraca dugme za izmenu.
+     *
+     * @return dugme za izmenu
+     */
     public JButton getjButtonIzmeni() {
         return jButtonIzmeni;
     }
 
+    /**
+     * Postavlja dugme za izmenu.
+     *
+     * @param jButtonIzmeni dugme za izmenu
+     */
     public void setjButtonIzmeni(JButton jButtonIzmeni) {
         this.jButtonIzmeni = jButtonIzmeni;
     }
 
+    /**
+     * Vraca tekstualno polje za identifikator.
+     *
+     * @return tekstualno polje za identifikator
+     */
     public JTextField getjTextFieldId() {
         return jTextFieldId;
     }
 
+    /**
+     * Postavlja tekstualno polje za identifikator.
+     *
+     * @param jTextFieldId tekstualno polje za identifikator
+     */
     public void setjTextFieldId(JTextField jTextFieldId) {
         this.jTextFieldId = jTextFieldId;
     }
 
+    /**
+     * Vraca tekstualno polje za naziv.
+     *
+     * @return tekstualno polje za naziv
+     */
     public JTextField getjTextFieldNaziv() {
         return jTextFieldNaziv;
     }
 
+    /**
+     * Postavlja tekstualno polje za naziv.
+     *
+     * @param jTextFieldNaziv tekstualno polje za naziv
+     */
     public void setjTextFieldNaziv(JTextField jTextFieldNaziv) {
         this.jTextFieldNaziv = jTextFieldNaziv;
     }
 
+    /**
+     * Vraca tekstualno polje za popust.
+     *
+     * @return tekstualno polje za popust
+     */
     public JTextField getjTextFieldPopust() {
         return jTextFieldPopust;
     }
 
+    /**
+     * Postavlja tekstualno polje za popust.
+     *
+     * @param jTextFieldPopust tekstualno polje za popust
+     */
     public void setjTextFieldPopust(JTextField jTextFieldPopust) {
         this.jTextFieldPopust = jTextFieldPopust;
     }
@@ -155,13 +215,21 @@ public class DodajKategorijuGostaForma extends javax.swing.JFrame {
     
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    /** Swing komponenta. */
     private javax.swing.JButton jButtonDodaj;
+    /** Swing komponenta. */
     private javax.swing.JButton jButtonIzmeni;
+    /** Swing komponenta. */
     private javax.swing.JLabel jLabel1;
+    /** Swing komponenta. */
     private javax.swing.JLabel jLabel2;
+    /** Swing komponenta. */
     private javax.swing.JLabel jLabel3;
+    /** Swing komponenta. */
     private javax.swing.JTextField jTextFieldId;
+    /** Swing komponenta. */
     private javax.swing.JTextField jTextFieldNaziv;
+    /** Swing komponenta. */
     private javax.swing.JTextField jTextFieldPopust;
     // End of variables declaration//GEN-END:variables
 }

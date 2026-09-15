@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
- */
 package forme;
 
 import domen.KategorijaGosta;
@@ -10,13 +6,17 @@ import javax.swing.JTable;
 import javax.swing.JTextField;
 
 /**
+ * Forma za prikaz detalja izabranog gosta i njegovih racuna.
+ * Prikazuje osnovne podatke gosta, kategoriju, popust i agregirane
+ * informacije o dugovanju, placenim i neplacenim racunima.
  *
- * @author Cofara
+ * @author Filip Oketic
+ * @version 1.0
  */
 public class DetaljiGostaForma extends javax.swing.JFrame {
 
     /**
-     * Creates new form DetaljiGosta
+     * Kreira formu i inicijalizuje Swing komponente.
      */
     public DetaljiGostaForma() {
         initComponents();
@@ -174,18 +174,38 @@ public class DetaljiGostaForma extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    /**
+     * Vraca tabelu racuna.
+     *
+     * @return tabela racuna
+     */
     public JTable getjTableRacuni() {
         return jTableRacuni;
     }
 
+    /**
+     * Postavlja tabelu racuna.
+     *
+     * @param jTableRacuni tabela racuna
+     */
     public void setjTableRacuni(JTable jTableRacuni) {
         this.jTableRacuni = jTableRacuni;
     }
 
+    /**
+     * Vraca tekstualno polje za kategoriju.
+     *
+     * @return tekstualno polje za kategoriju
+     */
     public JTextField getjTextFieldKategorija() {
         return jTextFieldKategorija;
     }
 
+    /**
+     * Postavlja tekstualno polje za kategoriju.
+     *
+     * @param jTextFieldKategorija tekstualno polje za kategoriju
+     */
     public void setjTextFieldKategorija(JTextField jTextFieldKategorija) {
         this.jTextFieldKategorija = jTextFieldKategorija;
     }
@@ -193,66 +213,146 @@ public class DetaljiGostaForma extends javax.swing.JFrame {
 
     
 
+    /**
+     * Vraca tekstualno polje za dugovanje.
+     *
+     * @return tekstualno polje za dugovanje
+     */
     public JTextField getjTextFieldDug() {
         return jTextFieldDug;
     }
 
+    /**
+     * Postavlja tekstualno polje za dugovanje.
+     *
+     * @param jTextFieldDug tekstualno polje za dugovanje
+     */
     public void setjTextFieldDug(JTextField jTextFieldDug) {
         this.jTextFieldDug = jTextFieldDug;
     }
 
+    /**
+     * Vraca tekstualno polje za identifikator.
+     *
+     * @return tekstualno polje za identifikator
+     */
     public JTextField getjTextFieldId() {
         return jTextFieldId;
     }
 
+    /**
+     * Postavlja tekstualno polje za identifikator.
+     *
+     * @param jTextFieldId tekstualno polje za identifikator
+     */
     public void setjTextFieldId(JTextField jTextFieldId) {
         this.jTextFieldId = jTextFieldId;
     }
 
+    /**
+     * Vraca tekstualno polje za ime.
+     *
+     * @return tekstualno polje za ime
+     */
     public JTextField getjTextFieldIme() {
         return jTextFieldIme;
     }
 
+    /**
+     * Postavlja tekstualno polje za ime.
+     *
+     * @param jTextFieldIme tekstualno polje za ime
+     */
     public void setjTextFieldIme(JTextField jTextFieldIme) {
         this.jTextFieldIme = jTextFieldIme;
     }
 
+    /**
+     * Vraca tekstualno polje za broj neplacenih racuna.
+     *
+     * @return tekstualno polje za broj neplacenih racuna
+     */
     public JTextField getjTextFieldNeplacenih() {
         return jTextFieldNeplacenih;
     }
 
+    /**
+     * Postavlja tekstualno polje za broj neplacenih racuna.
+     *
+     * @param jTextFieldNeplacenih tekstualno polje za broj neplacenih racuna
+     */
     public void setjTextFieldNeplacenih(JTextField jTextFieldNeplacenih) {
         this.jTextFieldNeplacenih = jTextFieldNeplacenih;
     }
 
+    /**
+     * Vraca tekstualno polje za broj placenih racuna.
+     *
+     * @return tekstualno polje za broj placenih racuna
+     */
     public JTextField getjTextFieldPlaceni() {
         return jTextFieldPlaceni;
     }
 
+    /**
+     * Postavlja tekstualno polje za broj placenih racuna.
+     *
+     * @param jTextFieldPlaceni tekstualno polje za broj placenih racuna
+     */
     public void setjTextFieldPlaceni(JTextField jTextFieldPlaceni) {
         this.jTextFieldPlaceni = jTextFieldPlaceni;
     }
 
+    /**
+     * Vraca tekstualno polje za prezime.
+     *
+     * @return tekstualno polje za prezime
+     */
     public JTextField getjTextFieldPrezime() {
         return jTextFieldPrezime;
     }
 
+    /**
+     * Postavlja tekstualno polje za prezime.
+     *
+     * @param jTextFieldPrezime tekstualno polje za prezime
+     */
     public void setjTextFieldPrezime(JTextField jTextFieldPrezime) {
         this.jTextFieldPrezime = jTextFieldPrezime;
     }
 
+    /**
+     * Vraca tekstualno polje za ukupan broj racuna.
+     *
+     * @return tekstualno polje za ukupan broj racuna
+     */
     public JTextField getjTextFieldUkupno() {
         return jTextFieldUkupno;
     }
 
+    /**
+     * Postavlja tekstualno polje za ukupan broj racuna.
+     *
+     * @param jTextFieldUkupno tekstualno polje za ukupan broj racuna
+     */
     public void setjTextFieldUkupno(JTextField jTextFieldUkupno) {
         this.jTextFieldUkupno = jTextFieldUkupno;
     }
 
+    /**
+     * Vraca tekstualno polje za popust.
+     *
+     * @return tekstualno polje za popust
+     */
     public JTextField getjTextFieldPopust() {
         return jTextFieldPopust;
     }
 
+    /**
+     * Postavlja tekstualno polje za popust.
+     *
+     * @param jTextFieldPopust tekstualno polje za popust
+     */
     public void setjTextFieldPopust(JTextField jTextFieldPopust) {
         this.jTextFieldPopust = jTextFieldPopust;
     }
@@ -261,26 +361,47 @@ public class DetaljiGostaForma extends javax.swing.JFrame {
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    /** Swing komponenta. */
     private javax.swing.JLabel jLabel1;
+    /** Swing komponenta. */
     private javax.swing.JLabel jLabel10;
+    /** Swing komponenta. */
     private javax.swing.JLabel jLabel2;
+    /** Swing komponenta. */
     private javax.swing.JLabel jLabel3;
+    /** Swing komponenta. */
     private javax.swing.JLabel jLabel4;
+    /** Swing komponenta. */
     private javax.swing.JLabel jLabel5;
+    /** Swing komponenta. */
     private javax.swing.JLabel jLabel6;
+    /** Swing komponenta. */
     private javax.swing.JLabel jLabel7;
+    /** Swing komponenta. */
     private javax.swing.JLabel jLabel8;
+    /** Swing komponenta. */
     private javax.swing.JLabel jLabel9;
+    /** Swing komponenta. */
     private javax.swing.JScrollPane jScrollPane1;
+    /** Swing komponenta. */
     private javax.swing.JTable jTableRacuni;
+    /** Swing komponenta. */
     private javax.swing.JTextField jTextFieldDug;
+    /** Swing komponenta. */
     private javax.swing.JTextField jTextFieldId;
+    /** Swing komponenta. */
     private javax.swing.JTextField jTextFieldIme;
+    /** Swing komponenta. */
     private javax.swing.JTextField jTextFieldKategorija;
+    /** Swing komponenta. */
     private javax.swing.JTextField jTextFieldNeplacenih;
+    /** Swing komponenta. */
     private javax.swing.JTextField jTextFieldPlaceni;
+    /** Swing komponenta. */
     private javax.swing.JTextField jTextFieldPopust;
+    /** Swing komponenta. */
     private javax.swing.JTextField jTextFieldPrezime;
+    /** Swing komponenta. */
     private javax.swing.JTextField jTextFieldUkupno;
     // End of variables declaration//GEN-END:variables
 }

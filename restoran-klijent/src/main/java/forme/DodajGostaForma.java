@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
- */
 package forme;
 
 import domen.KategorijaGosta;
@@ -11,13 +7,17 @@ import javax.swing.JComboBox;
 import javax.swing.JTextField;
 
 /**
+ * Forma za dodavanje novog ili izmenu postojeceg gosta.
+ * Koristi se u dva moda (dodavanje i izmena) i omogucava unos imena,
+ * prezimena i izbor kategorije gosta. Kontroler vezuje akcije dugmadi.
  *
- * @author Cofara
+ * @author Filip Oketic
+ * @version 1.0
  */
 public class DodajGostaForma extends javax.swing.JFrame {
 
     /**
-     * Creates new form DodajGostaForma
+     * Kreira formu i inicijalizuje Swing komponente.
      */
     public DodajGostaForma() {
         initComponents();
@@ -123,10 +123,20 @@ public class DodajGostaForma extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    /**
+     * Vraca combo box za kategoriju gosta.
+     *
+     * @return combo box za kategoriju gosta
+     */
     public JComboBox<KategorijaGosta> getjComboBoxKategorijaGosta() {
         return jComboBoxKategorijaGosta;
     }
 
+    /**
+     * Postavlja combo box za kategoriju gosta.
+     *
+     * @param jComboBoxKategorijaGosta combo box za kategoriju gosta
+     */
     public void setjComboBoxKategorijaGosta(JComboBox<KategorijaGosta> jComboBoxKategorijaGosta) {
         this.jComboBoxKategorijaGosta = jComboBoxKategorijaGosta;
     }
@@ -142,62 +152,132 @@ public class DodajGostaForma extends javax.swing.JFrame {
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    /** Swing komponenta. */
     private javax.swing.JButton jButtonDodaj;
+    /** Swing komponenta. */
     private javax.swing.JButton jButtonIzmeni;
+    /** Swing komponenta. */
     private javax.swing.JComboBox<KategorijaGosta> jComboBoxKategorijaGosta;
+    /** Swing komponenta. */
     private javax.swing.JLabel jLabel1;
+    /** Swing komponenta. */
     private javax.swing.JLabel jLabel2;
+    /** Swing komponenta. */
     private javax.swing.JLabel jLabel3;
+    /** Swing komponenta. */
     private javax.swing.JLabel jLabel4;
+    /** Swing komponenta. */
     private javax.swing.JTextField jTextFieldId;
+    /** Swing komponenta. */
     private javax.swing.JTextField jTextFieldIme;
+    /** Swing komponenta. */
     private javax.swing.JTextField jTextFieldPrezime;
     // End of variables declaration//GEN-END:variables
 
+    /**
+     * Dodaje ActionListener na dugme za dodavanje.
+     *
+     * @param actionListener osluskivac koji se poziva pri kliku na dugme za dodavanje
+     */
     public void dodajAddActionListener(ActionListener actionListener) {
         jButtonDodaj.addActionListener(actionListener);
     }
     
+    /**
+     * Dodaje ActionListener na dugme za izmenu.
+     *
+     * @param actionListener osluskivac koji se poziva pri kliku na dugme za izmenu
+     */
     public void izmeniAddActionListener(ActionListener actionListener) {
         jButtonIzmeni.addActionListener(actionListener);
     }
 
+    /**
+     * Vraca tekstualno polje za ime.
+     *
+     * @return tekstualno polje za ime
+     */
     public JTextField getjTextFieldIme() {
         return jTextFieldIme;
     }
 
+    /**
+     * Postavlja tekstualno polje za ime.
+     *
+     * @param jTextFieldIme tekstualno polje za ime
+     */
     public void setjTextFieldIme(JTextField jTextFieldIme) {
         this.jTextFieldIme = jTextFieldIme;
     }
 
+    /**
+     * Vraca tekstualno polje za prezime.
+     *
+     * @return tekstualno polje za prezime
+     */
     public JTextField getjTextFieldPrezime() {
         return jTextFieldPrezime;
     }
 
+    /**
+     * Postavlja tekstualno polje za prezime.
+     *
+     * @param jTextFieldPrezime tekstualno polje za prezime
+     */
     public void setjTextFieldPrezime(JTextField jTextFieldPrezime) {
         this.jTextFieldPrezime = jTextFieldPrezime;
     }
 
+    /**
+     * Vraca dugme za dodavanje.
+     *
+     * @return dugme za dodavanje
+     */
     public JButton getjButtonDodaj() {
         return jButtonDodaj;
     }
 
+    /**
+     * Postavlja dugme za dodavanje.
+     *
+     * @param jButtonDodaj dugme za dodavanje
+     */
     public void setjButtonDodaj(JButton jButtonDodaj) {
         this.jButtonDodaj = jButtonDodaj;
     }
 
+    /**
+     * Vraca dugme za izmenu.
+     *
+     * @return dugme za izmenu
+     */
     public JButton getjButtonIzmeni() {
         return jButtonIzmeni;
     }
 
+    /**
+     * Postavlja dugme za izmenu.
+     *
+     * @param jButtonIzmeni dugme za izmenu
+     */
     public void setjButtonIzmeni(JButton jButtonIzmeni) {
         this.jButtonIzmeni = jButtonIzmeni;
     }
 
+    /**
+     * Vraca tekstualno polje za identifikator.
+     *
+     * @return tekstualno polje za identifikator
+     */
     public JTextField getjTextFieldId() {
         return jTextFieldId;
     }
 
+    /**
+     * Postavlja tekstualno polje za identifikator.
+     *
+     * @param jTextFieldId tekstualno polje za identifikator
+     */
     public void setjTextFieldId(JTextField jTextFieldId) {
         this.jTextFieldId = jTextFieldId;
     }

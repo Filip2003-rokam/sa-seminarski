@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package repository.db;
 
 import java.sql.Connection;
@@ -9,16 +5,31 @@ import java.sql.DriverManager;
 import konfiguracija.Konfiguracija;
 
 /**
+ * Singleton fabrika JDBC konekcija ka bazi podataka.
+ * Parametre konekcije (url, username, password) cita iz {@link Konfiguracija}.
+ * Konekcija se kreira sa {@code autoCommit = false} radi rukovanja transakcijama.
  *
- * @author Cofara
+ * @author Filip Oketic
+ * @version 1.0
  */
 public class DbConnectionFactory {
-    
+
+    /**
+     * Jedina instanca fabrike (singleton).
+     */
     private static DbConnectionFactory instance;
+
+    /**
+     * Aktivna JDBC konekcija ka bazi.
+     */
     private Connection connection;
 
+    /**
+     * Privatni konstruktor koji uspostavlja konekciju na osnovu
+     * konfiguracionih parametara iz {@link Konfiguracija}.
+     */
     private DbConnectionFactory() {
-        
+
             try {
                 if(connection == null || connection.isClosed()) {
 
@@ -32,9 +43,14 @@ public class DbConnectionFactory {
                 ex.printStackTrace();
             }
 
-        
+
     }
 
+    /**
+     * Vraca jedinu instancu fabrike konekcija.
+     *
+     * @return instanca klase DbConnectionFactory
+     */
     public static DbConnectionFactory getInstance() {
         if (instance == null) {
             instance = new DbConnectionFactory();
@@ -42,11 +58,16 @@ public class DbConnectionFactory {
         return instance;
     }
 
+    /**
+     * Vraca aktivnu JDBC konekciju.
+     *
+     * @return JDBC {@link Connection} objekat
+     */
     public Connection getConnection() {
         return connection;
     }
-    
-    
 
-    
+
+
+
 }

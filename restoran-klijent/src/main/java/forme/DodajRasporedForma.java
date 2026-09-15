@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
- */
 package forme;
 
 import domen.Konobar;
@@ -12,13 +8,17 @@ import javax.swing.JComboBox;
 import javax.swing.JTextField;
 
 /**
+ * Forma za dodavanje novog ili izmenu postojeceg rasporeda rada.
+ * Omogucava izbor konobara i smene, kao i unos datuma rasporeda.
+ * Koristi se u dva moda koje kontroler postavlja pre prikaza.
  *
- * @author Cofara
+ * @author Filip Oketic
+ * @version 1.0
  */
 public class DodajRasporedForma extends javax.swing.JFrame {
 
     /**
-     * Creates new form DodajKonobarSmenaForma
+     * Kreira formu i inicijalizuje Swing komponente.
      */
     public DodajRasporedForma() {
         initComponents();
@@ -100,42 +100,92 @@ public class DodajRasporedForma extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    /**
+     * Vraca dugme za dodavanje.
+     *
+     * @return dugme za dodavanje
+     */
     public JButton getjButtonDodaj() {
         return jButtonDodaj;
     }
 
+    /**
+     * Postavlja dugme za dodavanje.
+     *
+     * @param jButtonDodaj dugme za dodavanje
+     */
     public void setjButtonDodaj(JButton jButtonDodaj) {
         this.jButtonDodaj = jButtonDodaj;
     }
 
+    /**
+     * Vraca dugme za izmenu.
+     *
+     * @return dugme za izmenu
+     */
     public JButton getjButtonIzmeni() {
         return jButtonIzmeni;
     }
 
+    /**
+     * Postavlja dugme za izmenu.
+     *
+     * @param jButtonIzmeni dugme za izmenu
+     */
     public void setjButtonIzmeni(JButton jButtonIzmeni) {
         this.jButtonIzmeni = jButtonIzmeni;
     }
 
+    /**
+     * Vraca combo box za konobara.
+     *
+     * @return combo box za konobara
+     */
     public JComboBox<Konobar> getjComboBoxKonobar() {
         return jComboBoxKonobar;
     }
 
+    /**
+     * Postavlja combo box za konobara.
+     *
+     * @param jComboBoxKonobar combo box za konobara
+     */
     public void setjComboBoxKonobar(JComboBox<Konobar> jComboBoxKonobar) {
         this.jComboBoxKonobar = jComboBoxKonobar;
     }
 
+    /**
+     * Vraca combo box za smenu.
+     *
+     * @return combo box za smenu
+     */
     public JComboBox<Smena> getjComboBoxSmena() {
         return jComboBoxSmena;
     }
 
+    /**
+     * Postavlja combo box za smenu.
+     *
+     * @param jComboBoxSmena combo box za smenu
+     */
     public void setjComboBoxSmena(JComboBox<Smena> jComboBoxSmena) {
         this.jComboBoxSmena = jComboBoxSmena;
     }
 
+    /**
+     * Vraca tekstualno polje za datum.
+     *
+     * @return tekstualno polje za datum
+     */
     public JTextField getjTextFieldDatum() {
         return jTextFieldDatum;
     }
 
+    /**
+     * Postavlja tekstualno polje za datum.
+     *
+     * @param jTextFieldDatum tekstualno polje za datum
+     */
     public void setjTextFieldDatum(JTextField jTextFieldDatum) {
         this.jTextFieldDatum = jTextFieldDatum;
     }
@@ -146,21 +196,39 @@ public class DodajRasporedForma extends javax.swing.JFrame {
     
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    /** Swing komponenta. */
     private javax.swing.JButton jButtonDodaj;
+    /** Swing komponenta. */
     private javax.swing.JButton jButtonIzmeni;
+    /** Swing komponenta. */
     private javax.swing.JComboBox<Konobar> jComboBoxKonobar;
+    /** Swing komponenta. */
     private javax.swing.JComboBox<Smena> jComboBoxSmena;
+    /** Swing komponenta. */
     private javax.swing.JLabel jLabel1;
+    /** Swing komponenta. */
     private javax.swing.JLabel jLabel2;
+    /** Swing komponenta. */
     private javax.swing.JLabel jLabel3;
+    /** Swing komponenta. */
     private javax.swing.JTextField jTextFieldDatum;
     // End of variables declaration//GEN-END:variables
 
 
+    /**
+     * Dodaje ActionListener na dugme za dodavanje.
+     *
+     * @param actionListener osluskivac koji se poziva pri kliku na dugme za dodavanje
+     */
     public void dodajAddActionListener(ActionListener actionListener) {
         jButtonDodaj.addActionListener(actionListener);
     }
     
+    /**
+     * Dodaje ActionListener na dugme za izmenu.
+     *
+     * @param actionListener osluskivac koji se poziva pri kliku na dugme za izmenu
+     */
     public void izmeniAddActionListener(ActionListener actionListener) {
         jButtonIzmeni.addActionListener(actionListener);
     }
