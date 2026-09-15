@@ -10,23 +10,42 @@ import javax.swing.JOptionPane;
 import komunikacija.Komunikacija;
 
 /**
+ * Kontroler forme za dodavanje i izmenu kategorije gosta
+ * ({@link forme.DodajKategorijuGostaForma}).
+ * U klijentskom MVC-u prikuplja naziv i popust sa forme i salje zahteve
+ * serveru preko {@link komunikacija.Komunikacija}.
  *
- * @author Cofara
+ * @author Filip Oketic
+ * @version 1.0
  */
 public class DodajKategorijuGostaController {
 
+    /** Forma za dodavanje/izmenu kategorije gosta kojom ovaj kontroler upravlja. */
     private final DodajKategorijuGostaForma dkf;
 
+    /**
+     * Kreira kontroler i registruje listenere za dodavanje i izmenu.
+     *
+     * @param dkf forma za kategoriju gosta
+     */
     public DodajKategorijuGostaController(DodajKategorijuGostaForma dkf) {
         this.dkf = dkf;
         addActionListener();
     }
 
+    /**
+     * Priprema formu prema datom modu i prikazuje je.
+     *
+     * @param mod rezim rada forme (dodavanje ili izmena)
+     */
     public void otvoriFormu(FormaMod mod) {
         pripremiFormu(mod);
         dkf.setVisible(true);
     }
 
+    /**
+     * Registruje listenere za dugmad Dodaj i Izmeni.
+     */
     private void addActionListener() {
 
         // ➕ Dodaj
@@ -95,6 +114,12 @@ public class DodajKategorijuGostaController {
         });
     }
 
+    /**
+     * Podesava vidljivost dugmadi i popunjava polja u zavisnosti od moda.
+     * Za izmenu kategorija se cita iz parametra koordinatora <code>kategorijaGosta</code>.
+     *
+     * @param mod rezim rada forme
+     */
     private void pripremiFormu(FormaMod mod) {
         switch (mod) {
             case DODAJ:

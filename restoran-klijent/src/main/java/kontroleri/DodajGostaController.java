@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package kontroleri;
 
 import cordinator.Cordinator;
@@ -17,18 +13,33 @@ import javax.swing.JOptionPane;
 import komunikacija.Komunikacija;
 
 /**
+ * Kontroler forme za dodavanje i izmenu gosta ({@link forme.DodajGostaForma}).
+ * U klijentskom MVC-u povezuje formu sa serverom: ucitava kategorije gostiju,
+ * salje zahteve za dodavanje/izmenu i osvezava tabelu gostiju preko koordinatora.
  *
- * @author Cofara
+ * @author Filip Oketic
+ * @version 1.0
  */
 public class DodajGostaController {
     
+    /** Forma za dodavanje/izmenu gosta kojom ovaj kontroler upravlja. */
     private final DodajGostaForma dpf;
 
+    /**
+     * Kreira kontroler i registruje listenere za dodavanje i izmenu.
+     *
+     * @param dpf forma za gosta
+     */
     public DodajGostaController(DodajGostaForma dpf) {
         this.dpf = dpf;
         addActionListener();
     }
 
+    /**
+     * Priprema formu prema modu, popunjava combo box kategorija i prikazuje formu.
+     *
+     * @param mod rezim rada forme (dodavanje ili izmena)
+     */
     public void otvoriFormu(FormaMod mod){
         pripremiFormu(mod);
         
@@ -42,6 +53,9 @@ public class DodajGostaController {
         dpf.setVisible(true);
     }
     
+    /**
+     * Registruje listenere za dugmad Dodaj i Izmeni.
+     */
     private void addActionListener() {
         
          // 🔹 DODAJ GOSTA
@@ -110,6 +124,12 @@ public class DodajGostaController {
         
     }
 
+    /**
+     * Podesava vidljivost dugmadi i popunjava polja u zavisnosti od moda.
+     * Za izmenu gost se cita iz parametra koordinatora <code>gost</code>.
+     *
+     * @param mod rezim rada forme
+     */
     private void pripremiFormu(FormaMod mod) {
         
         switch (mod) {

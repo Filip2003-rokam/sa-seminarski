@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package kontroleri;
 
 import cordinator.Cordinator;
@@ -9,21 +5,39 @@ import domen.Konobar;
 import forme.GlavnaForma;
 
 /**
+ * Kontroler glavne forme klijentske aplikacije ({@link forme.GlavnaForma}).
+ * U klijentskom MVC-u prikazuje ulogovanog konobara i sluzi kao ulazna
+ * tacka nakon uspesne prijave; navigaciju ka ostalim formama vodi
+ * {@link cordinator.Cordinator}.
  *
- * @author Cofara
+ * @author Filip Oketic
+ * @version 1.0
  */
 public class GlavnaFormaController {
+
+    /** Glavna forma kojom ovaj kontroler upravlja. */
     private final GlavnaForma gf;
 
+    /**
+     * Kreira kontroler i priprema listenere na formi.
+     *
+     * @param gf glavna forma
+     */
     public GlavnaFormaController(GlavnaForma gf) {
         this.gf = gf;
         addActionListeners();
     }
 
+    /**
+     * Registruje action listenere (trenutno prazno; navigacija je u formi/koordinatoru).
+     */
     private void addActionListeners() {
         
     }
 
+    /**
+     * Prikazuje glavnu formu i postavlja ime i prezime ulogovanog konobara.
+     */
     public void otvoriFormu() {
         Konobar ulogovani = Cordinator.getInstance().getUlogovani();
         String imePrezime = ulogovani.getIme() + " " + ulogovani.getPrezime();

@@ -11,30 +11,49 @@ import javax.swing.JOptionPane;
 import komunikacija.Komunikacija;
 
 /**
+ * Kontroler forme za prikaz konobara ({@link forme.PrikazKonobaraForma}).
+ * U klijentskom MVC-u ucitava listu konobara sa servera, omogucava pretragu,
+ * brisanje i otvaranje forme za izmenu preko {@link cordinator.Cordinator}-a.
  *
- * @author Cofara
+ * @author Filip Oketic
+ * @version 1.0
  */
 public class PrikazKonobaraController {
 
+    /** Forma za prikaz konobara kojom ovaj kontroler upravlja. */
     private final PrikazKonobaraForma pkf;
 
+    /**
+     * Kreira kontroler i registruje listenere korisnickih akcija.
+     *
+     * @param pkf forma za prikaz konobara
+     */
     public PrikazKonobaraController(PrikazKonobaraForma pkf) {
         this.pkf = pkf;
         addActionListeners();
     }
 
+    /**
+     * Priprema podatke, centrira i prikazuje formu.
+     */
     public void otvoriFormu() {
         pripremiFormu();
         pkf.setVisible(true);
         pkf.setLocationRelativeTo(null);
     }
 
+    /**
+     * Ucitava konobare sa servera i postavlja model tabele.
+     */
     private void pripremiFormu() {
         List<Konobar> konobari = Komunikacija.getInstance().ucitajKonobare();
         ModelTabeleKonobar mtk = new ModelTabeleKonobar(konobari);
         pkf.getjTableKonobari().setModel(mtk);
     }
 
+    /**
+     * Registruje listenere: obrisi, izmeni, pretrazi, resetuj.
+     */
     private void addActionListeners() {
 
         // 🔹 Obrisi
@@ -101,6 +120,9 @@ public class PrikazKonobaraController {
         });
     }
 
+    /**
+     * Osvezava prikaz konobara (ponovo ucitava podatke sa servera).
+     */
     public void osveziPrikazKonobaraFormu() {
         pripremiFormu();
     }

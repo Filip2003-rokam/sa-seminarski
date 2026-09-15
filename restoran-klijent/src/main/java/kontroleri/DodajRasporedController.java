@@ -13,21 +13,46 @@ import java.util.List;
 import javax.swing.JOptionPane;
 import komunikacija.Komunikacija;
 
+/**
+ * Kontroler forme za dodavanje i izmenu rasporeda rada
+ * ({@link forme.DodajRasporedForma}, entitet {@link domen.KonobarSmena}).
+ * U klijentskom MVC-u povezuje konobara, smenu i datum i salje zahteve serveru.
+ *
+ * @author Filip Oketic
+ * @version 1.0
+ */
 public class DodajRasporedController {
 
+    /** Forma za dodavanje/izmenu rasporeda kojom ovaj kontroler upravlja. */
     private final DodajRasporedForma drf;
 
+    /**
+     * Kreira kontroler i registruje listenere za dodavanje i izmenu.
+     *
+     * @param drf forma za raspored
+     */
     public DodajRasporedController(DodajRasporedForma drf) {
         this.drf = drf;
         addActionListeners();
     }
 
+    /**
+     * Priprema formu prema datom modu, centrira je i prikazuje.
+     *
+     * @param mod rezim rada forme (dodavanje ili izmena)
+     */
     public void otvoriFormu(FormaMod mod) {
         pripremiFormu(mod);
         drf.setVisible(true);
         drf.setLocationRelativeTo(null);
     }
 
+    /**
+     * Popunjava combo boxeve konobara i smena; za izmenu ucitava
+     * raspored iz parametra koordinatora <code>raspored</code>.
+     *
+     * @param mod rezim rada forme
+     */
     private void pripremiFormu(FormaMod mod) {
         try {
             // popuni combo boxeve
@@ -59,6 +84,9 @@ public class DodajRasporedController {
         }
     }
 
+    /**
+     * Registruje listenere za dugmad Dodaj i Izmeni.
+     */
     private void addActionListeners() {
         drf.dodajAddActionListener(new ActionListener() {
             @Override

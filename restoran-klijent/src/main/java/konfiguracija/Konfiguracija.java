@@ -15,12 +15,18 @@ import java.util.logging.Logger;
  */
 public class Konfiguracija {
 
+    /** Jedina instanca singleton klase. */
     private static Konfiguracija instanca;
 
+    /** Ucitana svojstva konfiguracije. */
     private final Properties konfiguracija;
 
+    /** Naziv classpath resursa sa konfiguracionim parametrima. */
     private static final String RESURS = "config.properties";
 
+    /**
+     * Privatni konstruktor koji ucitava konfiguraciju iz classpath resursa.
+     */
     private Konfiguracija() {
         konfiguracija = new Properties();
         try (InputStream in = Konfiguracija.class.getClassLoader().getResourceAsStream(RESURS)) {

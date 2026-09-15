@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
- */
 package forme;
 
 import java.awt.event.ActionListener;
@@ -9,13 +5,17 @@ import javax.swing.JButton;
 import javax.swing.JTextField;
 
 /**
+ * Forma za dodavanje novog ili izmenu postojeceg artikla.
+ * Omogucava unos identifikatora, naziva, tipa i cene artikla.
+ * Koristi se u dva moda koje kontroler postavlja pre prikaza.
  *
- * @author Cofara
+ * @author Filip Oketic
+ * @version 1.0
  */
 public class DodajArtikalForma extends javax.swing.JFrame {
 
     /**
-     * Creates new form DodajArtikalForma
+     * Kreira formu i inicijalizuje Swing komponente.
      */
     public DodajArtikalForma() {
         initComponents();
@@ -116,50 +116,110 @@ public class DodajArtikalForma extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    /**
+     * Vraca dugme za dodavanje.
+     *
+     * @return dugme za dodavanje
+     */
     public JButton getjButtonDodaj() {
         return jButtonDodaj;
     }
 
+    /**
+     * Postavlja dugme za dodavanje.
+     *
+     * @param jButtonDodaj dugme za dodavanje
+     */
     public void setjButtonDodaj(JButton jButtonDodaj) {
         this.jButtonDodaj = jButtonDodaj;
     }
 
+    /**
+     * Vraca dugme za izmenu.
+     *
+     * @return dugme za izmenu
+     */
     public JButton getjButtonIzmeni() {
         return jButtonIzmeni;
     }
 
+    /**
+     * Postavlja dugme za izmenu.
+     *
+     * @param jButtonIzmeni dugme za izmenu
+     */
     public void setjButtonIzmeni(JButton jButtonIzmeni) {
         this.jButtonIzmeni = jButtonIzmeni;
     }
 
+    /**
+     * Vraca tekstualno polje za cenu.
+     *
+     * @return tekstualno polje za cenu
+     */
     public JTextField getjTextFieldCena() {
         return jTextFieldCena;
     }
 
+    /**
+     * Postavlja tekstualno polje za cenu.
+     *
+     * @param jTextFieldCena tekstualno polje za cenu
+     */
     public void setjTextFieldCena(JTextField jTextFieldCena) {
         this.jTextFieldCena = jTextFieldCena;
     }
 
+    /**
+     * Vraca tekstualno polje za identifikator.
+     *
+     * @return tekstualno polje za identifikator
+     */
     public JTextField getjTextFieldId() {
         return jTextFieldId;
     }
 
+    /**
+     * Postavlja tekstualno polje za identifikator.
+     *
+     * @param jTextFieldId tekstualno polje za identifikator
+     */
     public void setjTextFieldId(JTextField jTextFieldId) {
         this.jTextFieldId = jTextFieldId;
     }
 
+    /**
+     * Vraca tekstualno polje za naziv.
+     *
+     * @return tekstualno polje za naziv
+     */
     public JTextField getjTextFieldNaziv() {
         return jTextFieldNaziv;
     }
 
+    /**
+     * Postavlja tekstualno polje za naziv.
+     *
+     * @param jTextFieldNaziv tekstualno polje za naziv
+     */
     public void setjTextFieldNaziv(JTextField jTextFieldNaziv) {
         this.jTextFieldNaziv = jTextFieldNaziv;
     }
 
+    /**
+     * Vraca tekstualno polje za tip.
+     *
+     * @return tekstualno polje za tip
+     */
     public JTextField getjTextFieldTip() {
         return jTextFieldTip;
     }
 
+    /**
+     * Postavlja tekstualno polje za tip.
+     *
+     * @param jTextFieldTip tekstualno polje za tip
+     */
     public void setjTextFieldTip(JTextField jTextFieldTip) {
         this.jTextFieldTip = jTextFieldTip;
     }
@@ -178,10 +238,20 @@ public class DodajArtikalForma extends javax.swing.JFrame {
     private javax.swing.JTextField jTextFieldTip;
     // End of variables declaration//GEN-END:variables
 
+     /**
+      * Dodaje ActionListener na dugme za dodavanje.
+      *
+      * @param actionListener osluskivac koji se poziva pri kliku na dugme za dodavanje
+      */
      public void dodajAddActionListener(ActionListener actionListener) {
         jButtonDodaj.addActionListener(actionListener);
     }
     
+    /**
+     * Dodaje ActionListener na dugme za izmenu.
+     *
+     * @param actionListener osluskivac koji se poziva pri kliku na dugme za izmenu
+     */
     public void izmeniAddActionListener(ActionListener actionListener) {
         jButtonIzmeni.addActionListener(actionListener);
     }

@@ -9,21 +9,42 @@ import java.awt.event.ActionListener;
 import javax.swing.JOptionPane;
 import komunikacija.Komunikacija;
 
-
+/**
+ * Kontroler forme za dodavanje i izmenu konobara ({@link forme.DodajKonobaraForma}).
+ * U klijentskom MVC-u prikuplja ime, prezime, korisnicko ime i lozinku sa forme
+ * i salje zahteve serveru preko {@link komunikacija.Komunikacija}.
+ *
+ * @author Filip Oketic
+ * @version 1.0
+ */
 public class DodajKonobaraController {
 
+    /** Forma za dodavanje/izmenu konobara kojom ovaj kontroler upravlja. */
     private final DodajKonobaraForma dkf;
 
+    /**
+     * Kreira kontroler i registruje listenere za dodavanje i izmenu.
+     *
+     * @param dkf forma za konobara
+     */
     public DodajKonobaraController(DodajKonobaraForma dkf) {
         this.dkf = dkf;
         addActionListener();
     }
 
+    /**
+     * Priprema formu prema datom modu i prikazuje je.
+     *
+     * @param mod rezim rada forme (dodavanje ili izmena)
+     */
     public void otvoriFormu(FormaMod mod) {
         pripremiFormu(mod);
         dkf.setVisible(true);
     }
 
+    /**
+     * Registruje listenere za dugmad Dodaj i Izmeni.
+     */
     private void addActionListener() {
         // ➕ Dodaj
         dkf.dodajAddActionListener(new ActionListener() {
@@ -77,6 +98,12 @@ public class DodajKonobaraController {
         });
     }
 
+    /**
+     * Podesava vidljivost dugmadi i popunjava polja u zavisnosti od moda.
+     * Za izmenu konobar se cita iz parametra koordinatora <code>konobar</code>.
+     *
+     * @param mod rezim rada forme
+     */
     private void pripremiFormu(FormaMod mod) {
         switch (mod) {
             case DODAJ:

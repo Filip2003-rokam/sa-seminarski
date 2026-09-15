@@ -15,25 +15,40 @@ import javax.swing.JOptionPane;
 import komunikacija.Komunikacija;
 
 /**
- * Kontroler za prikaz rasporeda (KonobarSmena)
- * koji povezuje konobare, smene i datume rada.
- * @author Cofara
+ * Kontroler forme za prikaz rasporeda rada ({@link forme.PrikazRasporedaForma}).
+ * U klijentskom MVC-u prikazuje veze konobar-smena-datum ({@link domen.KonobarSmena}),
+ * omogucava filtriranje, brisanje i otvaranje forme za izmenu.
+ *
+ * @author Filip Oketic
+ * @version 1.0
  */
 public class PrikazRasporedaController {
 
+    /** Forma za prikaz rasporeda kojom ovaj kontroler upravlja. */
     private final PrikazRasporedaForma prf;
 
+    /**
+     * Kreira kontroler i registruje listenere korisnickih akcija.
+     *
+     * @param prf forma za prikaz rasporeda
+     */
     public PrikazRasporedaController(PrikazRasporedaForma prf) {
         this.prf = prf;
         addActionListeners();
     }
 
+    /**
+     * Priprema podatke, centrira i prikazuje formu.
+     */
     public void otvoriFormu() {
         pripremiFormu();
         prf.setVisible(true);
         prf.setLocationRelativeTo(null);
     }
 
+    /**
+     * Ucitava konobare, smene i raspored sa servera i postavlja model tabele.
+     */
     private void pripremiFormu() {
         try {
             // 🔹 Učitaj listu konobara
@@ -67,6 +82,9 @@ public class PrikazRasporedaController {
         }
     }
 
+    /**
+     * Registruje listenere: pretrazi, resetuj, obrisi, izmeni.
+     */
     private void addActionListeners() {
 
         
@@ -147,6 +165,9 @@ public class PrikazRasporedaController {
         
     }
 
+    /**
+     * Osvezava prikaz rasporeda (ponovo ucitava podatke sa servera).
+     */
     public void osveziPrikazRasporedaFormu() {
         pripremiFormu();
     }

@@ -10,29 +10,50 @@ import java.util.List;
 import javax.swing.JOptionPane;
 import komunikacija.Komunikacija;
 
-
-
+/**
+ * Kontroler forme za prikaz artikala ({@link forme.PrikazArtikalaForma}).
+ * U klijentskom MVC-u ucitava listu artikala sa servera, omogucava pretragu,
+ * brisanje i otvaranje forme za izmenu preko {@link cordinator.Cordinator}-a.
+ *
+ * @author Filip Oketic
+ * @version 1.0
+ */
 public class PrikazArtikalaController {
     
+    /** Forma za prikaz artikala kojom ovaj kontroler upravlja. */
     private final PrikazArtikalaForma pjf;
 
+    /**
+     * Kreira kontroler i registruje listenere korisnickih akcija.
+     *
+     * @param pjf forma za prikaz artikala
+     */
     public PrikazArtikalaController(PrikazArtikalaForma pjf) {
         this.pjf = pjf;
         addActionListeners();
     }
     
+    /**
+     * Priprema podatke, centrira i prikazuje formu.
+     */
     public void otvoriFormu() {
         pripremiFormu();
         pjf.setVisible(true);
         pjf.setLocationRelativeTo(null);
     }
     
+    /**
+     * Ucitava artikle sa servera i postavlja model tabele.
+     */
     private void pripremiFormu() {
         List<Artikal> artikli = Komunikacija.getInstance().ucitajArtikle();
         ModelTabeleArtikal model = new ModelTabeleArtikal(artikli);
         pjf.getjTableArtikal().setModel(model);
     }
     
+    /**
+     * Registruje listenere: obrisi, izmeni, pretrazi, resetuj.
+     */
     private void addActionListeners() {
         
         // Obrisi dugme
@@ -97,6 +118,9 @@ public class PrikazArtikalaController {
         });
     }
 
+    /**
+     * Osvezava prikaz artikala (ponovo ucitava podatke sa servera).
+     */
     public void osveziPrikazArtikalaFormu() {
         pripremiFormu();
     }

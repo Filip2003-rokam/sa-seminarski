@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package forme.model;
 
 import domen.Gost;
@@ -15,8 +11,11 @@ import javax.swing.table.AbstractTableModel;
 import komunikacija.Komunikacija;
 
 /**
+ * Model tabele za prikaz racuna u Swing {@code JTable} komponenti.
+ * Prikazuje kolone: Datum, Vreme, Ukupan iznos, Izdat, Gost, Konobar.
  *
- * @author Cofara
+ * @author Filip Oketic
+ * @version 1.0
  */
 public class ModelTabeleRacuni extends AbstractTableModel {
 
@@ -26,20 +25,41 @@ public class ModelTabeleRacuni extends AbstractTableModel {
     private final String[] kolone = {"Datum", "Vreme", "Ukupan iznos", "Izdat", "Gost", "Konobar"};
 
     
+    /**
+     * Kreira model tabele na osnovu prosledjene liste racuna.
+     *
+     * @param racuni lista racuna za prikaz
+     */
     public ModelTabeleRacuni(List<Racun> racuni) {
         this.racuni = racuni;
     }
 
+    /**
+     * Vraca broj redova u tabeli.
+     *
+     * @return broj racuna u listi, ili 0 ako je lista null
+     */
     @Override
     public int getRowCount() {
         return racuni == null ? 0 : racuni.size();
     }
 
+    /**
+     * Vraca broj kolona u tabeli.
+     *
+     * @return broj kolona
+     */
     @Override
     public int getColumnCount() {
         return kolone.length;
     }
 
+    /**
+     * Vraca naziv kolone za zadati indeks.
+     *
+     * @param column indeks kolone
+     * @return naziv kolone
+     */
     @Override
     public String getColumnName(int column) {
         return kolone[column];
@@ -47,6 +67,15 @@ public class ModelTabeleRacuni extends AbstractTableModel {
     
     
 
+    /**
+     * Vraca vrednost celije na zadatoj poziciji.
+     * Kolone: 0 - Datum, 1 - Vreme, 2 - Ukupan iznos, 3 - Izdat (DA/NE),
+     * 4 - Gost (ime i prezime), 5 - Konobar (ime i prezime).
+     *
+     * @param rowIndex indeks reda
+     * @param columnIndex indeks kolone
+     * @return vrednost celije
+     */
     @Override
     public Object getValueAt(int rowIndex, int columnIndex) {
         Racun r = racuni.get(rowIndex);
@@ -62,19 +91,45 @@ public class ModelTabeleRacuni extends AbstractTableModel {
         }
     }
 
+    /**
+     * Postavlja novu listu racuna i obavestava tabelu o promeni podataka.
+     *
+     * @param racuni nova lista racuna
+     */
     public void setRacuni(List<Racun> racuni) {
         this.racuni = racuni;
         fireTableDataChanged();
     }
 
+    /**
+     * Vraca racun na zadatom redu tabele.
+     *
+     * @param rowIndex indeks reda
+     * @return racun na datom redu
+     */
     public Racun getRacunAt(int rowIndex) {
         return racuni.get(rowIndex);
     }
 
+    /**
+     * Vraca listu racuna koja se prikazuje u tabeli.
+     *
+     * @return lista racuna
+     */
     public List<Racun> getRacuni() {
         return racuni;
     }
     
+    /**
+     * Filtrira listu racuna po konobaru, gostu, datumu i smeni.
+     * Null kriterijumi se ignorisu. Filter po smeni proverava da li
+     * vreme izdavanja racuna upada u interval smene.
+     *
+     * @param konobar izabrani konobar (moze biti null)
+     * @param gost izabrani gost (moze biti null)
+     * @param datum datum izdavanja (moze biti null)
+     * @param smena smena za filtriranje po vremenu (moze biti null)
+     */
     public void pretrazi(Konobar konobar, Gost gost, LocalDate datum, Smena smena) {
         List<Racun> filtrirani = new ArrayList<>();
 
@@ -118,7 +173,11 @@ public class ModelTabeleRacuni extends AbstractTableModel {
     }
 
     
-        // 🔹 Vrati broj plaćenih računa (jeIzdat == true)
+    /**
+     * Vraca broj placenih racuna (jeIzdat == true).
+     *
+     * @return broj placenih racuna
+     */
     public int getBrojPlaceniRacuna() {
         int count = 0;
         for (Racun r : racuni) {
@@ -129,7 +188,11 @@ public class ModelTabeleRacuni extends AbstractTableModel {
         return count;
     }
 
-    // 🔹 Vrati broj neplaćenih računa (jeIzdat == false)
+    /**
+     * Vraca broj neplacenih racuna (jeIzdat == false).
+     *
+     * @return broj neplacenih racuna
+     */
     public int getBrojNeplaceniRacuna() {
         int count = 0;
         for (Racun r : racuni) {
@@ -140,12 +203,20 @@ public class ModelTabeleRacuni extends AbstractTableModel {
         return count;
     }
 
-    // 🔹 Vrati ukupan broj računa
+    /**
+     * Vraca ukupan broj racuna u trenutnoj listi.
+     *
+     * @return ukupan broj racuna, ili 0 ako je lista null
+     */
     public int getUkupanBrojRacuna() {
         return racuni != null ? racuni.size() : 0;
     }
 
-    // 🔹 Vrati ukupan preostali dug (suma svih neplaćenih računa)
+    /**
+     * Vraca ukupan preostali dug kao sumu iznosa svih neplacenih racuna.
+     *
+     * @return suma iznosa neplacenih racuna
+     */
     public double getUkupanPreostaliDug() {
         double suma = 0;
         for (Racun r : racuni) {

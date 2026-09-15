@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
- */
 package forme;
 
 import domen.Konobar;
@@ -13,13 +9,17 @@ import javax.swing.JTable;
 import javax.swing.JTextField;
 
 /**
+ * Forma za pregled, pretragu, izmenu i brisanje rasporeda rada.
+ * Prikazuje tabelu rasporeda i omogucava filtriranje po konobaru,
+ * smeni i datumu. Kontroler povezuje dugmad sa operacijama.
  *
- * @author Cofara
+ * @author Filip Oketic
+ * @version 1.0
  */
 public class PrikazRasporedaForma extends javax.swing.JFrame {
 
     /**
-     * Creates new form PrikazRasporedaForma
+     * Kreira formu i inicijalizuje Swing komponente.
      */
     public PrikazRasporedaForma() {
         initComponents();
@@ -179,66 +179,146 @@ public class PrikazRasporedaForma extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jButtonIzmeniActionPerformed
 
+    /**
+     * Vraca dugme za izmenu.
+     *
+     * @return dugme za izmenu
+     */
     public JButton getjButtonIzmeni() {
         return jButtonIzmeni;
     }
 
+    /**
+     * Postavlja dugme za izmenu.
+     *
+     * @param jButtonIzmeni dugme za izmenu
+     */
     public void setjButtonIzmeni(JButton jButtonIzmeni) {
         this.jButtonIzmeni = jButtonIzmeni;
     }
 
+    /**
+     * Vraca dugme za brisanje.
+     *
+     * @return dugme za brisanje
+     */
     public JButton getjButtonObrisi() {
         return jButtonObrisi;
     }
 
+    /**
+     * Postavlja dugme za brisanje.
+     *
+     * @param jButtonObrisi dugme za brisanje
+     */
     public void setjButtonObrisi(JButton jButtonObrisi) {
         this.jButtonObrisi = jButtonObrisi;
     }
 
+    /**
+     * Vraca dugme za pretragu.
+     *
+     * @return dugme za pretragu
+     */
     public JButton getjButtonPretrazi() {
         return jButtonPretrazi;
     }
 
+    /**
+     * Postavlja dugme za pretragu.
+     *
+     * @param jButtonPretrazi dugme za pretragu
+     */
     public void setjButtonPretrazi(JButton jButtonPretrazi) {
         this.jButtonPretrazi = jButtonPretrazi;
     }
 
+    /**
+     * Vraca dugme za resetovanje filtera.
+     *
+     * @return dugme za resetovanje filtera
+     */
     public JButton getjButtonResetuj() {
         return jButtonResetuj;
     }
 
+    /**
+     * Postavlja dugme za resetovanje filtera.
+     *
+     * @param jButtonResetuj dugme za resetovanje filtera
+     */
     public void setjButtonResetuj(JButton jButtonResetuj) {
         this.jButtonResetuj = jButtonResetuj;
     }
 
+    /**
+     * Vraca combo box za konobara.
+     *
+     * @return combo box za konobara
+     */
     public JComboBox<Konobar> getjComboBoxKonobar() {
         return jComboBoxKonobar;
     }
 
+    /**
+     * Postavlja combo box za konobara.
+     *
+     * @param jComboBoxKonobar combo box za konobara
+     */
     public void setjComboBoxKonobar(JComboBox<Konobar> jComboBoxKonobar) {
         this.jComboBoxKonobar = jComboBoxKonobar;
     }
 
+    /**
+     * Vraca combo box za smenu.
+     *
+     * @return combo box za smenu
+     */
     public JComboBox<Smena> getjComboBoxSmena() {
         return jComboBoxSmena;
     }
 
+    /**
+     * Postavlja combo box za smenu.
+     *
+     * @param jComboBoxSmena combo box za smenu
+     */
     public void setjComboBoxSmena(JComboBox<Smena> jComboBoxSmena) {
         this.jComboBoxSmena = jComboBoxSmena;
     }
 
+    /**
+     * Vraca tabelu rasporeda.
+     *
+     * @return tabela rasporeda
+     */
     public JTable getjTableRaspored() {
         return jTableRaspored;
     }
 
+    /**
+     * Postavlja tabelu rasporeda.
+     *
+     * @param jTableRaspored tabela rasporeda
+     */
     public void setjTableRaspored(JTable jTableRaspored) {
         this.jTableRaspored = jTableRaspored;
     }
 
+    /**
+     * Vraca tekstualno polje za datum.
+     *
+     * @return tekstualno polje za datum
+     */
     public JTextField getjTextFieldDatum() {
         return jTextFieldDatum;
     }
 
+    /**
+     * Postavlja tekstualno polje za datum.
+     *
+     * @param jTextFieldDatum tekstualno polje za datum
+     */
     public void setjTextFieldDatum(JTextField jTextFieldDatum) {
         this.jTextFieldDatum = jTextFieldDatum;
     }
@@ -264,18 +344,38 @@ public class PrikazRasporedaForma extends javax.swing.JFrame {
     // End of variables declaration//GEN-END:variables
 
 
+        /**
+         * Dodaje ActionListener na dugme za brisanje.
+         *
+         * @param actionListener osluskivac koji se poziva pri kliku na dugme za brisanje
+         */
         public void addBtnObrisiActionListener(ActionListener actionListener) {
             jButtonObrisi.addActionListener(actionListener);
         }
 
+        /**
+         * Dodaje ActionListener na dugme za izmenu.
+         *
+         * @param actionListener osluskivac koji se poziva pri kliku na dugme za izmenu
+         */
         public void addBtnIzmeniActionListener(ActionListener actionListener) {
             jButtonIzmeni.addActionListener(actionListener);
         }
 
+        /**
+         * Dodaje ActionListener na dugme za pretragu.
+         *
+         * @param actionListener osluskivac koji se poziva pri kliku na dugme za pretragu
+         */
         public void addBtnPretraziActionListener(ActionListener actionListener) {
             jButtonPretrazi.addActionListener(actionListener);
         }
 
+        /**
+         * Dodaje ActionListener na dugme za resetovanje filtera.
+         *
+         * @param actionListener osluskivac koji se poziva pri kliku na dugme za resetovanje
+         */
         public void addBtnResetujActionListener(ActionListener actionListener) {
             jButtonResetuj.addActionListener(actionListener);
         }

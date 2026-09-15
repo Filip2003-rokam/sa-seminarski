@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package kontroleri;
 
 import domen.Gost;
@@ -17,24 +13,40 @@ import javax.swing.JOptionPane;
 import komunikacija.Komunikacija;
 
 /**
+ * Kontroler forme za prikaz gostiju ({@link forme.PrikazGostijuForma}).
+ * U klijentskom MVC-u ucitava goste i kategorije, omogucava pretragu, brisanje,
+ * izmenu i otvaranje detalja gosta preko {@link cordinator.Cordinator}-a.
  *
- * @author Cofara
+ * @author Filip Oketic
+ * @version 1.0
  */
 public class PrikazGostijuController {
     
+    /** Forma za prikaz gostiju kojom ovaj kontroler upravlja. */
     private final PrikazGostijuForma ppf;
 
+    /**
+     * Kreira kontroler i registruje listenere korisnickih akcija.
+     *
+     * @param ppf forma za prikaz gostiju
+     */
     public PrikazGostijuController(PrikazGostijuForma ppf) {
         this.ppf = ppf;
         addActionListener();
     }
 
+    /**
+     * Priprema podatke i prikazuje formu.
+     */
     public void otvoriFormu() {
         pripremiFormu();
         //ppf.show(true);
         ppf.setVisible(true);
     }
 
+    /**
+     * Ucitava goste i kategorije sa servera i postavlja model tabele.
+     */
     public void pripremiFormu() {
         
         List<Gost> gosti = komunikacija.Komunikacija.getInstance().ucitajGoste();
@@ -51,6 +63,9 @@ public class PrikazGostijuController {
         ppf.getjTableGosti().setModel(mtg);
     }
 
+        /**
+         * Registruje listenere: obrisi, izmeni, pretrazi, resetuj, detalji.
+         */
         private void addActionListener() {
             ppf.addBtnObrisiActionListener(new ActionListener() {
                 @Override
@@ -153,6 +168,9 @@ public class PrikazGostijuController {
             
     }
 
+    /**
+     * Osvezava prikaz gostiju (ponovo ucitava podatke sa servera).
+     */
     public void osveziPrikazGostijuFormu() {
         
         pripremiFormu();
