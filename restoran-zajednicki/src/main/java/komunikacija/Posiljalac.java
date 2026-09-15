@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package komunikacija;
 
 import java.io.IOException;
@@ -11,29 +7,47 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
+ * Odgovoran je za slanje serijalizovanih objekata preko mrezne uticnice.
+ * Koristi {@link ObjectOutputStream} za prenos {@link Zahtev} ili {@link Odgovor}
+ * objekata izmedju klijenta i servera. Greske pri pisanju se hvataju lokalno
+ * i ne propagiraju se pozivaocu.
  *
- * @author Cofara
+ * @author Filip Oketic
+ * @version 1.0
  */
 public class Posiljalac {
-    
+
+    /** Uticnica preko koje se salju objekti. */
     private Socket socket;
 
+    /**
+     * Kreira posiljaoca vezanog za zadatu uticnicu.
+     *
+     * @param socket mrezna uticnica za slanje podataka
+     */
     public Posiljalac(Socket socket) {
         this.socket = socket;
     }
-    
-    public void posalji(Object ob){
-        
+
+    /**
+     * Salje serijalizovani objekat preko uticnice.
+     * U slucaju {@link IOException} greska se ispisuje na konzolu
+     * ({@code printStackTrace}) i ne propagira se dalje.
+     *
+     * @param ob objekat koji se salje (obicno {@link Zahtev} ili {@link Odgovor})
+     */
+    public void posalji(Object ob) {
+
         try {
             ObjectOutputStream out = new ObjectOutputStream(socket.getOutputStream());
-            
+
             out.writeObject(ob);
             out.flush();
-            
+
         } catch (IOException ex) {
             ex.printStackTrace();
         }
-        
+
     }
-    
+
 }
