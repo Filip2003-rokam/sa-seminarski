@@ -80,11 +80,12 @@ class SmenaTest {
     }
 
     @Test
-    @DisplayName("Pun konstruktor baca izuzetak kada kraj nije posle pocetka")
-    void testPunKonstruktorBacaIzuzetakKadaKrajNijePoslePocetka() {
-        IllegalArgumentException ex = assertThrows(IllegalArgumentException.class,
-                () -> new Smena(1, "Jutarnja", LocalTime.of(16, 0), LocalTime.of(8, 0)));
-        assertEquals("Kraj smene mora biti posle pocetka.", ex.getMessage());
+    @DisplayName("Pun konstruktor prihvata smenu koja prelazi ponoc")
+    void testPunKonstruktorPrihvataSmenuKojaPrelaziPonoc() {
+        Smena nocna = assertDoesNotThrow(
+                () -> new Smena(1, "Nocna", LocalTime.of(22, 0), LocalTime.of(6, 0)));
+        assertEquals(LocalTime.of(22, 0), nocna.getVremePocetka());
+        assertEquals(LocalTime.of(6, 0), nocna.getVremeKraja());
     }
 
     @Test
@@ -159,16 +160,6 @@ class SmenaTest {
     }
 
     @Test
-    @DisplayName("setVremePocetka baca izuzetak kada je pocetak posle vec postavljenog kraja")
-    void testSetVremePocetkaBacaIzuzetakKadaJePocetakPosleKraja() {
-        Smena s = new Smena();
-        s.setVremeKraja(LocalTime.of(12, 0));
-        IllegalArgumentException ex = assertThrows(IllegalArgumentException.class,
-                () -> s.setVremePocetka(LocalTime.of(14, 0)));
-        assertEquals("Kraj smene mora biti posle pocetka.", ex.getMessage());
-    }
-
-    @Test
     @DisplayName("setVremePocetka prihvata vrednost kada kraj nije postavljen")
     void testSetVremePocetkaPrihvataVrednostKadaKrajNijePostavljen() {
         Smena s = new Smena();
@@ -197,26 +188,6 @@ class SmenaTest {
     }
 
     @Test
-    @DisplayName("setVremeKraja baca izuzetak kada je kraj pre pocetka")
-    void testSetVremeKrajaBacaIzuzetakKadaJeKrajPrePocetka() {
-        Smena s = new Smena();
-        s.setVremePocetka(LocalTime.of(12, 0));
-        IllegalArgumentException ex = assertThrows(IllegalArgumentException.class,
-                () -> s.setVremeKraja(LocalTime.of(10, 0)));
-        assertEquals("Kraj smene mora biti posle pocetka.", ex.getMessage());
-    }
-
-    @Test
-    @DisplayName("setVremeKraja baca izuzetak kada su kraj i pocetak jednaki")
-    void testSetVremeKrajaBacaIzuzetakKadaSuKrajIPocetakJednaki() {
-        Smena s = new Smena();
-        s.setVremePocetka(LocalTime.of(12, 0));
-        IllegalArgumentException ex = assertThrows(IllegalArgumentException.class,
-                () -> s.setVremeKraja(LocalTime.of(12, 0)));
-        assertEquals("Kraj smene mora biti posle pocetka.", ex.getMessage());
-    }
-
-    @Test
     @DisplayName("setVremeKraja prihvata vrednost kada pocetak nije postavljen")
     void testSetVremeKrajaPrihvataVrednostKadaPocetakNijePostavljen() {
         Smena s = new Smena();
@@ -224,6 +195,124 @@ class SmenaTest {
         s.setVremeKraja(kraj);
         assertEquals(kraj, s.getVremeKraja());
         assertNull(s.getVremePocetka());
+    }
+
+    @Test
+    @DisplayName("Pojedinacni setteri ne proveravaju medjusobni odnos vremena")
+    void testPojedinacniSetteriNeProveravajuOdnosVremena() {
+        Smena s = new Smena();
+        s.setVremeKraja(LocalTime.of(12, 0));
+        assertDoesNotThrow(() -> s.setVremePocetka(LocalTime.of(14, 0)));
+        assertEquals(LocalTime.of(14, 0), s.getVremePocetka());
+    }
+
+    @ParameterizedTest
+    @MethodSource("nevalidniVremenskiIntervali")
+    @DisplayName("proveriVremena odbija jednaka vremena")
+    void testProveriVremenaBacaIzuzetakZaNevalidanInterval(
+            LocalTime pocetak, LocalTime kraj) {
+        Smena s = new Smena();
+        s.setVremePocetka(pocetak);
+        s.setVremeKraja(kraj);
+
+        IllegalArgumentException ex = assertThrows(
+                IllegalArgumentException.class, s::proveriVremena);
+
+        assertEquals("Vreme pocetka i kraja smene ne sme biti jednako.", ex.getMessage());
+    }
+
+    static Stream<Arguments> nevalidniVremenskiIntervali() {
+        return Stream.of(
+                Arguments.of(LocalTime.of(12, 0), LocalTime.of(12, 0))
+        );
+    }
+
+    @Test
+    @DisplayName("proveriVremena prihvata ispravan interval")
+    void testProveriVremenaPrihvataIspravanInterval() {
+        assertDoesNotThrow(smena::proveriVremena);
+    }
+
+    @Test
+    @DisplayName("proveriVremena odbija interval bez vremena kraja")
+    void testProveriVremenaBacaIzuzetakKadaKrajNijePostavljen() {
+        Smena s = new Smena();
+        s.setVremePocetka(LocalTime.of(8, 0));
+        IllegalArgumentException ex = assertThrows(
+                IllegalArgumentException.class, s::proveriVremena);
+        assertEquals("Vreme kraja smene ne sme biti null.", ex.getMessage());
+    }
+
+    @Test
+    @DisplayName("proveriVremena odbija interval bez vremena pocetka")
+    void testProveriVremenaBacaIzuzetakKadaPocetakNijePostavljen() {
+        Smena s = new Smena();
+        s.setVremeKraja(LocalTime.of(16, 0));
+        IllegalArgumentException ex = assertThrows(
+                IllegalArgumentException.class, s::proveriVremena);
+        assertEquals("Vreme pocetka smene ne sme biti null.", ex.getMessage());
+    }
+
+    @Test
+    @DisplayName("postaviVremena postavlja ispravan interval")
+    void testPostaviVremenaPostavljaIspravanInterval() {
+        Smena s = new Smena();
+        s.postaviVremena(LocalTime.of(8, 0), LocalTime.of(16, 0));
+        assertEquals(LocalTime.of(8, 0), s.getVremePocetka());
+        assertEquals(LocalTime.of(16, 0), s.getVremeKraja());
+    }
+
+    @ParameterizedTest
+    @MethodSource("nevalidniVremenskiIntervali")
+    @DisplayName("postaviVremena odbija jednaka vremena")
+    void testPostaviVremenaBacaIzuzetakZaNevalidanInterval(
+            LocalTime pocetak, LocalTime kraj) {
+        Smena s = new Smena();
+        IllegalArgumentException ex = assertThrows(IllegalArgumentException.class,
+                () -> s.postaviVremena(pocetak, kraj));
+        assertEquals("Vreme pocetka i kraja smene ne sme biti jednako.", ex.getMessage());
+    }
+
+    @Test
+    @DisplayName("postaviVremena odbija null pocetak")
+    void testPostaviVremenaBacaIzuzetakZaNullPocetak() {
+        IllegalArgumentException ex = assertThrows(IllegalArgumentException.class,
+                () -> smena.postaviVremena(null, LocalTime.of(16, 0)));
+        assertEquals("Vreme pocetka smene ne sme biti null.", ex.getMessage());
+    }
+
+    @Test
+    @DisplayName("postaviVremena odbija null kraj")
+    void testPostaviVremenaBacaIzuzetakZaNullKraj() {
+        IllegalArgumentException ex = assertThrows(IllegalArgumentException.class,
+                () -> smena.postaviVremena(LocalTime.of(8, 0), null));
+        assertEquals("Vreme kraja smene ne sme biti null.", ex.getMessage());
+    }
+
+    @Test
+    @DisplayName("prelaziPonoc vraca true za nocnu smenu")
+    void testPrelaziPonocVracaTrueZaNocnuSmenu() {
+        Smena nocna = new Smena(2, "Nocna", LocalTime.of(22, 0), LocalTime.of(6, 0));
+        assertTrue(nocna.prelaziPonoc());
+    }
+
+    @Test
+    @DisplayName("prelaziPonoc vraca false za dnevnu smenu")
+    void testPrelaziPonocVracaFalseZaDnevnuSmenu() {
+        assertFalse(smena.prelaziPonoc());
+    }
+
+    @Test
+    @DisplayName("Trajanje dnevne smene racuna se u minutima")
+    void testVratiTrajanjeUMinutimaZaDnevnuSmenu() {
+        assertEquals(480, smena.vratiTrajanjeUMinutima());
+    }
+
+    @Test
+    @DisplayName("Trajanje nocne smene racuna se preko ponoci")
+    void testVratiTrajanjeUMinutimaZaNocnuSmenu() {
+        Smena nocna = new Smena(2, "Nocna", LocalTime.of(22, 0), LocalTime.of(6, 0));
+        assertEquals(480, nocna.vratiTrajanjeUMinutima());
     }
 
     @Test
@@ -351,14 +440,14 @@ class SmenaTest {
         ResultSet rs = mock(ResultSet.class);
         Time pocetak1 = Time.valueOf(LocalTime.of(8, 0));
         Time kraj1 = Time.valueOf(LocalTime.of(16, 0));
-        Time pocetak2 = Time.valueOf(LocalTime.of(16, 0));
-        Time kraj2 = Time.valueOf(LocalTime.of(23, 0));
+        Time pocetak2 = Time.valueOf(LocalTime.of(22, 0));
+        Time kraj2 = Time.valueOf(LocalTime.of(6, 0));
 
         when(rs.next()).thenReturn(true, true, false);
         when(rs.getInt("idSmena")).thenReturn(1, 2);
-        when(rs.getString("naziv")).thenReturn("Jutarnja", "Vecernja");
+        when(rs.getString("naziv")).thenReturn("Jutarnja", "Nocna");
         when(rs.getTime("vremePocetka")).thenReturn(pocetak1, pocetak2);
-        when(rs.getTime("vremeKraja")).thenReturn(kraj1, kraj1, kraj2, kraj2);
+        when(rs.getTime("vremeKraja")).thenReturn(kraj1, kraj2);
 
         List<ApstraktniDomenskiObjekat> lista = smena.vratiListu(rs);
 
@@ -370,9 +459,10 @@ class SmenaTest {
         assertEquals(LocalTime.of(16, 0), prva.getVremeKraja());
         Smena druga = (Smena) lista.get(1);
         assertEquals(2, druga.getIdSmena());
-        assertEquals("Vecernja", druga.getNaziv());
-        assertEquals(LocalTime.of(16, 0), druga.getVremePocetka());
-        assertEquals(LocalTime.of(23, 0), druga.getVremeKraja());
+        assertEquals("Nocna", druga.getNaziv());
+        assertEquals(LocalTime.of(22, 0), druga.getVremePocetka());
+        assertEquals(LocalTime.of(6, 0), druga.getVremeKraja());
+        assertTrue(druga.prelaziPonoc());
     }
 
     @Test
@@ -384,7 +474,7 @@ class SmenaTest {
         when(rs.getInt("idSmena")).thenReturn(7);
         when(rs.getString("naziv")).thenReturn("Popodnevna");
         when(rs.getTime("vremePocetka")).thenReturn(pocetak);
-        when(rs.getTime("vremeKraja")).thenReturn(kraj, kraj);
+        when(rs.getTime("vremeKraja")).thenReturn(kraj);
 
         Smena rezultat = (Smena) smena.vratiObjekatIzRS(rs);
         assertEquals(7, rezultat.getIdSmena());
@@ -394,8 +484,8 @@ class SmenaTest {
     }
 
     @Test
-    @DisplayName("vratiObjekatIzRS postavlja vreme kraja na null kada ResultSet vraca null")
-    void testVratiObjekatIzRSNullVremeKraja() throws Exception {
+    @DisplayName("vratiObjekatIzRS odbija null vreme kraja iz baze")
+    void testVratiObjekatIzRSBacaIzuzetakZaNullVremeKraja() throws Exception {
         ResultSet rs = mock(ResultSet.class);
         Time pocetak = Time.valueOf(LocalTime.of(10, 0));
         when(rs.getInt("idSmena")).thenReturn(8);
@@ -403,10 +493,8 @@ class SmenaTest {
         when(rs.getTime("vremePocetka")).thenReturn(pocetak);
         when(rs.getTime("vremeKraja")).thenReturn(null);
 
-        Smena rezultat = (Smena) smena.vratiObjekatIzRS(rs);
-        assertEquals(8, rezultat.getIdSmena());
-        assertEquals("Otvorena", rezultat.getNaziv());
-        assertEquals(LocalTime.of(10, 0), rezultat.getVremePocetka());
-        assertNull(rezultat.getVremeKraja());
+        IllegalArgumentException ex = assertThrows(IllegalArgumentException.class,
+                () -> smena.vratiObjekatIzRS(rs));
+        assertEquals("Vreme kraja smene ne sme biti null.", ex.getMessage());
     }
 }

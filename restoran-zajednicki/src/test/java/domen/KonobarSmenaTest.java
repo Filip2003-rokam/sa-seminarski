@@ -256,14 +256,14 @@ class KonobarSmenaTest {
         when(rs.getString("korisnickoIme")).thenReturn("marko", "ana");
         when(rs.getString("sifra")).thenReturn("s1", "s2");
         when(rs.getInt("idSmena")).thenReturn(2, 4);
-        when(rs.getString("naziv")).thenReturn("Jutarnja", "Vecernja");
+        when(rs.getString("naziv")).thenReturn("Jutarnja", "Nocna");
         when(rs.getTime("vremePocetka")).thenReturn(
                 java.sql.Time.valueOf(LocalTime.of(8, 0)),
-                java.sql.Time.valueOf(LocalTime.of(16, 0))
+                java.sql.Time.valueOf(LocalTime.of(22, 0))
         );
         when(rs.getTime("vremeKraja")).thenReturn(
                 java.sql.Time.valueOf(LocalTime.of(16, 0)),
-                java.sql.Time.valueOf(LocalTime.of(23, 0))
+                java.sql.Time.valueOf(LocalTime.of(6, 0))
         );
         when(rs.getDate("datumSmene")).thenReturn(
                 java.sql.Date.valueOf(LocalDate.of(2024, 5, 15)),
@@ -289,9 +289,10 @@ class KonobarSmenaTest {
         assertEquals(3, drugi.getKonobar().getIdKonobar());
         assertEquals("Ana", drugi.getKonobar().getIme());
         assertEquals(4, drugi.getSmena().getIdSmena());
-        assertEquals("Vecernja", drugi.getSmena().getNaziv());
-        assertEquals(LocalTime.of(16, 0), drugi.getSmena().getVremePocetka());
-        assertEquals(LocalTime.of(23, 0), drugi.getSmena().getVremeKraja());
+        assertEquals("Nocna", drugi.getSmena().getNaziv());
+        assertEquals(LocalTime.of(22, 0), drugi.getSmena().getVremePocetka());
+        assertEquals(LocalTime.of(6, 0), drugi.getSmena().getVremeKraja());
+        assertTrue(drugi.getSmena().prelaziPonoc());
         assertEquals(LocalDate.of(2024, 5, 16), drugi.getDatumSmene());
     }
 

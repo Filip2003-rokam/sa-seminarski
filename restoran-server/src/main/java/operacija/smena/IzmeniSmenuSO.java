@@ -7,8 +7,8 @@ import repository.db.DbRepository;
 /**
  * Sistemska operacija za izmenu postojece smene u bazi podataka.
  * Radi nad domenskom klasom {@link Smena}.
- * Preduslovi zahtevaju da parametar bude instanca Smena.
- * Validacija atributa (naziv, vremena, redosled) je u setterima domen klase.
+ * Preduslovi zahtevaju da parametar bude instanca Smena i da vremenski
+ * interval bude ispravan. Pojedinacne vrednosti atributa proveravaju setteri.
  *
  * @author Filip Oketic
  * @version 1.0
@@ -35,13 +35,16 @@ public class IzmeniSmenuSO extends ApstraktnaGenerickaOperacija {
      * Proverava preduslove za izmenu smene.
      *
      * @param param objekat koji mora biti tipa {@link Smena}
-     * @throws Exception ako je param null ili nije Smena ("Sistem nije mogao da izmeni smenu.")
+     * @throws Exception ako je param null ili nije Smena
+     * @throws IllegalArgumentException ako neko vreme nije postavljeno ili su
+     *         vreme pocetka i vreme kraja jednaki
      */
     @Override
     protected void preduslovi(Object param) throws Exception {
         if (param == null || !(param instanceof Smena)) {
             throw new Exception("Sistem nije mogao da izmeni smenu.");
         }
+        ((Smena) param).proveriVremena();
     }
 
     /**

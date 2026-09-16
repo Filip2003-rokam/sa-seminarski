@@ -2,10 +2,14 @@ package operacija.smena;
 
 import domen.Smena;
 import java.time.LocalTime;
+import java.util.stream.Stream;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.MethodSource;
 import repository.db.DbRepository;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -68,5 +72,43 @@ class IzmeniSmenuSOTest {
     void testPogresanTipParametaraBacaGresku() {
         Exception ex = assertThrows(Exception.class, () -> so.izvrsi("nije smena", null));
         assertEquals("Sistem nije mogao da izmeni smenu.", ex.getMessage());
+    }
+
+    @ParameterizedTest
+    @MethodSource("nevalidniVremenskiIntervali")
+    @DisplayName("Izmena odbija jednaka vremena")
+    void testNevalidanVremenskiIntervalBacaGresku(
+            LocalTime pocetak, LocalTime kraj) throws Exception {
+        Smena nevalidnaSmena = new Smena();
+        nevalidnaSmena.setIdSmena(1);
+        nevalidnaSmena.setNaziv("Jutarnja");
+        nevalidnaSmena.setVremePocetka(pocetak);
+        nevalidnaSmena.setVremeKraja(kraj);
+
+        IllegalArgumentException ex = assertThrows(IllegalArgumentException.class,
+                () -> so.izvrsi(nevalidnaSmena, null));
+
+        assertEquals("Vreme pocetka i kraja smene ne sme biti jednako.", ex.getMessage());
+        verify(broker).rollback();
+        verify(broker, never()).edit(any());
+        verify(broker, never()).commit();
+    }
+
+    static Stream<Arguments> nevalidniVremenskiIntervali() {
+        return Stream.of(
+                Arguments.of(LocalTime.of(12, 0), LocalTime.of(12, 0))
+        );
+    }
+
+    @Test
+    @DisplayName("Izmena prihvata smenu koja prelazi ponoc")
+    void testIzmenaPrihvataSmenuKojaPrelaziPonoc() throws Exception {
+        Smena nocna = new Smena(2, "Nocna", LocalTime.of(22, 0), LocalTime.of(6, 0));
+
+        so.izvrsi(nocna, null);
+
+        verify(broker).edit(nocna);
+        verify(broker).commit();
+        verify(broker, never()).rollback();
     }
 }
