@@ -18,9 +18,9 @@ Klijent-server desktop aplikacija u Javi za upravljanje restoranom: gosti, artik
 
 Projekat je Maven multi-module:
 
-- **restoran-zajednicki** — domenske klase, komunikacioni objekti (`Zahtev`, `Odgovor`, `Operacija`, `Posiljalac`, `Primalac`) i zajednički ugovori koje koriste i klijent i server.
-- **restoran-server** — serverska aplikacija: prijem zahteva, sistemske operacije, pristup bazi (repository), konfiguracija i Swing forma za pokretanje/zaustavljanje servera. Uključuje i izvoz računa u JSON (`JsonUtil`, `IzveziRacuneUJsonSO`).
-- **restoran-klijent** — klijentska Swing aplikacija: forme, kontroleri, koordinator i fasada komunikacije prema serveru.
+- **restoran-zajednicki** - domenske klase, komunikacioni objekti (`Zahtev`, `Odgovor`, `Operacija`, `Posiljalac`, `Primalac`) i zajednički ugovori koje koriste i klijent i server.
+- **restoran-server** - serverska aplikacija: prijem zahteva, sistemske operacije, pristup bazi (repository), konfiguracija i Swing forma za pokretanje/zaustavljanje servera. Uključuje i izvoz računa u JSON (`JsonUtil`, `IzveziRacuneUJsonSO`).
+- **restoran-klijent** - klijentska Swing aplikacija: forme, kontroleri, koordinator i fasada komunikacije prema serveru.
 
 ## Preduslovi
 
@@ -122,15 +122,15 @@ Smena može prelaziti ponoć. Metoda `prelaziPonoc` proverava da li smena prelaz
 
 Paket `operacija` u modulu `restoran-server` (šablon `ApstraktnaGenerickaOperacija`):
 
-- **login** — `LoginOperacija`
-- **gosti** — `UcitajGosteSO`, `DodajGostaSO`, `IzmeniGostaSO`, `ObrisiGostaSO`
-- **artikal** — `UcitajArtikleSO`, `DodajArtikalSO`, `IzmeniArtikalSO`, `ObrisiArtikalSO`
-- **kategorijagosta** — `UcitajKategorijeGostijuSO`, `DodajKategorijuGostaSO`, `IzmeniKategorijuGostaSO`, `ObrisiKategorijuGostaSO`
-- **konobar** — `UcitajKonobareSO`, `DodajKonobaraSO`, `IzmeniKonobaraSO`, `ObrisiKonobaraSO`
-- **racuni** — `UcitajRacuneSO`, `DodajRacunSO`, `IzmeniRacunSO`, `ObrisiRacunSO`, `IzveziRacuneUJsonSO`
-- **stavke** — `UcitajStavkeRacunaSO`, `ObrisiStavkuRacunaSO`
-- **smena** — `UcitajSmeneSO`, `DodajSmenuSO`, `IzmeniSmenuSO`, `ObrisiSmenuSO`
-- **raspored** — `UcitajRasporedSO`, `DodajRasporedSO`, `IzmeniRasporedSO`, `ObrisiRasporedSO`
+- **login** - `LoginOperacija`
+- **gosti** - `UcitajGosteSO`, `DodajGostaSO`, `IzmeniGostaSO`, `ObrisiGostaSO`
+- **artikal** - `UcitajArtikleSO`, `DodajArtikalSO`, `IzmeniArtikalSO`, `ObrisiArtikalSO`
+- **kategorijagosta** - `UcitajKategorijeGostijuSO`, `DodajKategorijuGostaSO`, `IzmeniKategorijuGostaSO`, `ObrisiKategorijuGostaSO`
+- **konobar** - `UcitajKonobareSO`, `DodajKonobaraSO`, `IzmeniKonobaraSO`, `ObrisiKonobaraSO`
+- **racuni** - `UcitajRacuneSO`, `DodajRacunSO`, `IzmeniRacunSO`, `ObrisiRacunSO`, `IzveziRacuneUJsonSO`
+- **stavke** - `UcitajStavkeRacunaSO`, `ObrisiStavkuRacunaSO`
+- **smena** - `UcitajSmeneSO`, `DodajSmenuSO`, `IzmeniSmenuSO`, `ObrisiSmenuSO`
+- **raspored** - `UcitajRasporedSO`, `DodajRasporedSO`, `IzmeniRasporedSO`, `ObrisiRasporedSO`
 
 ## Izvoz računa u JSON
 
