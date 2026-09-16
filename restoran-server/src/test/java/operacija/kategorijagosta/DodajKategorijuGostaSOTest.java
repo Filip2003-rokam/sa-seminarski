@@ -1,6 +1,7 @@
 package operacija.kategorijagosta;
 
 import domen.KategorijaGosta;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -24,6 +25,13 @@ class DodajKategorijuGostaSOTest {
         doNothing().when(broker).rollback();
         so = new DodajKategorijuGostaSO(broker);
         validnaKategorija = new KategorijaGosta(1, "VIP", 10.0, true);
+    }
+
+    @AfterEach
+    void tearDown() {
+        broker = null;
+        so = null;
+        validnaKategorija = null;
     }
 
     @Test
@@ -59,38 +67,6 @@ class DodajKategorijuGostaSOTest {
     void testPogresanTipParametaraBacaGresku() {
         Exception ex = assertThrows(Exception.class, () -> so.izvrsi("nije kategorija", null));
         assertEquals("Sistem nije mogao da doda kategoriju gosta!", ex.getMessage());
-    }
-
-    @Test
-    @DisplayName("Null opis baca GRESKA OPIS")
-    void testNullOpisBacaGresku() {
-        validnaKategorija.setOpis(null);
-        Exception ex = assertThrows(Exception.class, () -> so.izvrsi(validnaKategorija, null));
-        assertEquals("GRESKA OPIS", ex.getMessage());
-    }
-
-    @Test
-    @DisplayName("Prazan opis baca GRESKA OPIS")
-    void testPrazanOpisBacaGresku() {
-        validnaKategorija.setOpis("");
-        Exception ex = assertThrows(Exception.class, () -> so.izvrsi(validnaKategorija, null));
-        assertEquals("GRESKA OPIS", ex.getMessage());
-    }
-
-    @Test
-    @DisplayName("Opis kraći od 2 karaktera baca GRESKA OPIS")
-    void testKratakOpisBacaGresku() {
-        validnaKategorija.setOpis("A");
-        Exception ex = assertThrows(Exception.class, () -> so.izvrsi(validnaKategorija, null));
-        assertEquals("GRESKA OPIS", ex.getMessage());
-    }
-
-    @Test
-    @DisplayName("Negativan popust baca GRESKA POPUST")
-    void testNegativanPopustBacaGresku() {
-        validnaKategorija.setPopust(-1);
-        Exception ex = assertThrows(Exception.class, () -> so.izvrsi(validnaKategorija, null));
-        assertEquals("GRESKA POPUST - mora biti >= 0", ex.getMessage());
     }
 
     @Test

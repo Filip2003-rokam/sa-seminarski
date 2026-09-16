@@ -1,6 +1,7 @@
 package operacija.artikal;
 
 import domen.Artikal;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -24,6 +25,13 @@ class IzmeniArtikalSOTest {
         doNothing().when(broker).rollback();
         so = new IzmeniArtikalSO(broker);
         validanArtikal = new Artikal(1, "Pizza", 850.0, "Jelo");
+    }
+
+    @AfterEach
+    void tearDown() {
+        broker = null;
+        so = null;
+        validanArtikal = null;
     }
 
     @Test
@@ -59,61 +67,5 @@ class IzmeniArtikalSOTest {
     void testPogresanTipParametaraBacaGresku() {
         Exception ex = assertThrows(Exception.class, () -> so.izvrsi(123, null));
         assertEquals("Sistem nije mogao da izmeni artikal", ex.getMessage());
-    }
-
-    @Test
-    @DisplayName("Null naziv baca GRESKA NAZIV")
-    void testNullNazivBacaGresku() {
-        validanArtikal.setNaziv(null);
-        Exception ex = assertThrows(Exception.class, () -> so.izvrsi(validanArtikal, null));
-        assertEquals("GRESKA NAZIV", ex.getMessage());
-    }
-
-    @Test
-    @DisplayName("Prazan naziv baca GRESKA NAZIV")
-    void testPrazanNazivBacaGresku() {
-        validanArtikal.setNaziv("");
-        Exception ex = assertThrows(Exception.class, () -> so.izvrsi(validanArtikal, null));
-        assertEquals("GRESKA NAZIV", ex.getMessage());
-    }
-
-    @Test
-    @DisplayName("Naziv kraći od 2 karaktera baca GRESKA NAZIV")
-    void testKratakNazivBacaGresku() {
-        validanArtikal.setNaziv("X");
-        Exception ex = assertThrows(Exception.class, () -> so.izvrsi(validanArtikal, null));
-        assertEquals("GRESKA NAZIV", ex.getMessage());
-    }
-
-    @Test
-    @DisplayName("Null tip baca GRESKA TIP")
-    void testNullTipBacaGresku() {
-        validanArtikal.setTip(null);
-        Exception ex = assertThrows(Exception.class, () -> so.izvrsi(validanArtikal, null));
-        assertEquals("GRESKA TIP", ex.getMessage());
-    }
-
-    @Test
-    @DisplayName("Prazan tip baca GRESKA TIP")
-    void testPrazanTipBacaGresku() {
-        validanArtikal.setTip("");
-        Exception ex = assertThrows(Exception.class, () -> so.izvrsi(validanArtikal, null));
-        assertEquals("GRESKA TIP", ex.getMessage());
-    }
-
-    @Test
-    @DisplayName("Cena nula baca GRESKA CENA")
-    void testCenaNulaBacaGresku() {
-        validanArtikal.setCena(0);
-        Exception ex = assertThrows(Exception.class, () -> so.izvrsi(validanArtikal, null));
-        assertEquals("GRESKA CENA", ex.getMessage());
-    }
-
-    @Test
-    @DisplayName("Negativna cena baca GRESKA CENA")
-    void testNegativnaCenaBacaGresku() {
-        validanArtikal.setCena(-5.5);
-        Exception ex = assertThrows(Exception.class, () -> so.izvrsi(validanArtikal, null));
-        assertEquals("GRESKA CENA", ex.getMessage());
     }
 }

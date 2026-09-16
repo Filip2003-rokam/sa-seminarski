@@ -66,15 +66,16 @@ public class DodajKategorijuGostaController {
                     return;
                 }
 
-                Komunikacija.getInstance().konekcija();
-                KategorijaGosta kg = new KategorijaGosta(-1, naziv, popust, true);
-
                 try {
+                    Komunikacija.getInstance().konekcija();
+                    KategorijaGosta kg = new KategorijaGosta(0, naziv, popust, true);
                     Komunikacija.getInstance().dodajKategorijuGosta(kg);
                     JOptionPane.showMessageDialog(dkf, "Sistem je zapamtio kategoriju gosta.", "Uspeh", JOptionPane.INFORMATION_MESSAGE);
                     dkf.dispose();
+                } catch (IllegalArgumentException exc) {
+                    JOptionPane.showMessageDialog(dkf, exc.getMessage(), "Neispravan unos", JOptionPane.WARNING_MESSAGE);
                 } catch (Exception exc) {
-                    JOptionPane.showMessageDialog(dkf, "Sistem ne može da zapamti kategoriju gosta.", "Greška", JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(dkf, "Sistem ne može da zapamti kategoriju gosta.", "Greska", JOptionPane.ERROR_MESSAGE);
                 }
             }
         });
@@ -87,28 +88,28 @@ public class DodajKategorijuGostaController {
             }
 
             private void izmeni(ActionEvent e) {
-                int id = Integer.parseInt(dkf.getjTextFieldId().getText());
                 String naziv = dkf.getjTextFieldNaziv().getText().trim();
+                int id;
                 double popust;
 
                 try {
+                    id = Integer.parseInt(dkf.getjTextFieldId().getText());
                     popust = Double.parseDouble(dkf.getjTextFieldPopust().getText().trim());
                 } catch (NumberFormatException ex) {
-                    JOptionPane.showMessageDialog(dkf, "Popust mora biti broj!", "Greška", JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(dkf, "Id i popust moraju biti brojevi!", "Greska", JOptionPane.ERROR_MESSAGE);
                     return;
                 }
 
-                Komunikacija.getInstance().konekcija();
-                
-                // ovo ima popust cemo postaviti da uvek bude true jer je beskoristan parametar
-                KategorijaGosta kg = new KategorijaGosta(id, naziv, popust,true);
-
                 try {
+                    Komunikacija.getInstance().konekcija();
+                    KategorijaGosta kg = new KategorijaGosta(id, naziv, popust, true);
                     Komunikacija.getInstance().izmeniKategorijuGosta(kg);
                     JOptionPane.showMessageDialog(dkf, "Sistem je izmenio kategoriju gosta.", "Uspeh", JOptionPane.INFORMATION_MESSAGE);
                     dkf.dispose();
+                } catch (IllegalArgumentException exc) {
+                    JOptionPane.showMessageDialog(dkf, exc.getMessage(), "Neispravan unos", JOptionPane.WARNING_MESSAGE);
                 } catch (Exception exc) {
-                    JOptionPane.showMessageDialog(dkf, "Sistem ne može da izmeni kategoriju gosta.", "Greška", JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(dkf, "Sistem ne može da izmeni kategoriju gosta.", "Greska", JOptionPane.ERROR_MESSAGE);
                 }
             }
         });

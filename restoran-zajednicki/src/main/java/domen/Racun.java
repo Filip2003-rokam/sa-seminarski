@@ -50,26 +50,28 @@ public class Racun implements ApstraktniDomenskiObjekat{
 
     /**
      * Konstruktor koji kreira racun sa svim atributima.
+     * Validacija se vrsi preko setera.
      *
      * @param idRacun jedinstveni identifikator racuna
-     * @param datumIzdavanja datum izdavanja (moze biti null dok racun nije izdat)
-     * @param vremeIzdavanja vreme izdavanja (moze biti null dok racun nije izdat)
-     * @param ukupanIznos ukupan iznos (ocekivano &gt;= 0)
+     * @param datumIzdavanja datum izdavanja
+     * @param vremeIzdavanja vreme izdavanja
+     * @param ukupanIznos ukupan iznos (mora biti &gt; 0)
      * @param jeIzdat true ako je racun izdat, false ako je u pripremi
      * @param konobar konobar koji izdaje racun
      * @param gost gost za kog se izdaje racun
-     * @param stavke lista stavki racuna (moze biti null ili prazna)
+     * @param stavke lista stavki racuna (ne sme biti null ni prazna)
+     * @throws IllegalArgumentException ako bilo koja prosledjena vrednost ne zadovoljava pravila settera
      */
     public Racun(int idRacun, LocalDate datumIzdavanja, LocalTime vremeIzdavanja, double ukupanIznos,
                  boolean jeIzdat, Konobar konobar, Gost gost, List<StavkaRacuna> stavke) {
-        this.idRacun = idRacun;
-        this.datumIzdavanja = datumIzdavanja;
-        this.vremeIzdavanja = vremeIzdavanja;
-        this.ukupanIznos = ukupanIznos;
-        this.jeIzdat = jeIzdat;
-        this.konobar = konobar;
-        this.gost = gost;
-        this.stavke = stavke;
+        setIdRacun(idRacun);
+        setDatumIzdavanja(datumIzdavanja);
+        setVremeIzdavanja(vremeIzdavanja);
+        setUkupanIznos(ukupanIznos);
+        setJeIzdat(jeIzdat);
+        setKonobar(konobar);
+        setGost(gost);
+        setStavke(stavke);
     }
 
     /**
@@ -82,9 +84,15 @@ public class Racun implements ApstraktniDomenskiObjekat{
     /**
      * Postavlja jedinstveni identifikator racuna.
      *
-     * @param idRacun novi id (pozitivan broj koji odgovara PK u bazi)
+     * @param idRacun novi id (ne sme biti negativan)
+     * @throws IllegalArgumentException ako je idRacun negativan
      */
-    public void setIdRacun(int idRacun) { this.idRacun = idRacun; }
+    public void setIdRacun(int idRacun) {
+        if (idRacun < 0) {
+            throw new IllegalArgumentException("Id racuna ne sme biti negativan.");
+        }
+        this.idRacun = idRacun;
+    }
 
     /**
      * Vraca datum izdavanja racuna kao {@link LocalDate}.
@@ -96,9 +104,15 @@ public class Racun implements ApstraktniDomenskiObjekat{
     /**
      * Postavlja datum izdavanja racuna.
      *
-     * @param datumIzdavanja datum izdavanja (null dozvoljen dok racun nije izdat)
+     * @param datumIzdavanja datum izdavanja (ne sme biti null)
+     * @throws IllegalArgumentException ako je datumIzdavanja null
      */
-    public void setDatumIzdavanja(LocalDate datumIzdavanja) { this.datumIzdavanja = datumIzdavanja; }
+    public void setDatumIzdavanja(LocalDate datumIzdavanja) {
+        if (datumIzdavanja == null) {
+            throw new IllegalArgumentException("Datum izdavanja racuna ne sme biti null.");
+        }
+        this.datumIzdavanja = datumIzdavanja;
+    }
 
     /**
      * Vraca vreme izdavanja racuna kao {@link LocalTime}.
@@ -110,9 +124,15 @@ public class Racun implements ApstraktniDomenskiObjekat{
     /**
      * Postavlja vreme izdavanja racuna.
      *
-     * @param vremeIzdavanja vreme izdavanja (null dozvoljen dok racun nije izdat)
+     * @param vremeIzdavanja vreme izdavanja (ne sme biti null)
+     * @throws IllegalArgumentException ako je vremeIzdavanja null
      */
-    public void setVremeIzdavanja(LocalTime vremeIzdavanja) { this.vremeIzdavanja = vremeIzdavanja; }
+    public void setVremeIzdavanja(LocalTime vremeIzdavanja) {
+        if (vremeIzdavanja == null) {
+            throw new IllegalArgumentException("Vreme izdavanja racuna ne sme biti null.");
+        }
+        this.vremeIzdavanja = vremeIzdavanja;
+    }
 
     /**
      * Vraca ukupan iznos racuna kao double.
@@ -124,9 +144,15 @@ public class Racun implements ApstraktniDomenskiObjekat{
     /**
      * Postavlja ukupan iznos racuna.
      *
-     * @param ukupanIznos novi iznos (ocekivano &gt;= 0)
+     * @param ukupanIznos novi iznos (mora biti &gt; 0)
+     * @throws IllegalArgumentException ako je ukupanIznos manji ili jednak nuli
      */
-    public void setUkupanIznos(double ukupanIznos) { this.ukupanIznos = ukupanIznos; }
+    public void setUkupanIznos(double ukupanIznos) {
+        if (ukupanIznos <= 0) {
+            throw new IllegalArgumentException("Ukupan iznos racuna mora biti veci od nule.");
+        }
+        this.ukupanIznos = ukupanIznos;
+    }
 
     /**
      * Vraca da li je racun izdat.
@@ -152,9 +178,15 @@ public class Racun implements ApstraktniDomenskiObjekat{
     /**
      * Postavlja konobara racuna.
      *
-     * @param konobar konobar sa validnim idKonobar (potreban za INSERT/UPDATE)
+     * @param konobar konobar sa validnim idKonobar (ne sme biti null)
+     * @throws IllegalArgumentException ako je konobar null
      */
-    public void setKonobar(Konobar konobar) { this.konobar = konobar; }
+    public void setKonobar(Konobar konobar) {
+        if (konobar == null) {
+            throw new IllegalArgumentException("Konobar racuna ne sme biti null.");
+        }
+        this.konobar = konobar;
+    }
 
     /**
      * Vraca gosta racuna kao objekat tipa {@link Gost}.
@@ -166,9 +198,15 @@ public class Racun implements ApstraktniDomenskiObjekat{
     /**
      * Postavlja gosta racuna.
      *
-     * @param gost gost sa validnim idGost (potreban za INSERT/UPDATE)
+     * @param gost gost sa validnim idGost (ne sme biti null)
+     * @throws IllegalArgumentException ako je gost null
      */
-    public void setGost(Gost gost) { this.gost = gost; }
+    public void setGost(Gost gost) {
+        if (gost == null) {
+            throw new IllegalArgumentException("Gost racuna ne sme biti null.");
+        }
+        this.gost = gost;
+    }
 
     /**
      * Vraca listu stavki racuna.
@@ -180,9 +218,15 @@ public class Racun implements ApstraktniDomenskiObjekat{
     /**
      * Postavlja listu stavki racuna.
      *
-     * @param stavke lista stavki (moze biti null ili prazna)
+     * @param stavke lista stavki (ne sme biti null ni prazna)
+     * @throws IllegalArgumentException ako je lista null ili prazna
      */
-    public void setStavke(List<StavkaRacuna> stavke) { this.stavke = stavke; }
+    public void setStavke(List<StavkaRacuna> stavke) {
+        if (stavke == null || stavke.isEmpty()) {
+            throw new IllegalArgumentException("Racun mora sadrzati barem jednu stavku.");
+        }
+        this.stavke = stavke;
+    }
 
     /**
      * Poredi racune po identifikatoru {@code idRacun}.
@@ -260,19 +304,25 @@ public List<ApstraktniDomenskiObjekat> vratiListu(ResultSet rs) throws Exception
             rs.getString("g.prezime"),
             null // ako imas i kategoriju gosta, ovde se dodaje
         );
-        
-        
 
-        Racun r = new Racun(
-            rs.getInt("idRacun"),
-            rs.getDate("datumIzdavanja") != null ? rs.getDate("datumIzdavanja").toLocalDate() : null,
-            rs.getTime("vremeIzdavanja") != null ? rs.getTime("vremeIzdavanja").toLocalTime() : null,
-            rs.getDouble("ukupanIznos"),
-            rs.getBoolean("jeIzdat"),
-            k, // ovde ide konobar
-            g, // ovde ide gost
-            null // stavke kasnije posebno
-        );
+        Racun r = new Racun();
+        r.setIdRacun(rs.getInt("idRacun"));
+        if (rs.getDate("datumIzdavanja") != null) {
+            r.setDatumIzdavanja(rs.getDate("datumIzdavanja").toLocalDate());
+        }
+        if (rs.getTime("vremeIzdavanja") != null) {
+            r.setVremeIzdavanja(rs.getTime("vremeIzdavanja").toLocalTime());
+        }
+        double iznos = rs.getDouble("ukupanIznos");
+        if (iznos > 0) {
+            r.setUkupanIznos(iznos);
+        } else {
+            r.ukupanIznos = iznos;
+        }
+        r.setJeIzdat(rs.getBoolean("jeIzdat"));
+        r.setKonobar(k);
+        r.setGost(g);
+        // stavke se ucitavaju posebno
 
         lista.add(r);
     }
@@ -336,16 +386,23 @@ public List<ApstraktniDomenskiObjekat> vratiListu(ResultSet rs) throws Exception
      */
     @Override
     public ApstraktniDomenskiObjekat vratiObjekatIzRS(ResultSet rs) throws Exception {
-        return new Racun(
-            rs.getInt("idRacun"),
-            rs.getDate("datumIzdavanja") != null ? rs.getDate("datumIzdavanja").toLocalDate() : null,
-            rs.getTime("vremeIzdavanja") != null ? rs.getTime("vremeIzdavanja").toLocalTime() : null,
-            rs.getDouble("ukupanIznos"),
-            rs.getBoolean("jeIzdat"),
-            null,
-            null,
-            null
-        );
+        Racun r = new Racun();
+        r.setIdRacun(rs.getInt("idRacun"));
+        if (rs.getDate("datumIzdavanja") != null) {
+            r.setDatumIzdavanja(rs.getDate("datumIzdavanja").toLocalDate());
+        }
+        if (rs.getTime("vremeIzdavanja") != null) {
+            r.setVremeIzdavanja(rs.getTime("vremeIzdavanja").toLocalTime());
+        }
+        double iznos = rs.getDouble("ukupanIznos");
+        if (iznos > 0) {
+            r.setUkupanIznos(iznos);
+        } else {
+            r.ukupanIznos = iznos;
+        }
+        r.setJeIzdat(rs.getBoolean("jeIzdat"));
+        // konobar, gost i stavke se ne ucitavaju ovde
+        return r;
     }
 
     /**

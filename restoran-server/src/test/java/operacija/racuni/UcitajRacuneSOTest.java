@@ -1,12 +1,15 @@
 package operacija.racuni;
 
+import domen.Artikal;
 import domen.Gost;
 import domen.KategorijaGosta;
 import domen.Konobar;
 import domen.Racun;
+import domen.StavkaRacuna;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.List;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -30,6 +33,12 @@ class UcitajRacuneSOTest {
         so = new UcitajRacuneSO(broker);
     }
 
+    @AfterEach
+    void tearDown() {
+        broker = null;
+        so = null;
+    }
+
     @Test
     @DisplayName("Parametar različit od null baca grešku")
     void testParametarNijeNullBacaGresku() throws Exception {
@@ -45,8 +54,10 @@ class UcitajRacuneSOTest {
     void testUspesnoUcitavaRacune() throws Exception {
         Konobar konobar = new Konobar(1, "Petar", "Petrovic", "ppetar", "sifra");
         Gost gost = new Gost(1, "Marko", "Markovic", new KategorijaGosta(1, "VIP", 10.0, true));
+        Artikal artikal = new Artikal(1, "Pizza", 850.0, "Jelo");
+        StavkaRacuna stavka = new StavkaRacuna(1, 1, 2, 1700.0, 850.0, artikal);
         Racun r = new Racun(1, LocalDate.of(2024, 5, 10), LocalTime.of(14, 30),
-                1700.0, true, konobar, gost, List.of());
+                1700.0, true, konobar, gost, List.of(stavka));
         List<Racun> lista = List.of(r);
         when(broker.getAll(any(), any())).thenReturn(lista);
 

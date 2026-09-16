@@ -2,9 +2,14 @@ package operacija.smena;
 
 import domen.Smena;
 import java.time.LocalTime;
+import java.util.stream.Stream;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.MethodSource;
 import repository.db.DbRepository;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -25,6 +30,13 @@ class IzmeniSmenuSOTest {
         doNothing().when(broker).rollback();
         so = new IzmeniSmenuSO(broker);
         validnaSmena = new Smena(1, "Jutarnja", LocalTime.of(8, 0), LocalTime.of(16, 0));
+    }
+
+    @AfterEach
+    void tearDown() {
+        broker = null;
+        so = null;
+        validnaSmena = null;
     }
 
     @Test
@@ -62,62 +74,41 @@ class IzmeniSmenuSOTest {
         assertEquals("Sistem nije mogao da izmeni smenu.", ex.getMessage());
     }
 
-    @Test
-    @DisplayName("Null naziv baca grešku o dužini")
-    void testNullNazivBacaGresku() {
-        validnaSmena.setNaziv(null);
-        Exception ex = assertThrows(Exception.class, () -> so.izvrsi(validnaSmena, null));
-        assertEquals("Naziv smene mora imati bar 3 karaktera.", ex.getMessage());
+    @ParameterizedTest
+    @MethodSource("nevalidniVremenskiIntervali")
+    @DisplayName("Izmena odbija jednaka vremena")
+    void testNevalidanVremenskiIntervalBacaGresku(
+            LocalTime pocetak, LocalTime kraj) throws Exception {
+        Smena nevalidnaSmena = new Smena();
+        nevalidnaSmena.setIdSmena(1);
+        nevalidnaSmena.setNaziv("Jutarnja");
+        nevalidnaSmena.setVremePocetka(pocetak);
+        nevalidnaSmena.setVremeKraja(kraj);
+
+        IllegalArgumentException ex = assertThrows(IllegalArgumentException.class,
+                () -> so.izvrsi(nevalidnaSmena, null));
+
+        assertEquals("Vreme pocetka i kraja smene ne sme biti jednako.", ex.getMessage());
+        verify(broker).rollback();
+        verify(broker, never()).edit(any());
+        verify(broker, never()).commit();
+    }
+
+    static Stream<Arguments> nevalidniVremenskiIntervali() {
+        return Stream.of(
+                Arguments.of(LocalTime.of(12, 0), LocalTime.of(12, 0))
+        );
     }
 
     @Test
-    @DisplayName("Prazan naziv baca grešku o dužini")
-    void testPrazanNazivBacaGresku() {
-        validnaSmena.setNaziv("");
-        Exception ex = assertThrows(Exception.class, () -> so.izvrsi(validnaSmena, null));
-        assertEquals("Naziv smene mora imati bar 3 karaktera.", ex.getMessage());
-    }
+    @DisplayName("Izmena prihvata smenu koja prelazi ponoc")
+    void testIzmenaPrihvataSmenuKojaPrelaziPonoc() throws Exception {
+        Smena nocna = new Smena(2, "Nocna", LocalTime.of(22, 0), LocalTime.of(6, 0));
 
-    @Test
-    @DisplayName("Naziv kraći od 3 karaktera baca grešku")
-    void testKratakNazivBacaGresku() {
-        validnaSmena.setNaziv("Ab");
-        Exception ex = assertThrows(Exception.class, () -> so.izvrsi(validnaSmena, null));
-        assertEquals("Naziv smene mora imati bar 3 karaktera.", ex.getMessage());
-    }
+        so.izvrsi(nocna, null);
 
-    @Test
-    @DisplayName("Null početak smene baca posebnu grešku")
-    void testNullPocetakBacaGresku() {
-        validnaSmena.setVremePocetka(null);
-        Exception ex = assertThrows(Exception.class, () -> so.izvrsi(validnaSmena, null));
-        assertEquals("Početak smene mora biti unet.", ex.getMessage());
-    }
-
-    @Test
-    @DisplayName("Null kraj smene baca posebnu grešku")
-    void testNullKrajBacaGresku() {
-        validnaSmena.setVremeKraja(null);
-        Exception ex = assertThrows(Exception.class, () -> so.izvrsi(validnaSmena, null));
-        assertEquals("Kraj smene mora biti unet.", ex.getMessage());
-    }
-
-    @Test
-    @DisplayName("Kraj pre početka baca grešku o redosledu")
-    void testKrajPrePocetkaBacaGresku() {
-        validnaSmena.setVremePocetka(LocalTime.of(16, 0));
-        validnaSmena.setVremeKraja(LocalTime.of(8, 0));
-        Exception ex = assertThrows(Exception.class, () -> so.izvrsi(validnaSmena, null));
-        assertEquals("Kraj smene mora biti posle početka.", ex.getMessage());
-    }
-
-    @Test
-    @DisplayName("Jednaka vremena početka i kraja baca grešku o redosledu")
-    void testJednakaVremenaBacaGresku() {
-        LocalTime isto = LocalTime.of(10, 0);
-        validnaSmena.setVremePocetka(isto);
-        validnaSmena.setVremeKraja(isto);
-        Exception ex = assertThrows(Exception.class, () -> so.izvrsi(validnaSmena, null));
-        assertEquals("Kraj smene mora biti posle početka.", ex.getMessage());
+        verify(broker).edit(nocna);
+        verify(broker).commit();
+        verify(broker, never()).rollback();
     }
 }

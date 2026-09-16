@@ -4,9 +4,14 @@ import java.sql.ResultSet;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.List;
+import java.util.stream.Stream;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.MethodSource;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
@@ -26,6 +31,14 @@ class KonobarSmenaTest {
         konobarSmena = new KonobarSmena(konobar, smena, datumSmene);
     }
 
+    @AfterEach
+    void tearDown() {
+        konobar = null;
+        smena = null;
+        datumSmene = null;
+        konobarSmena = null;
+    }
+
     @Test
     @DisplayName("Prazan konstruktor kreira objekat KonobarSmena")
     void testPrazanKonstruktorKreiraObjekat() {
@@ -42,6 +55,30 @@ class KonobarSmenaTest {
     }
 
     @Test
+    @DisplayName("Pun konstruktor baca izuzetak za null konobara")
+    void testPunKonstruktorBacaIzuzetakZaNullKonobara() {
+        IllegalArgumentException ex = assertThrows(IllegalArgumentException.class,
+                () -> new KonobarSmena(null, smena, datumSmene));
+        assertEquals("Konobar u rasporedu ne sme biti null.", ex.getMessage());
+    }
+
+    @Test
+    @DisplayName("Pun konstruktor baca izuzetak za null smenu")
+    void testPunKonstruktorBacaIzuzetakZaNullSmenu() {
+        IllegalArgumentException ex = assertThrows(IllegalArgumentException.class,
+                () -> new KonobarSmena(konobar, null, datumSmene));
+        assertEquals("Smena u rasporedu ne sme biti null.", ex.getMessage());
+    }
+
+    @Test
+    @DisplayName("Pun konstruktor baca izuzetak za null datum")
+    void testPunKonstruktorBacaIzuzetakZaNullDatum() {
+        IllegalArgumentException ex = assertThrows(IllegalArgumentException.class,
+                () -> new KonobarSmena(konobar, smena, null));
+        assertEquals("Datum smene ne sme biti null.", ex.getMessage());
+    }
+
+    @Test
     @DisplayName("Setter i getter za konobar rade ispravno")
     void testSetGetKonobar() {
         KonobarSmena ks = new KonobarSmena();
@@ -51,12 +88,30 @@ class KonobarSmenaTest {
     }
 
     @Test
+    @DisplayName("setKonobar baca izuzetak za null")
+    void testSetKonobarBacaIzuzetakZaNull() {
+        KonobarSmena ks = new KonobarSmena();
+        IllegalArgumentException ex = assertThrows(IllegalArgumentException.class,
+                () -> ks.setKonobar(null));
+        assertEquals("Konobar u rasporedu ne sme biti null.", ex.getMessage());
+    }
+
+    @Test
     @DisplayName("Setter i getter za smenu rade ispravno")
     void testSetGetSmena() {
         KonobarSmena ks = new KonobarSmena();
-        Smena s = new Smena(4, "Vecernja", LocalTime.of(16, 0), LocalTime.of(0, 0));
+        Smena s = new Smena(4, "Vecernja", LocalTime.of(16, 0), LocalTime.of(23, 0));
         ks.setSmena(s);
         assertEquals(s, ks.getSmena());
+    }
+
+    @Test
+    @DisplayName("setSmena baca izuzetak za null")
+    void testSetSmenaBacaIzuzetakZaNull() {
+        KonobarSmena ks = new KonobarSmena();
+        IllegalArgumentException ex = assertThrows(IllegalArgumentException.class,
+                () -> ks.setSmena(null));
+        assertEquals("Smena u rasporedu ne sme biti null.", ex.getMessage());
     }
 
     @Test
@@ -69,60 +124,79 @@ class KonobarSmenaTest {
     }
 
     @Test
-    @DisplayName("equals vraća true kada se objekat poredi sam sa sobom")
+    @DisplayName("setDatumSmene baca izuzetak za null")
+    void testSetDatumSmeneBacaIzuzetakZaNull() {
+        KonobarSmena ks = new KonobarSmena();
+        IllegalArgumentException ex = assertThrows(IllegalArgumentException.class,
+                () -> ks.setDatumSmene(null));
+        assertEquals("Datum smene ne sme biti null.", ex.getMessage());
+    }
+
+    @Test
+    @DisplayName("equals vraca true kada se objekat poredi sam sa sobom")
     void testEqualsIstiObjekat() {
         assertTrue(konobarSmena.equals(konobarSmena));
     }
 
     @Test
-    @DisplayName("equals vraća false kada se objekat poredi sa null")
+    @DisplayName("equals vraca false kada se objekat poredi sa null")
     void testEqualsSaNull() {
         assertFalse(konobarSmena.equals(null));
     }
 
     @Test
-    @DisplayName("equals vraća false kada se objekat poredi sa objektom drugog tipa")
+    @DisplayName("equals vraca false kada se objekat poredi sa objektom drugog tipa")
     void testEqualsSaDrugimTipom() {
         assertFalse(konobarSmena.equals("nije KonobarSmena"));
     }
 
-    @Test
-    @DisplayName("Dva objekta sa istim konobarom, smenom i datumom su jednaka")
-    void testEqualsIstiKompozitniKljuc() {
-        KonobarSmena drugi = new KonobarSmena(
-                new Konobar(1, "Drugo", "Ime", "x", "y"),
-                new Smena(2, "Druga", LocalTime.of(9, 0), LocalTime.of(17, 0)),
-                LocalDate.of(2024, 5, 15)
-        );
-        assertTrue(konobarSmena.equals(drugi));
+    @ParameterizedTest
+    @MethodSource("podaciZaEquals")
+    @DisplayName("equals poredi po konobaru, smeni i datumu")
+    void testEqualsPoKompozitnomKljucu(KonobarSmena prvi, KonobarSmena drugi, boolean ocekivano) {
+        assertEquals(ocekivano, prvi.equals(drugi));
     }
 
-    @Test
-    @DisplayName("Dva objekta sa različitim kompozitnim ključem nisu jednaka")
-    void testEqualsRazlicitKompozitniKljuc() {
-        KonobarSmena drugi = new KonobarSmena(konobar, smena, LocalDate.of(2024, 6, 1));
-        assertFalse(konobarSmena.equals(drugi));
+    static Stream<Arguments> podaciZaEquals() {
+        Konobar k1 = new Konobar(1, "Marko", "Markovic", "marko", "sifra1");
+        Konobar k2 = new Konobar(1, "Drugo", "Ime", "x", "y");
+        Smena s1 = new Smena(2, "Jutarnja", LocalTime.of(8, 0), LocalTime.of(16, 0));
+        Smena s2 = new Smena(2, "Druga", LocalTime.of(9, 0), LocalTime.of(17, 0));
+        LocalDate d1 = LocalDate.of(2024, 5, 15);
+        LocalDate d2 = LocalDate.of(2024, 6, 1);
+        return Stream.of(
+                Arguments.of(
+                        new KonobarSmena(k1, s1, d1),
+                        new KonobarSmena(k2, s2, d1),
+                        true
+                ),
+                Arguments.of(
+                        new KonobarSmena(k1, s1, d1),
+                        new KonobarSmena(k1, s1, d2),
+                        false
+                )
+        );
     }
 
     @Test
     @DisplayName("Jednaki objekti imaju isti hashCode")
     void testHashCodeJednakiObjektiImajuIstiHashCode() {
         KonobarSmena drugi = new KonobarSmena(
-                new Konobar(1, "X", "Y", "a", "b"),
-                new Smena(2, "Z", LocalTime.of(8, 0), LocalTime.of(16, 0)),
+                new Konobar(1, "Xx", "Yy", "ab", "cd"),
+                new Smena(2, "Zzz", LocalTime.of(8, 0), LocalTime.of(16, 0)),
                 LocalDate.of(2024, 5, 15)
         );
         assertEquals(konobarSmena.hashCode(), drugi.hashCode());
     }
 
     @Test
-    @DisplayName("Višestruki pozivi hashCode na istom objektu vraćaju istu vrednost")
+    @DisplayName("Visestruki pozivi hashCode na istom objektu vracaju istu vrednost")
     void testHashCodeKonzistentnost() {
         assertEquals(konobarSmena.hashCode(), konobarSmena.hashCode());
     }
 
     @Test
-    @DisplayName("toString sadrži konobar, smenu i datumSmene")
+    @DisplayName("toString sadrzi konobar, smenu i datumSmene")
     void testToStringFormat() {
         String rezultat = konobarSmena.toString();
         assertTrue(rezultat.contains("konobar=" + konobar));
@@ -131,13 +205,13 @@ class KonobarSmenaTest {
     }
 
     @Test
-    @DisplayName("vratiNazivTabele vraća ime tabele konobarsmena")
+    @DisplayName("vratiNazivTabele vraca ime tabele konobarsmena")
     void testVratiNazivTabele() {
         assertEquals("konobarsmena", konobarSmena.vratiNazivTabele());
     }
 
     @Test
-    @DisplayName("vratiPrimarniKljuc vraća kompozitni uslov sa idKonobar, idSmena i datumSmene")
+    @DisplayName("vratiPrimarniKljuc vraca kompozitni uslov sa idKonobar, idSmena i datumSmene")
     void testVratiPrimarniKljuc() {
         assertEquals(
                 "idKonobar=1 AND idSmena=2 AND datumSmene='2024-05-15'",
@@ -146,25 +220,25 @@ class KonobarSmenaTest {
     }
 
     @Test
-    @DisplayName("vratiKoloneZaUbacivanje vraća nazive kolona za INSERT")
+    @DisplayName("vratiKoloneZaUbacivanje vraca nazive kolona za INSERT")
     void testVratiKoloneZaUbacivanje() {
         assertEquals("idKonobar, idSmena, datumSmene", konobarSmena.vratiKoloneZaUbacivanje());
     }
 
     @Test
-    @DisplayName("vratiVrednostiZaUbacivanje vraća vrednosti u SQL formatu za INSERT")
+    @DisplayName("vratiVrednostiZaUbacivanje vraca vrednosti u SQL formatu za INSERT")
     void testVratiVrednostiZaUbacivanje() {
         assertEquals("1, 2, '2024-05-15'", konobarSmena.vratiVrednostiZaUbacivanje());
     }
 
     @Test
-    @DisplayName("vratiVrednostiZaIzmenu vraća SET deo SQL upita za datumSmene")
+    @DisplayName("vratiVrednostiZaIzmenu vraca SET deo SQL upita za datumSmene")
     void testVratiVrednostiZaIzmenu() {
         assertEquals("datumSmene='2024-05-15'", konobarSmena.vratiVrednostiZaIzmenu());
     }
 
     @Test
-    @DisplayName("vratiListu vraća praznu listu kada ResultSet nema redova")
+    @DisplayName("vratiListu vraca praznu listu kada ResultSet nema redova")
     void testVratiListuPrazanResultSet() throws Exception {
         ResultSet rs = mock(ResultSet.class);
         when(rs.next()).thenReturn(false);
@@ -182,14 +256,14 @@ class KonobarSmenaTest {
         when(rs.getString("korisnickoIme")).thenReturn("marko", "ana");
         when(rs.getString("sifra")).thenReturn("s1", "s2");
         when(rs.getInt("idSmena")).thenReturn(2, 4);
-        when(rs.getString("naziv")).thenReturn("Jutarnja", "Vecernja");
+        when(rs.getString("naziv")).thenReturn("Jutarnja", "Nocna");
         when(rs.getTime("vremePocetka")).thenReturn(
                 java.sql.Time.valueOf(LocalTime.of(8, 0)),
-                java.sql.Time.valueOf(LocalTime.of(16, 0))
+                java.sql.Time.valueOf(LocalTime.of(22, 0))
         );
         when(rs.getTime("vremeKraja")).thenReturn(
                 java.sql.Time.valueOf(LocalTime.of(16, 0)),
-                java.sql.Time.valueOf(LocalTime.of(0, 0))
+                java.sql.Time.valueOf(LocalTime.of(6, 0))
         );
         when(rs.getDate("datumSmene")).thenReturn(
                 java.sql.Date.valueOf(LocalDate.of(2024, 5, 15)),
@@ -215,13 +289,13 @@ class KonobarSmenaTest {
         assertEquals(3, drugi.getKonobar().getIdKonobar());
         assertEquals("Ana", drugi.getKonobar().getIme());
         assertEquals(4, drugi.getSmena().getIdSmena());
-        assertEquals("Vecernja", drugi.getSmena().getNaziv());
-        assertEquals(LocalTime.of(16, 0), drugi.getSmena().getVremePocetka());
-        assertEquals(LocalTime.of(0, 0), drugi.getSmena().getVremeKraja());
+        assertEquals("Nocna", drugi.getSmena().getNaziv());
+        assertEquals(LocalTime.of(22, 0), drugi.getSmena().getVremePocetka());
+        assertEquals(LocalTime.of(6, 0), drugi.getSmena().getVremeKraja());
+        assertTrue(drugi.getSmena().prelaziPonoc());
         assertEquals(LocalDate.of(2024, 5, 16), drugi.getDatumSmene());
     }
 
-    // Lista koristi vremePocetka/vremeKraja; pojedinačni objekat koristi pocetak/kraj
     @Test
     @DisplayName("vratiObjekatIzRS kreira KonobarSmena iz ResultSet-a sa kolonama pocetak i kraj")
     void testVratiObjekatIzRS() throws Exception {

@@ -1,6 +1,7 @@
 package domen;
 
 import java.sql.ResultSet;
+import java.sql.Time;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -36,17 +37,21 @@ public class Smena implements ApstraktniDomenskiObjekat{
 
     /**
      * Konstruktor koji kreira smenu sa svim atributima.
+     * Validacija se vrsi preko setera.
      *
      * @param idSmena jedinstveni identifikator smene
      * @param naziv naziv smene
      * @param vremePocetka vreme pocetka smene
-     * @param vremeKraja vreme kraja smene (moze biti null)
+     * @param vremeKraja vreme kraja smene
+     * @throws IllegalArgumentException ako bilo koja prosledjena vrednost ne zadovoljava
+     *         pravila settera ili su vreme pocetka i vreme kraja jednaki
      */
     public Smena(int idSmena, String naziv, LocalTime vremePocetka, LocalTime vremeKraja) {
-        this.idSmena = idSmena;
-        this.naziv = naziv;
-        this.vremePocetka = vremePocetka;
-        this.vremeKraja = vremeKraja;
+        setIdSmena(idSmena);
+        setNaziv(naziv);
+        setVremePocetka(vremePocetka);
+        setVremeKraja(vremeKraja);
+        proveriVremena();
     }
 
     /**
@@ -59,9 +64,15 @@ public class Smena implements ApstraktniDomenskiObjekat{
     /**
      * Postavlja jedinstveni identifikator smene.
      *
-     * @param idSmena novi id (pozitivan broj koji odgovara PK u bazi)
+     * @param idSmena novi id (ne sme biti negativan)
+     * @throws IllegalArgumentException ako je idSmena negativan
      */
-    public void setIdSmena(int idSmena) { this.idSmena = idSmena; }
+    public void setIdSmena(int idSmena) {
+        if (idSmena < 0) {
+            throw new IllegalArgumentException("Id smene ne sme biti negativan.");
+        }
+        this.idSmena = idSmena;
+    }
 
     /**
      * Vraca naziv smene kao String.
@@ -73,9 +84,15 @@ public class Smena implements ApstraktniDomenskiObjekat{
     /**
      * Postavlja naziv smene.
      *
-     * @param naziv novi naziv (ne bi trebalo da bude null ili prazan string)
+     * @param naziv novi naziv (minimum 3 karaktera)
+     * @throws IllegalArgumentException ako je naziv null ili ako ima manje od 3 karaktera
      */
-    public void setNaziv(String naziv) { this.naziv = naziv; }
+    public void setNaziv(String naziv) {
+        if (naziv == null || naziv.length() < 3) {
+            throw new IllegalArgumentException("Naziv smene mora imati najmanje 3 karaktera.");
+        }
+        this.naziv = naziv;
+    }
 
     /**
      * Vraca vreme pocetka smene kao {@link LocalTime}.
@@ -87,9 +104,15 @@ public class Smena implements ApstraktniDomenskiObjekat{
     /**
      * Postavlja vreme pocetka smene.
      *
-     * @param vremePocetka vreme pocetka (ne bi trebalo da bude null)
+     * @param vremePocetka vreme pocetka (ne sme biti null)
+     * @throws IllegalArgumentException ako je vremePocetka null
      */
-    public void setVremePocetka(LocalTime vremePocetka) { this.vremePocetka = vremePocetka; }
+    public void setVremePocetka(LocalTime vremePocetka) {
+        if (vremePocetka == null) {
+            throw new IllegalArgumentException("Vreme pocetka smene ne sme biti null.");
+        }
+        this.vremePocetka = vremePocetka;
+    }
 
     /**
      * Vraca vreme kraja smene kao {@link LocalTime}.
@@ -101,10 +124,81 @@ public class Smena implements ApstraktniDomenskiObjekat{
     /**
      * Postavlja vreme kraja smene.
      *
-     * @param vremeKraja vreme kraja (moze biti null; ako je postavljeno,
-     *        ocekivano je posle vremena pocetka)
+     * @param vremeKraja vreme kraja (ne sme biti null)
+     * @throws IllegalArgumentException ako je vremeKraja null
      */
-    public void setVremeKraja(LocalTime vremeKraja) { this.vremeKraja = vremeKraja; }
+    public void setVremeKraja(LocalTime vremeKraja) {
+        if (vremeKraja == null) {
+            throw new IllegalArgumentException("Vreme kraja smene ne sme biti null.");
+        }
+        this.vremeKraja = vremeKraja;
+    }
+
+    /**
+     * Proverava da li je vremenski interval smene ispravan. Smena moze da
+     * predje preko ponoci, ali oba vremena moraju biti postavljena i razlicita.
+     *
+     * @throws IllegalArgumentException ako neko vreme nije postavljeno ili su
+     *         vreme pocetka i vreme kraja jednaki
+     */
+    public void proveriVremena() {
+        if (vremePocetka == null) {
+            throw new IllegalArgumentException("Vreme pocetka smene ne sme biti null.");
+        }
+        if (vremeKraja == null) {
+            throw new IllegalArgumentException("Vreme kraja smene ne sme biti null.");
+        }
+        if (vremeKraja.equals(vremePocetka)) {
+            throw new IllegalArgumentException(
+                    "Vreme pocetka i kraja smene ne sme biti jednako.");
+        }
+    }
+
+    /**
+     * Postavlja pocetak i kraj smene kao jedan vremenski interval.
+     * Vrednosti se dodeljuju tek nakon sto obe prodju validaciju.
+     *
+     * @param pocetak vreme pocetka smene
+     * @param kraj vreme kraja smene
+     * @throws IllegalArgumentException ako je neko vreme null ili su vremena jednaka
+     */
+    public void postaviVremena(LocalTime pocetak, LocalTime kraj) {
+        if (pocetak == null) {
+            throw new IllegalArgumentException("Vreme pocetka smene ne sme biti null.");
+        }
+        if (kraj == null) {
+            throw new IllegalArgumentException("Vreme kraja smene ne sme biti null.");
+        }
+        if (kraj.equals(pocetak)) {
+            throw new IllegalArgumentException(
+                    "Vreme pocetka i kraja smene ne sme biti jednako.");
+        }
+        this.vremePocetka = pocetak;
+        this.vremeKraja = kraj;
+    }
+
+    /**
+     * Odredjuje da li se smena zavrsava narednog dana.
+     *
+     * @return true ako je vreme kraja pre vremena pocetka, inace false
+     * @throws IllegalArgumentException ako vremenski interval nije ispravan
+     */
+    public boolean prelaziPonoc() {
+        proveriVremena();
+        return vremeKraja.isBefore(vremePocetka);
+    }
+
+    /**
+     * Racuna trajanje smene u minutima, ukljucujuci smene koje prelaze ponoc.
+     *
+     * @return trajanje smene u minutima
+     * @throws IllegalArgumentException ako vremenski interval nije ispravan
+     */
+    public long vratiTrajanjeUMinutima() {
+        proveriVremena();
+        long trajanje = java.time.Duration.between(vremePocetka, vremeKraja).toMinutes();
+        return trajanje > 0 ? trajanje : trajanje + 24 * 60;
+    }
 
     /**
      * Poredi smene po identifikatoru {@code idSmena}.
@@ -160,11 +254,12 @@ public String vratiNazivTabele() {
 public List<ApstraktniDomenskiObjekat> vratiListu(ResultSet rs) throws Exception {
     List<ApstraktniDomenskiObjekat> lista = new ArrayList<>();
     while (rs.next()) {
+        Time kraj = rs.getTime("vremeKraja");
         Smena s = new Smena(
             rs.getInt("idSmena"),
             rs.getString("naziv"),
             rs.getTime("vremePocetka").toLocalTime(),
-            rs.getTime("vremeKraja") != null ? rs.getTime("vremeKraja").toLocalTime() : null
+            kraj != null ? kraj.toLocalTime() : null
         );
         lista.add(s);
     }
@@ -212,11 +307,12 @@ public String vratiPrimarniKljuc() {
  */
 @Override
 public ApstraktniDomenskiObjekat vratiObjekatIzRS(ResultSet rs) throws Exception {
+    Time kraj = rs.getTime("vremeKraja");
     return new Smena(
         rs.getInt("idSmena"),
         rs.getString("naziv"),
         rs.getTime("vremePocetka").toLocalTime(),
-        rs.getTime("vremeKraja") != null ? rs.getTime("vremeKraja").toLocalTime() : null
+        kraj != null ? kraj.toLocalTime() : null
     );
 }
 

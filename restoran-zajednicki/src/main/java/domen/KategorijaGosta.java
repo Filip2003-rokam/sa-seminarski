@@ -34,17 +34,19 @@ public class KategorijaGosta implements ApstraktniDomenskiObjekat{
 
     /**
      * Konstruktor koji kreira kategoriju gosta sa svim atributima.
+     * Validacija se vrsi preko setera.
      *
      * @param idKategorijaGosta jedinstveni identifikator kategorije
      * @param opis tekstualni opis kategorije
      * @param popust procenat popusta (ocekivano &gt;= 0)
      * @param imaPopust true ako kategorija ima pravo na popust, inace false
+     * @throws IllegalArgumentException ako bilo koja prosledjena vrednost ne zadovoljava pravila settera
      */
     public KategorijaGosta(int idKategorijaGosta, String opis, double popust, boolean imaPopust) {
-        this.idKategorijaGosta = idKategorijaGosta;
-        this.opis = opis;
-        this.popust = popust;
-        this.imaPopust = imaPopust;
+        setIdKategorijaGosta(idKategorijaGosta);
+        setOpis(opis);
+        setPopust(popust);
+        setImaPopust(imaPopust);
     }
 
     /**
@@ -57,9 +59,15 @@ public class KategorijaGosta implements ApstraktniDomenskiObjekat{
     /**
      * Postavlja jedinstveni identifikator kategorije gosta.
      *
-     * @param idKategorijaGosta novi id (pozitivan broj koji odgovara PK u bazi)
+     * @param idKategorijaGosta novi id (ne sme biti negativan)
+     * @throws IllegalArgumentException ako je idKategorijaGosta negativan
      */
-    public void setIdKategorijaGosta(int idKategorijaGosta) { this.idKategorijaGosta = idKategorijaGosta; }
+    public void setIdKategorijaGosta(int idKategorijaGosta) {
+        if (idKategorijaGosta < 0) {
+            throw new IllegalArgumentException("Id kategorije gosta ne sme biti negativan.");
+        }
+        this.idKategorijaGosta = idKategorijaGosta;
+    }
 
     /**
      * Vraca opis kategorije gosta kao String.
@@ -71,9 +79,15 @@ public class KategorijaGosta implements ApstraktniDomenskiObjekat{
     /**
      * Postavlja opis kategorije gosta.
      *
-     * @param opis novi opis (ne bi trebalo da bude null ili prazan string)
+     * @param opis novi opis (minimum 2 karaktera)
+     * @throws IllegalArgumentException ako je opis null ili ako ima manje od 2 karaktera
      */
-    public void setOpis(String opis) { this.opis = opis; }
+    public void setOpis(String opis) {
+        if (opis == null || opis.length() < 2) {
+            throw new IllegalArgumentException("Opis kategorije gosta mora imati najmanje 2 karaktera.");
+        }
+        this.opis = opis;
+    }
 
     /**
      * Vraca procenat popusta kategorije kao double.
@@ -85,9 +99,15 @@ public class KategorijaGosta implements ApstraktniDomenskiObjekat{
     /**
      * Postavlja procenat popusta kategorije.
      *
-     * @param popust novi popust (ocekivano &gt;= 0; obicno 0-100)
+     * @param popust novi popust (mora biti &gt;= 0)
+     * @throws IllegalArgumentException ako je popust manji od nule
      */
-    public void setPopust(double popust) { this.popust = popust; }
+    public void setPopust(double popust) {
+        if (popust < 0) {
+            throw new IllegalArgumentException("Popust kategorije gosta mora biti veci ili jednak nuli.");
+        }
+        this.popust = popust;
+    }
 
     /**
      * Vraca da li kategorija ima pravo na popust.

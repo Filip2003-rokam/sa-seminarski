@@ -4,10 +4,16 @@ import java.sql.ResultSet;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
+import java.util.stream.Stream;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.MethodSource;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
@@ -25,22 +31,49 @@ class RacunTest {
     void setUp() {
         konobar = new Konobar(1, "Marko", "Markovic", "marko", "sifra1");
         gost = new Gost(2, "Petar", "Petrovic", null);
+        Artikal artikal = new Artikal(5, "Pizza", 250.0, "Jelo");
         stavke = new ArrayList<>();
-        stavke.add(new StavkaRacuna(10, 1, 2, 500.0, 250.0, null));
+        stavke.add(new StavkaRacuna(10, 1, 2, 500.0, 250.0, artikal));
         datumIzdavanja = LocalDate.of(2024, 5, 15);
         vremeIzdavanja = LocalTime.of(14, 30, 0);
         racun = new Racun(10, datumIzdavanja, vremeIzdavanja, 1500.0, true, konobar, gost, stavke);
     }
 
+    @AfterEach
+    void tearDown() {
+        konobar = null;
+        gost = null;
+        stavke = null;
+        datumIzdavanja = null;
+        vremeIzdavanja = null;
+        racun = null;
+    }
+
+    private Racun kreirajValidanRacun(int id) {
+        Artikal artikal = new Artikal(5, "Pizza", 250.0, "Jelo");
+        List<StavkaRacuna> lista = new ArrayList<>();
+        lista.add(new StavkaRacuna(id, 1, 1, 250.0, 250.0, artikal));
+        return new Racun(
+                id,
+                LocalDate.of(2024, 1, 1),
+                LocalTime.of(10, 0),
+                250.0,
+                false,
+                new Konobar(1, "Marko", "Markovic", "marko", "sifra1"),
+                new Gost(2, "Petar", "Petrovic", null),
+                lista
+        );
+    }
+
     @Test
-    @DisplayName("Prazan konstruktor kreira objekat računa")
+    @DisplayName("Prazan konstruktor kreira objekat racuna")
     void testPrazanKonstruktorKreiraObjekat() {
         Racun r = new Racun();
         assertNotNull(r);
     }
 
     @Test
-    @DisplayName("Pun konstruktor postavlja sva polja računa")
+    @DisplayName("Pun konstruktor postavlja sva polja racuna")
     void testPunKonstruktorPostavljaSvaPolja() {
         assertEquals(10, racun.getIdRacun());
         assertEquals(datumIzdavanja, racun.getDatumIzdavanja());
@@ -53,11 +86,84 @@ class RacunTest {
     }
 
     @Test
+    @DisplayName("Pun konstruktor baca izuzetak za negativan id")
+    void testPunKonstruktorBacaIzuzetakZaNegativanId() {
+        IllegalArgumentException ex = assertThrows(IllegalArgumentException.class,
+                () -> new Racun(-1, datumIzdavanja, vremeIzdavanja, 1500.0, true, konobar, gost, stavke));
+        assertEquals("Id racuna ne sme biti negativan.", ex.getMessage());
+    }
+
+    @Test
+    @DisplayName("Pun konstruktor baca izuzetak za null datum")
+    void testPunKonstruktorBacaIzuzetakZaNullDatum() {
+        IllegalArgumentException ex = assertThrows(IllegalArgumentException.class,
+                () -> new Racun(10, null, vremeIzdavanja, 1500.0, true, konobar, gost, stavke));
+        assertEquals("Datum izdavanja racuna ne sme biti null.", ex.getMessage());
+    }
+
+    @Test
+    @DisplayName("Pun konstruktor baca izuzetak za null vreme")
+    void testPunKonstruktorBacaIzuzetakZaNullVreme() {
+        IllegalArgumentException ex = assertThrows(IllegalArgumentException.class,
+                () -> new Racun(10, datumIzdavanja, null, 1500.0, true, konobar, gost, stavke));
+        assertEquals("Vreme izdavanja racuna ne sme biti null.", ex.getMessage());
+    }
+
+    @Test
+    @DisplayName("Pun konstruktor baca izuzetak za nevalidan iznos")
+    void testPunKonstruktorBacaIzuzetakZaNevalidanIznos() {
+        IllegalArgumentException ex = assertThrows(IllegalArgumentException.class,
+                () -> new Racun(10, datumIzdavanja, vremeIzdavanja, 0.0, true, konobar, gost, stavke));
+        assertEquals("Ukupan iznos racuna mora biti veci od nule.", ex.getMessage());
+    }
+
+    @Test
+    @DisplayName("Pun konstruktor baca izuzetak za null konobara")
+    void testPunKonstruktorBacaIzuzetakZaNullKonobara() {
+        IllegalArgumentException ex = assertThrows(IllegalArgumentException.class,
+                () -> new Racun(10, datumIzdavanja, vremeIzdavanja, 1500.0, true, null, gost, stavke));
+        assertEquals("Konobar racuna ne sme biti null.", ex.getMessage());
+    }
+
+    @Test
+    @DisplayName("Pun konstruktor baca izuzetak za null gosta")
+    void testPunKonstruktorBacaIzuzetakZaNullGosta() {
+        IllegalArgumentException ex = assertThrows(IllegalArgumentException.class,
+                () -> new Racun(10, datumIzdavanja, vremeIzdavanja, 1500.0, true, konobar, null, stavke));
+        assertEquals("Gost racuna ne sme biti null.", ex.getMessage());
+    }
+
+    @Test
+    @DisplayName("Pun konstruktor baca izuzetak za prazne stavke")
+    void testPunKonstruktorBacaIzuzetakZaPrazneStavke() {
+        IllegalArgumentException ex = assertThrows(IllegalArgumentException.class,
+                () -> new Racun(10, datumIzdavanja, vremeIzdavanja, 1500.0, true, konobar, gost, new ArrayList<>()));
+        assertEquals("Racun mora sadrzati barem jednu stavku.", ex.getMessage());
+    }
+
+    @Test
     @DisplayName("Setter i getter za idRacun rade ispravno")
     void testSetGetIdRacun() {
         Racun r = new Racun();
         r.setIdRacun(20);
         assertEquals(20, r.getIdRacun());
+    }
+
+    @ParameterizedTest
+    @MethodSource("nevalidniIdRacun")
+    @DisplayName("setIdRacun baca izuzetak za negativan id")
+    void testSetIdRacunBacaIzuzetakZaNegativanId(int id) {
+        Racun r = new Racun();
+        IllegalArgumentException ex = assertThrows(IllegalArgumentException.class,
+                () -> r.setIdRacun(id));
+        assertEquals("Id racuna ne sme biti negativan.", ex.getMessage());
+    }
+
+    static Stream<Arguments> nevalidniIdRacun() {
+        return Stream.of(
+                Arguments.of(-1),
+                Arguments.of(-50)
+        );
     }
 
     @Test
@@ -70,6 +176,15 @@ class RacunTest {
     }
 
     @Test
+    @DisplayName("setDatumIzdavanja baca izuzetak za null")
+    void testSetDatumIzdavanjaBacaIzuzetakZaNull() {
+        Racun r = new Racun();
+        IllegalArgumentException ex = assertThrows(IllegalArgumentException.class,
+                () -> r.setDatumIzdavanja(null));
+        assertEquals("Datum izdavanja racuna ne sme biti null.", ex.getMessage());
+    }
+
+    @Test
     @DisplayName("Setter i getter za vremeIzdavanja rade ispravno")
     void testSetGetVremeIzdavanja() {
         Racun r = new Racun();
@@ -79,11 +194,38 @@ class RacunTest {
     }
 
     @Test
+    @DisplayName("setVremeIzdavanja baca izuzetak za null")
+    void testSetVremeIzdavanjaBacaIzuzetakZaNull() {
+        Racun r = new Racun();
+        IllegalArgumentException ex = assertThrows(IllegalArgumentException.class,
+                () -> r.setVremeIzdavanja(null));
+        assertEquals("Vreme izdavanja racuna ne sme biti null.", ex.getMessage());
+    }
+
+    @Test
     @DisplayName("Setter i getter za ukupanIznos rade ispravno")
     void testSetGetUkupanIznos() {
         Racun r = new Racun();
         r.setUkupanIznos(999.5);
         assertEquals(999.5, r.getUkupanIznos());
+    }
+
+    @ParameterizedTest
+    @MethodSource("nevalidniUkupanIznos")
+    @DisplayName("setUkupanIznos baca izuzetak za nevalidan iznos")
+    void testSetUkupanIznosBacaIzuzetakZaNevalidanIznos(double iznos) {
+        Racun r = new Racun();
+        IllegalArgumentException ex = assertThrows(IllegalArgumentException.class,
+                () -> r.setUkupanIznos(iznos));
+        assertEquals("Ukupan iznos racuna mora biti veci od nule.", ex.getMessage());
+    }
+
+    static Stream<Arguments> nevalidniUkupanIznos() {
+        return Stream.of(
+                Arguments.of(0.0),
+                Arguments.of(-1.0),
+                Arguments.of(-100.5)
+        );
     }
 
     @Test
@@ -97,7 +239,7 @@ class RacunTest {
     }
 
     @Test
-    @DisplayName("Setter i getter za ugnježdeni Konobar rade ispravno")
+    @DisplayName("Setter i getter za ugnjezdeni Konobar rade ispravno")
     void testSetGetKonobar() {
         Racun r = new Racun();
         Konobar k = new Konobar(5, "Ana", "Anic", "ana", "pass");
@@ -107,7 +249,16 @@ class RacunTest {
     }
 
     @Test
-    @DisplayName("Setter i getter za ugnježdeni Gost rade ispravno")
+    @DisplayName("setKonobar baca izuzetak za null")
+    void testSetKonobarBacaIzuzetakZaNull() {
+        Racun r = new Racun();
+        IllegalArgumentException ex = assertThrows(IllegalArgumentException.class,
+                () -> r.setKonobar(null));
+        assertEquals("Konobar racuna ne sme biti null.", ex.getMessage());
+    }
+
+    @Test
+    @DisplayName("Setter i getter za ugnjezdeni Gost rade ispravno")
     void testSetGetGost() {
         Racun r = new Racun();
         Gost g = new Gost(8, "Jovan", "Jovic", null);
@@ -117,63 +268,106 @@ class RacunTest {
     }
 
     @Test
+    @DisplayName("setGost baca izuzetak za null")
+    void testSetGostBacaIzuzetakZaNull() {
+        Racun r = new Racun();
+        IllegalArgumentException ex = assertThrows(IllegalArgumentException.class,
+                () -> r.setGost(null));
+        assertEquals("Gost racuna ne sme biti null.", ex.getMessage());
+    }
+
+    @Test
     @DisplayName("Setter i getter za listu stavki rade ispravno")
     void testSetGetStavke() {
         Racun r = new Racun();
+        Artikal a = new Artikal(1, "Sok", 100.0, "Pice");
         List<StavkaRacuna> lista = new ArrayList<>();
-        lista.add(new StavkaRacuna(1, 1, 1, 100.0, 100.0, null));
+        lista.add(new StavkaRacuna(1, 1, 1, 100.0, 100.0, a));
         r.setStavke(lista);
         assertEquals(lista, r.getStavke());
         assertEquals(1, r.getStavke().size());
     }
 
+    @ParameterizedTest
+    @MethodSource("nevalidneStavke")
+    @DisplayName("setStavke baca izuzetak za null ili praznu listu")
+    void testSetStavkeBacaIzuzetakZaNevalidnuListu(List<StavkaRacuna> lista) {
+        Racun r = new Racun();
+        IllegalArgumentException ex = assertThrows(IllegalArgumentException.class,
+                () -> r.setStavke(lista));
+        assertEquals("Racun mora sadrzati barem jednu stavku.", ex.getMessage());
+    }
+
+    static Stream<Arguments> nevalidneStavke() {
+        return Stream.of(
+                Arguments.of((List<StavkaRacuna>) null),
+                Arguments.of(Collections.emptyList()),
+                Arguments.of(new ArrayList<StavkaRacuna>())
+        );
+    }
+
     @Test
-    @DisplayName("equals vraća true kada se objekat poredi sam sa sobom")
+    @DisplayName("equals vraca true kada se objekat poredi sam sa sobom")
     void testEqualsIstiObjekat() {
         assertTrue(racun.equals(racun));
     }
 
     @Test
-    @DisplayName("equals vraća false kada se račun poredi sa null")
+    @DisplayName("equals vraca false kada se racun poredi sa null")
     void testEqualsSaNull() {
         assertFalse(racun.equals(null));
     }
 
     @Test
-    @DisplayName("equals vraća false kada se račun poredi sa objektom drugog tipa")
+    @DisplayName("equals vraca false kada se racun poredi sa objektom drugog tipa")
     void testEqualsSaDrugimTipom() {
         assertFalse(racun.equals("nije racun"));
     }
 
-    @Test
-    @DisplayName("Dva računa sa istim identifikatorom su jednaka i ako se ostala polja razlikuju")
-    void testEqualsIstiIdRazlicitaOstalaPolja() {
-        Racun drugi = new Racun(10, LocalDate.of(2020, 1, 1), LocalTime.of(10, 0), 1.0, false, null, null, null);
-        assertTrue(racun.equals(drugi));
+    @ParameterizedTest
+    @MethodSource("podaciZaEquals")
+    @DisplayName("equals poredi racune po identifikatoru")
+    void testEqualsPoId(Racun prvi, Racun drugi, boolean ocekivano) {
+        assertEquals(ocekivano, prvi.equals(drugi));
+    }
+
+    static Stream<Arguments> podaciZaEquals() {
+        Artikal artikal = new Artikal(5, "Pizza", 250.0, "Jelo");
+        List<StavkaRacuna> stavkeA = new ArrayList<>();
+        stavkeA.add(new StavkaRacuna(10, 1, 1, 250.0, 250.0, artikal));
+        List<StavkaRacuna> stavkeB = new ArrayList<>();
+        stavkeB.add(new StavkaRacuna(11, 1, 2, 500.0, 250.0, artikal));
+        Konobar k = new Konobar(1, "Marko", "Markovic", "marko", "sifra1");
+        Gost g = new Gost(2, "Petar", "Petrovic", null);
+        return Stream.of(
+                Arguments.of(
+                        new Racun(10, LocalDate.of(2024, 5, 15), LocalTime.of(14, 30), 1500.0, true, k, g, stavkeA),
+                        new Racun(10, LocalDate.of(2020, 1, 1), LocalTime.of(10, 0), 1.0, false, k, g, stavkeB),
+                        true
+                ),
+                Arguments.of(
+                        new Racun(10, LocalDate.of(2024, 5, 15), LocalTime.of(14, 30), 1500.0, true, k, g, stavkeA),
+                        new Racun(11, LocalDate.of(2024, 5, 15), LocalTime.of(14, 30), 1500.0, true, k, g, stavkeA),
+                        false
+                )
+        );
     }
 
     @Test
-    @DisplayName("Dva računa sa različitim identifikatorom nisu jednaka")
-    void testEqualsRazlicitId() {
-        Racun drugi = new Racun(11, datumIzdavanja, vremeIzdavanja, 1500.0, true, konobar, gost, stavke);
-        assertFalse(racun.equals(drugi));
-    }
-
-    @Test
-    @DisplayName("Jednaki računi imaju isti hashCode")
+    @DisplayName("Jednaki racuni imaju isti hashCode")
     void testHashCodeJednakiObjektiImajuIstiHashCode() {
-        Racun drugi = new Racun(10, null, null, 0.0, false, null, null, null);
+        Racun drugi = kreirajValidanRacun(10);
         assertEquals(racun.hashCode(), drugi.hashCode());
     }
 
     @Test
-    @DisplayName("Višestruki pozivi hashCode na istom objektu vraćaju istu vrednost")
+    @DisplayName("Visestruki pozivi hashCode na istom objektu vracaju istu vrednost")
     void testHashCodeKonzistentnost() {
         assertEquals(racun.hashCode(), racun.hashCode());
     }
 
     @Test
-    @DisplayName("toString sadrži id, datum, vreme, ukupanIznos i jeIzdat")
+    @DisplayName("toString sadrzi id, datum, vreme, ukupanIznos i jeIzdat")
     void testToStringFormat() {
         String rezultat = racun.toString();
         assertTrue(rezultat.contains("id=10"));
@@ -184,19 +378,19 @@ class RacunTest {
     }
 
     @Test
-    @DisplayName("vratiNazivTabele vraća ime tabele racun")
+    @DisplayName("vratiNazivTabele vraca ime tabele racun")
     void testVratiNazivTabele() {
         assertEquals("racun", racun.vratiNazivTabele());
     }
 
     @Test
-    @DisplayName("vratiPrimarniKljuc vraća uslov racun.idRacun bez razmaka u imenu tabele")
+    @DisplayName("vratiPrimarniKljuc vraca uslov racun.idRacun bez razmaka u imenu tabele")
     void testVratiPrimarniKljuc() {
         assertEquals("racun.idRacun=10", racun.vratiPrimarniKljuc());
     }
 
     @Test
-    @DisplayName("vratiKoloneZaUbacivanje vraća nazive kolona bez identifikatora")
+    @DisplayName("vratiKoloneZaUbacivanje vraca nazive kolona bez identifikatora")
     void testVratiKoloneZaUbacivanje() {
         assertEquals(
                 "datumIzdavanja, vremeIzdavanja, ukupanIznos, jeIzdat, idKonobar, idGost",
@@ -205,7 +399,7 @@ class RacunTest {
     }
 
     @Test
-    @DisplayName("vratiVrednostiZaUbacivanje vraća SQL Date/Time i jeIzdat kao 1 ili 0")
+    @DisplayName("vratiVrednostiZaUbacivanje vraca SQL Date/Time i jeIzdat kao 1 ili 0")
     void testVratiVrednostiZaUbacivanje() {
         java.sql.Date sqlDatum = java.sql.Date.valueOf(datumIzdavanja);
         java.sql.Time sqlVreme = java.sql.Time.valueOf(vremeIzdavanja);
@@ -216,7 +410,7 @@ class RacunTest {
     }
 
     @Test
-    @DisplayName("vratiVrednostiZaUbacivanje koristi 0 kada račun nije izdat")
+    @DisplayName("vratiVrednostiZaUbacivanje koristi 0 kada racun nije izdat")
     void testVratiVrednostiZaUbacivanjeJeIzdatFalse() {
         racun.setJeIzdat(false);
         java.sql.Date sqlDatum = java.sql.Date.valueOf(datumIzdavanja);
@@ -228,7 +422,7 @@ class RacunTest {
     }
 
     @Test
-    @DisplayName("vratiVrednostiZaIzmenu vraća SET deo SQL upita")
+    @DisplayName("vratiVrednostiZaIzmenu vraca SET deo SQL upita")
     void testVratiVrednostiZaIzmenu() {
         assertEquals(
                 "datumIzdavanja='2024-05-15', vremeIzdavanja='14:30', ukupanIznos=1500.0, jeIzdat=true, idKonobar=1, idGost=2",
@@ -237,7 +431,7 @@ class RacunTest {
     }
 
     @Test
-    @DisplayName("vratiListu vraća praznu listu kada ResultSet nema redova")
+    @DisplayName("vratiListu vraca praznu listu kada ResultSet nema redova")
     void testVratiListuPrazanResultSet() throws Exception {
         ResultSet rs = mock(ResultSet.class);
         when(rs.next()).thenReturn(false);
@@ -245,7 +439,7 @@ class RacunTest {
     }
 
     @Test
-    @DisplayName("vratiListu mapira dva reda ResultSet-a u listu sa dva računa")
+    @DisplayName("vratiListu mapira dva reda ResultSet-a u listu sa dva racuna")
     void testVratiListuDvaReda() throws Exception {
         ResultSet rs = mock(ResultSet.class);
         when(rs.next()).thenReturn(true, true, false);
@@ -306,7 +500,7 @@ class RacunTest {
     }
 
     @Test
-    @DisplayName("vratiObjekatIzRS kreira račun bez ugnježdenih objekata")
+    @DisplayName("vratiObjekatIzRS kreira racun bez ugnjezdenih objekata")
     void testVratiObjekatIzRS() throws Exception {
         ResultSet rs = mock(ResultSet.class);
         when(rs.getInt("idRacun")).thenReturn(7);

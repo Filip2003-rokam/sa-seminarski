@@ -3,6 +3,7 @@ package operacija.konobar;
 import domen.Konobar;
 import java.util.Arrays;
 import java.util.List;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -24,6 +25,12 @@ class UcitajKonobareSOTest {
         doNothing().when(broker).commit();
         doNothing().when(broker).rollback();
         so = new UcitajKonobareSO(broker);
+    }
+
+    @AfterEach
+    void tearDown() {
+        broker = null;
+        so = null;
     }
 
     @Test

@@ -54,19 +54,20 @@ public class DodajKonobaraController {
             }
 
             private void dodaj() {
-                String ime = dkf.getjTextFieldIme().getText().trim();
-                String prezime = dkf.getjTextFieldPrezime().getText().trim();
-                String username = dkf.getjTextFieldUsername().getText().trim();
-                String password = String.valueOf(dkf.getjPasswordField1().getPassword()).trim();
-
-                Konobar k = new Konobar(-1, ime, prezime, username, password);
-
                 try {
+                    String ime = dkf.getjTextFieldIme().getText().trim();
+                    String prezime = dkf.getjTextFieldPrezime().getText().trim();
+                    String username = dkf.getjTextFieldUsername().getText().trim();
+                    String password = String.valueOf(dkf.getjPasswordField1().getPassword()).trim();
+
+                    Konobar k = new Konobar(0, ime, prezime, username, password);
                     Komunikacija.getInstance().dodajKonobara(k);
                     JOptionPane.showMessageDialog(dkf, "Sistem je zapamtio konobara.", "Uspeh", JOptionPane.INFORMATION_MESSAGE);
                     dkf.dispose();
+                } catch (IllegalArgumentException ex) {
+                    JOptionPane.showMessageDialog(dkf, ex.getMessage(), "Neispravan unos", JOptionPane.WARNING_MESSAGE);
                 } catch (Exception ex) {
-                    JOptionPane.showMessageDialog(dkf, "Sistem ne može da zapamti konobara.", "Greška", JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(dkf, "Sistem ne može da zapamti konobara.", "Greska", JOptionPane.ERROR_MESSAGE);
                 }
             }
         });
@@ -79,20 +80,23 @@ public class DodajKonobaraController {
             }
 
             private void izmeni() {
-                int id = Integer.parseInt(dkf.getjTextFieldId().getText());
-                String ime = dkf.getjTextFieldIme().getText().trim();
-                String prezime = dkf.getjTextFieldPrezime().getText().trim();
-                String username = dkf.getjTextFieldUsername().getText().trim();
-                String password = String.valueOf(dkf.getjPasswordField1().getPassword()).trim();
-
-                Konobar k = new Konobar(id, ime, prezime, username, password);
-
                 try {
+                    int id = Integer.parseInt(dkf.getjTextFieldId().getText());
+                    String ime = dkf.getjTextFieldIme().getText().trim();
+                    String prezime = dkf.getjTextFieldPrezime().getText().trim();
+                    String username = dkf.getjTextFieldUsername().getText().trim();
+                    String password = String.valueOf(dkf.getjPasswordField1().getPassword()).trim();
+
+                    Konobar k = new Konobar(id, ime, prezime, username, password);
                     Komunikacija.getInstance().izmeniKonobara(k);
                     JOptionPane.showMessageDialog(dkf, "Sistem je izmenio konobara.", "Uspeh", JOptionPane.INFORMATION_MESSAGE);
                     dkf.dispose();
+                } catch (NumberFormatException ex) {
+                    JOptionPane.showMessageDialog(dkf, "Id mora biti broj.", "Greska", JOptionPane.ERROR_MESSAGE);
+                } catch (IllegalArgumentException ex) {
+                    JOptionPane.showMessageDialog(dkf, ex.getMessage(), "Neispravan unos", JOptionPane.WARNING_MESSAGE);
                 } catch (Exception ex) {
-                    JOptionPane.showMessageDialog(dkf, "Sistem ne može da izmeni konobara.", "Greška", JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(dkf, "Sistem ne može da izmeni konobara.", "Greska", JOptionPane.ERROR_MESSAGE);
                 }
             }
         });

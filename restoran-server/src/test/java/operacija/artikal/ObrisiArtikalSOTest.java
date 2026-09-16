@@ -1,6 +1,7 @@
 package operacija.artikal;
 
 import domen.Artikal;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -24,6 +25,13 @@ class ObrisiArtikalSOTest {
         doNothing().when(broker).rollback();
         so = new ObrisiArtikalSO(broker);
         artikal = new Artikal(1, "Pizza", 850.0, "Jelo");
+    }
+
+    @AfterEach
+    void tearDown() {
+        broker = null;
+        so = null;
+        artikal = null;
     }
 
     @Test

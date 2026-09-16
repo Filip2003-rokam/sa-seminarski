@@ -3,6 +3,8 @@ package operacija.gosti;
 import domen.Gost;
 import domen.KategorijaGosta;
 import domen.Konobar;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import repository.db.DbRepository;
@@ -13,25 +15,30 @@ import static org.mockito.Mockito.*;
 
 class ObrisiGostaSOTest {
 
-    private Gost validanGost() {
-        return new Gost(1, "Marko", "Markovic", new KategorijaGosta(1, "VIP", 10.0, true));
-    }
+    private DbRepository broker;
+    private ObrisiGostaSO so;
+    private Gost validanGost;
 
-    @SuppressWarnings("unchecked")
-    private DbRepository stubBroker() throws Exception {
-        DbRepository broker = mock(DbRepository.class);
+    @BeforeEach
+    void setUp() throws Exception {
+        broker = mock(DbRepository.class);
         doNothing().when(broker).connect();
         doNothing().when(broker).commit();
         doNothing().when(broker).rollback();
-        return broker;
+        so = new ObrisiGostaSO(broker);
+        validanGost = new Gost(1, "Marko", "Markovic", new KategorijaGosta(1, "VIP", 10.0, true));
+    }
+
+    @AfterEach
+    void tearDown() {
+        broker = null;
+        so = null;
+        validanGost = null;
     }
 
     @Test
     @DisplayName("preduslovi odbijaju null parametar")
     void testPredusloviOdbijajuNull() throws Exception {
-        DbRepository broker = stubBroker();
-        ObrisiGostaSO so = new ObrisiGostaSO(broker);
-
         Exception ex = assertThrows(Exception.class, () -> so.izvrsi(null, null));
         assertEquals("Sistem nije mogao da obriše gosta", ex.getMessage());
         verify(broker).rollback();
@@ -43,9 +50,6 @@ class ObrisiGostaSOTest {
     @Test
     @DisplayName("preduslovi odbijaju pogrešan tip parametra")
     void testPredusloviOdbijajuPogresanTip() throws Exception {
-        DbRepository broker = stubBroker();
-        ObrisiGostaSO so = new ObrisiGostaSO(broker);
-
         Exception ex = assertThrows(Exception.class, () -> so.izvrsi(new Konobar(), null));
         assertEquals("Sistem nije mogao da obriše gosta", ex.getMessage());
         verify(broker).rollback();
@@ -56,15 +60,12 @@ class ObrisiGostaSOTest {
     @Test
     @DisplayName("validan gost se uspešno briše i radi se commit")
     void testValidanGostSeBrise() throws Exception {
-        DbRepository broker = stubBroker();
         doNothing().when(broker).delete(any());
-        ObrisiGostaSO so = new ObrisiGostaSO(broker);
-        Gost g = validanGost();
 
-        so.izvrsi(g, null);
+        so.izvrsi(validanGost, null);
 
         verify(broker).connect();
-        verify(broker).delete(g);
+        verify(broker).delete(validanGost);
         verify(broker).commit();
         verify(broker, never()).rollback();
     }
@@ -72,14 +73,11 @@ class ObrisiGostaSOTest {
     @Test
     @DisplayName("kada broker.delete baci izuzetak, radi se rollback")
     void testBrokerDeleteBacaIzuzetakRadiRollback() throws Exception {
-        DbRepository broker = stubBroker();
         doThrow(new Exception("DB greska")).when(broker).delete(any());
-        ObrisiGostaSO so = new ObrisiGostaSO(broker);
-        Gost g = validanGost();
 
-        Exception ex = assertThrows(Exception.class, () -> so.izvrsi(g, null));
+        Exception ex = assertThrows(Exception.class, () -> so.izvrsi(validanGost, null));
         assertEquals("DB greska", ex.getMessage());
-        verify(broker).delete(g);
+        verify(broker).delete(validanGost);
         verify(broker).rollback();
         verify(broker, never()).commit();
     }

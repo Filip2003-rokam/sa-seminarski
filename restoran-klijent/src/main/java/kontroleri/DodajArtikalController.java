@@ -56,21 +56,22 @@ public class DodajArtikalController {
             }
 
             private void dodaj(ActionEvent e) {
-                
-                String naziv = djpf.getjTextFieldNaziv().getText().trim();
-                String tip = djpf.getjTextFieldTip().getText().trim();
-                double cena = Double.parseDouble(djpf.getjTextFieldCena().getText().trim());
-
-                Komunikacija.getInstance().konekcija();
-                
-                Artikal artikal = new Artikal(-1, naziv,cena, tip);
-                
                 try {
-                   Komunikacija.getInstance().dodajArtikal(artikal); 
-                   JOptionPane.showMessageDialog(djpf, "Sistem je zapamtio artikal.", "Uspeh", JOptionPane.INFORMATION_MESSAGE);
-                   djpf.dispose();
+                    String naziv = djpf.getjTextFieldNaziv().getText().trim();
+                    String tip = djpf.getjTextFieldTip().getText().trim();
+                    double cena = Double.parseDouble(djpf.getjTextFieldCena().getText().trim());
+
+                    Komunikacija.getInstance().konekcija();
+                    Artikal artikal = new Artikal(0, naziv, cena, tip);
+                    Komunikacija.getInstance().dodajArtikal(artikal);
+                    JOptionPane.showMessageDialog(djpf, "Sistem je zapamtio artikal.", "Uspeh", JOptionPane.INFORMATION_MESSAGE);
+                    djpf.dispose();
+                } catch (NumberFormatException exc) {
+                    JOptionPane.showMessageDialog(djpf, "Cena mora biti broj.", "Greska", JOptionPane.ERROR_MESSAGE);
+                } catch (IllegalArgumentException exc) {
+                    JOptionPane.showMessageDialog(djpf, exc.getMessage(), "Neispravan unos", JOptionPane.WARNING_MESSAGE);
                 } catch (Exception exc) {
-                   JOptionPane.showMessageDialog(djpf, "Sistem ne može da zapamti artikal.", "Greška", JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(djpf, "Sistem ne može da zapamti artikal.", "Greska", JOptionPane.ERROR_MESSAGE);
                 }
             }
         });
@@ -83,22 +84,23 @@ public class DodajArtikalController {
             }
 
             private void izmeni(ActionEvent e) {
-                
-                int id = Integer.parseInt(djpf.getjTextFieldId().getText());
-                String naziv = djpf.getjTextFieldNaziv().getText().trim();
-                String tip = djpf.getjTextFieldTip().getText().trim();
-                double cena = Double.parseDouble(djpf.getjTextFieldCena().getText().trim());
-
-                Komunikacija.getInstance().konekcija();
-                
-                Artikal artikal = new Artikal(id, naziv,cena, tip);
-                
                 try {
-                   Komunikacija.getInstance().izmeniArtikal(artikal); 
-                   JOptionPane.showMessageDialog(djpf, "Sistem je izmenio artikal.", "Uspeh", JOptionPane.INFORMATION_MESSAGE);
-                   djpf.dispose();
+                    int id = Integer.parseInt(djpf.getjTextFieldId().getText());
+                    String naziv = djpf.getjTextFieldNaziv().getText().trim();
+                    String tip = djpf.getjTextFieldTip().getText().trim();
+                    double cena = Double.parseDouble(djpf.getjTextFieldCena().getText().trim());
+
+                    Komunikacija.getInstance().konekcija();
+                    Artikal artikal = new Artikal(id, naziv, cena, tip);
+                    Komunikacija.getInstance().izmeniArtikal(artikal);
+                    JOptionPane.showMessageDialog(djpf, "Sistem je izmenio artikal.", "Uspeh", JOptionPane.INFORMATION_MESSAGE);
+                    djpf.dispose();
+                } catch (NumberFormatException exc) {
+                    JOptionPane.showMessageDialog(djpf, "Id i cena moraju biti brojevi.", "Greska", JOptionPane.ERROR_MESSAGE);
+                } catch (IllegalArgumentException exc) {
+                    JOptionPane.showMessageDialog(djpf, exc.getMessage(), "Neispravan unos", JOptionPane.WARNING_MESSAGE);
                 } catch (Exception exc) {
-                   JOptionPane.showMessageDialog(djpf, "Sistem ne može da izmeni artikal.", "Greška", JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(djpf, "Sistem ne može da izmeni artikal.", "Greska", JOptionPane.ERROR_MESSAGE);
                 }
             }
         });

@@ -35,17 +35,19 @@ public class Artikal implements ApstraktniDomenskiObjekat{
 
     /**
      * Konstruktor koji kreira artikal sa svim atributima.
+     * Validacija se vrsi preko setera.
      *
      * @param idArtikal jedinstveni identifikator artikla
      * @param naziv naziv artikla
      * @param cena jedinicna cena artikla (za poslovne operacije ocekivano &gt; 0)
      * @param tip tip artikla: "Jelo" ili "Pice"
+     * @throws IllegalArgumentException ako bilo koja prosledjena vrednost ne zadovoljava pravila settera
      */
     public Artikal(int idArtikal, String naziv, double cena, String tip) {
-        this.idArtikal = idArtikal;
-        this.naziv = naziv;
-        this.cena = cena;
-        this.tip = tip;
+        setIdArtikal(idArtikal);
+        setNaziv(naziv);
+        setCena(cena);
+        setTip(tip);
     }
 
     /**
@@ -58,9 +60,15 @@ public class Artikal implements ApstraktniDomenskiObjekat{
     /**
      * Postavlja jedinstveni identifikator artikla.
      *
-     * @param idArtikal novi id artikla (pozitivan broj koji odgovara PK u bazi)
+     * @param idArtikal novi id artikla (ne sme biti negativan)
+     * @throws IllegalArgumentException ako je idArtikal negativan
      */
-    public void setIdArtikal(int idArtikal) { this.idArtikal = idArtikal; }
+    public void setIdArtikal(int idArtikal) {
+        if (idArtikal < 0) {
+            throw new IllegalArgumentException("Id artikla ne sme biti negativan.");
+        }
+        this.idArtikal = idArtikal;
+    }
 
     /**
      * Vraca naziv artikla kao String.
@@ -72,9 +80,15 @@ public class Artikal implements ApstraktniDomenskiObjekat{
     /**
      * Postavlja naziv artikla.
      *
-     * @param naziv novi naziv (ne bi trebalo da bude null ili prazan string)
+     * @param naziv novi naziv (minimum 2 karaktera)
+     * @throws IllegalArgumentException ako je naziv null ili ako ima manje od 2 karaktera
      */
-    public void setNaziv(String naziv) { this.naziv = naziv; }
+    public void setNaziv(String naziv) {
+        if (naziv == null || naziv.length() < 2) {
+            throw new IllegalArgumentException("Naziv artikla mora imati najmanje 2 karaktera.");
+        }
+        this.naziv = naziv;
+    }
 
     /**
      * Vraca jedinicnu cenu artikla kao double.
@@ -86,9 +100,15 @@ public class Artikal implements ApstraktniDomenskiObjekat{
     /**
      * Postavlja jedinicnu cenu artikla.
      *
-     * @param cena nova cena (za poslovne operacije ocekivano &gt; 0)
+     * @param cena nova cena (mora biti veca od nule)
+     * @throws IllegalArgumentException ako je cena manja ili jednaka nuli
      */
-    public void setCena(double cena) { this.cena = cena; }
+    public void setCena(double cena) {
+        if (cena <= 0) {
+            throw new IllegalArgumentException("Cena artikla mora biti veca od nule.");
+        }
+        this.cena = cena;
+    }
 
     /**
      * Vraca tip artikla kao String ("Jelo" ili "Pice").
@@ -100,9 +120,15 @@ public class Artikal implements ApstraktniDomenskiObjekat{
     /**
      * Postavlja tip artikla.
      *
-     * @param tip ocekivane vrednosti: "Jelo" ili "Pice"
+     * @param tip ocekivane vrednosti: "Jelo" ili "Pice" (ne sme biti null ni prazan)
+     * @throws IllegalArgumentException ako je tip null ili prazan string
      */
-    public void setTip(String tip) { this.tip = tip; }
+    public void setTip(String tip) {
+        if (tip == null || tip.isEmpty()) {
+            throw new IllegalArgumentException("Tip artikla ne sme biti prazan.");
+        }
+        this.tip = tip;
+    }
 
     /**
      * Poredi artikle po identifikatoru {@code idArtikal}.

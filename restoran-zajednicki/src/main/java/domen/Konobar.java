@@ -38,19 +38,21 @@ public class Konobar implements ApstraktniDomenskiObjekat{
 
     /**
      * Konstruktor koji kreira konobara sa svim atributima.
+     * Validacija se vrsi preko setera.
      *
      * @param idKonobar jedinstveni identifikator konobara
      * @param ime ime konobara
      * @param prezime prezime konobara
      * @param korisnickoIme korisnicko ime za autentifikaciju
      * @param sifra sifra za autentifikaciju
+     * @throws IllegalArgumentException ako bilo koja prosledjena vrednost ne zadovoljava pravila settera
      */
     public Konobar(int idKonobar, String ime, String prezime, String korisnickoIme, String sifra) {
-        this.idKonobar = idKonobar;
-        this.ime = ime;
-        this.prezime = prezime;
-        this.korisnickoIme = korisnickoIme;
-        this.sifra = sifra;
+        setIdKonobar(idKonobar);
+        setIme(ime);
+        setPrezime(prezime);
+        setKorisnickoIme(korisnickoIme);
+        setSifra(sifra);
     }
 
     /**
@@ -63,9 +65,15 @@ public class Konobar implements ApstraktniDomenskiObjekat{
     /**
      * Postavlja jedinstveni identifikator konobara.
      *
-     * @param idKonobar novi id (pozitivan broj koji odgovara PK u bazi)
+     * @param idKonobar novi id (ne sme biti negativan)
+     * @throws IllegalArgumentException ako je idKonobar negativan
      */
-    public void setIdKonobar(int idKonobar) { this.idKonobar = idKonobar; }
+    public void setIdKonobar(int idKonobar) {
+        if (idKonobar < 0) {
+            throw new IllegalArgumentException("Id konobara ne sme biti negativan.");
+        }
+        this.idKonobar = idKonobar;
+    }
 
     /**
      * Vraca ime konobara kao String.
@@ -77,9 +85,15 @@ public class Konobar implements ApstraktniDomenskiObjekat{
     /**
      * Postavlja ime konobara.
      *
-     * @param ime novo ime (ne bi trebalo da bude null ili prazan string)
+     * @param ime novo ime (minimum 2 karaktera)
+     * @throws IllegalArgumentException ako je ime null ili ako ima manje od 2 karaktera
      */
-    public void setIme(String ime) { this.ime = ime; }
+    public void setIme(String ime) {
+        if (ime == null || ime.length() < 2) {
+            throw new IllegalArgumentException("Ime konobara mora imati najmanje 2 karaktera.");
+        }
+        this.ime = ime;
+    }
 
     /**
      * Vraca prezime konobara kao String.
@@ -91,9 +105,15 @@ public class Konobar implements ApstraktniDomenskiObjekat{
     /**
      * Postavlja prezime konobara.
      *
-     * @param prezime novo prezime (ne bi trebalo da bude null ili prazan string)
+     * @param prezime novo prezime (minimum 2 karaktera)
+     * @throws IllegalArgumentException ako je prezime null ili ako ima manje od 2 karaktera
      */
-    public void setPrezime(String prezime) { this.prezime = prezime; }
+    public void setPrezime(String prezime) {
+        if (prezime == null || prezime.length() < 2) {
+            throw new IllegalArgumentException("Prezime konobara mora imati najmanje 2 karaktera.");
+        }
+        this.prezime = prezime;
+    }
 
     /**
      * Vraca korisnicko ime konobara kao String.
@@ -106,8 +126,14 @@ public class Konobar implements ApstraktniDomenskiObjekat{
      * Postavlja korisnicko ime konobara.
      *
      * @param korisnickoIme novo korisnicko ime (jedinstveno u sistemu, ne prazno)
+     * @throws IllegalArgumentException ako je korisnicko ime null ili prazan string
      */
-    public void setKorisnickoIme(String korisnickoIme) { this.korisnickoIme = korisnickoIme; }
+    public void setKorisnickoIme(String korisnickoIme) {
+        if (korisnickoIme == null || korisnickoIme.isEmpty()) {
+            throw new IllegalArgumentException("Korisnicko ime konobara ne sme biti prazno.");
+        }
+        this.korisnickoIme = korisnickoIme;
+    }
 
     /**
      * Vraca sifru konobara kao String.
@@ -119,9 +145,15 @@ public class Konobar implements ApstraktniDomenskiObjekat{
     /**
      * Postavlja sifru konobara.
      *
-     * @param sifra nova sifra (ne bi trebalo da bude null ili prazan string)
+     * @param sifra nova sifra (ne sme biti null ili prazan string)
+     * @throws IllegalArgumentException ako je sifra null ili prazan string
      */
-    public void setSifra(String sifra) { this.sifra = sifra; }
+    public void setSifra(String sifra) {
+        if (sifra == null || sifra.isEmpty()) {
+            throw new IllegalArgumentException("Sifra konobara ne sme biti prazna.");
+        }
+        this.sifra = sifra;
+    }
 
     /**
      * Proverava da li prosledjeni kredencijali odgovaraju ovom konobaru.

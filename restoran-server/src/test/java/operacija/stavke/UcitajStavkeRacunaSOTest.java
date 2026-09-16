@@ -10,6 +10,7 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -33,6 +34,13 @@ class UcitajStavkeRacunaSOTest {
         doNothing().when(broker).rollback();
         so = new UcitajStavkeRacunaSO(broker);
         validanRacun = kreirajValidanRacun();
+    }
+
+    @AfterEach
+    void tearDown() {
+        broker = null;
+        so = null;
+        validanRacun = null;
     }
 
     private Racun kreirajValidanRacun() {

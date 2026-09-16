@@ -5,6 +5,7 @@ import domen.KonobarSmena;
 import domen.Smena;
 import java.time.LocalDate;
 import java.time.LocalTime;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -30,6 +31,13 @@ class DodajRasporedSOTest {
         Konobar k = new Konobar(1, "Marko", "Markovic", "mmarkovic", "sifra123");
         Smena s = new Smena(1, "Jutarnja", LocalTime.of(8, 0), LocalTime.of(16, 0));
         validanRaspored = new KonobarSmena(k, s, LocalDate.of(2026, 3, 15));
+    }
+
+    @AfterEach
+    void tearDown() {
+        broker = null;
+        so = null;
+        validanRaspored = null;
     }
 
     @Test
@@ -65,29 +73,5 @@ class DodajRasporedSOTest {
     void testPogresanTipParametaraBacaGresku() {
         Exception ex = assertThrows(Exception.class, () -> so.izvrsi("nije raspored", null));
         assertEquals("Sistem nije mogao da zapamti raspored.", ex.getMessage());
-    }
-
-    @Test
-    @DisplayName("Null konobar baca grešku o izboru")
-    void testNullKonobarBacaGresku() {
-        validanRaspored.setKonobar(null);
-        Exception ex = assertThrows(Exception.class, () -> so.izvrsi(validanRaspored, null));
-        assertEquals("Morate izabrati konobara.", ex.getMessage());
-    }
-
-    @Test
-    @DisplayName("Null smena baca grešku o izboru")
-    void testNullSmenaBacaGresku() {
-        validanRaspored.setSmena(null);
-        Exception ex = assertThrows(Exception.class, () -> so.izvrsi(validanRaspored, null));
-        assertEquals("Morate izabrati smenu.", ex.getMessage());
-    }
-
-    @Test
-    @DisplayName("Null datum smene baca grešku o izboru")
-    void testNullDatumBacaGresku() {
-        validanRaspored.setDatumSmene(null);
-        Exception ex = assertThrows(Exception.class, () -> so.izvrsi(validanRaspored, null));
-        assertEquals("Morate izabrati datum smene.", ex.getMessage());
     }
 }

@@ -1,6 +1,7 @@
 package operacija.konobar;
 
 import domen.Konobar;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -24,6 +25,13 @@ class ObrisiKonobaraSOTest {
         doNothing().when(broker).rollback();
         so = new ObrisiKonobaraSO(broker);
         validanKonobar = new Konobar(1, "Marko", "Markovic", "mmarkovic", "sifra123");
+    }
+
+    @AfterEach
+    void tearDown() {
+        broker = null;
+        so = null;
+        validanKonobar = null;
     }
 
     @Test

@@ -7,8 +7,7 @@ import repository.db.DbRepository;
 /**
  * Sistemska operacija za dodavanje nove kategorije gosta u sistem.
  * Radi nad domen klasom {@link KategorijaGosta}. Preduslovi zahtevaju da objekat
- * bude tipa KategorijaGosta, da opis ima najmanje 2 karaktera
- * i da popust bude veci ili jednak nuli.
+ * bude tipa KategorijaGosta. Validacija atributa (opis, popust) je u setterima domen klase.
  *
  * @author Filip Oketic
  * @version 1.0
@@ -37,23 +36,12 @@ public class DodajKategorijuGostaSO extends ApstraktnaGenerickaOperacija {
      * Proverava preduslove za dodavanje kategorije gosta.
      *
      * @param param objekat koji mora biti tipa {@link KategorijaGosta}
-     * @throws Exception ako objekat nije KategorijaGosta, ako opis ima manje od 2 karaktera,
-     *         ako popust nije veci ili jednak nuli
+     * @throws Exception ako je param null ili nije tipa {@link KategorijaGosta}
      */
     @Override
     protected void preduslovi(Object param) throws Exception {
         if (param == null || !(param instanceof KategorijaGosta)) {
             throw new Exception("Sistem nije mogao da doda kategoriju gosta!");
-        }
-
-        KategorijaGosta kg = (KategorijaGosta) param;
-
-        if (kg.getOpis()== null || kg.getOpis().isEmpty() || kg.getOpis().length() < 2) {
-            throw new Exception("GRESKA OPIS");
-        }
-
-        if (kg.getPopust() < 0) {
-            throw new Exception("GRESKA POPUST - mora biti >= 0");
         }
     }
 
