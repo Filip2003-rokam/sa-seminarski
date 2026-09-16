@@ -96,6 +96,8 @@ Otvorite `index.html` u odgovarajućem folderu.
 
 Paket `domen` u modulu `restoran-zajednicki`:
 
+Validacija vrednosti atributa vrši se u seterima domenskih klasa. Za nedozvoljene vrednosti seteri bacaju `IllegalArgumentException`.
+
 - `ApstraktniDomenskiObjekat`
 - `Artikal`
 - `Gost`
@@ -105,6 +107,16 @@ Paket `domen` u modulu `restoran-zajednicki`:
 - `Racun`
 - `Smena`
 - `StavkaRacuna`
+
+### Validacija
+
+Primeri pravila validacije:
+
+- ime gosta mora imati najmanje 3 karaktera;
+- cena artikla mora biti veća od nule;
+- vreme početka i vreme kraja smene ne smeju biti jednaki.
+
+Smena može prelaziti ponoć. Metoda `prelaziPonoc` proverava da li smena prelazi u sledeći dan, dok `vratiTrajanjeUMinutima` vraća ukupno trajanje smene u minutima.
 
 ## Sistemske operacije
 
