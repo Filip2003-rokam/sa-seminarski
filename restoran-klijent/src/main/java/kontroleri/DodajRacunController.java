@@ -15,6 +15,7 @@ import java.awt.event.ActionListener;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JOptionPane;
@@ -122,7 +123,7 @@ public class DodajRacunController {
 
                 // 6️⃣ Kreiraj stavku
                 StavkaRacuna novaStavka = new StavkaRacuna(
-                    -1,
+                    0,
                     rb,
                     kolicina,
                     ukupanIznos,
@@ -142,10 +143,12 @@ public class DodajRacunController {
 
             } catch (NumberFormatException ex) {
                 JOptionPane.showMessageDialog(drf, "Količina mora biti ceo broj!", "Greška", JOptionPane.ERROR_MESSAGE);
+            } catch (IllegalArgumentException ex) {
+                JOptionPane.showMessageDialog(drf, ex.getMessage(), "Neispravan unos", JOptionPane.WARNING_MESSAGE);
             } catch (Exception ex) {
                 System.out.println("GRESKAA: ");
                 ex.printStackTrace();
-                JOptionPane.showMessageDialog(drf, "Došlo je do greške prilikom dodavanja stavke.", "Greška", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(drf, "Došlo je do greške prilikom dodavanja stavke.", "Greska", JOptionPane.ERROR_MESSAGE);
             }
         }
     });
@@ -227,7 +230,7 @@ public class DodajRacunController {
                     ukupanIznos = Math.round(ukupanIznos * 100.0) / 100.0;
 
                     // 🔹 Kreiranje objekta Racun sa svim stavkama
-                    Racun r = new Racun(-1, datum, vreme, ukupanIznos, jeIzdat, izabraniKonobar, izabraniGost, stavke);
+                    Racun r = new Racun(0, datum, vreme, ukupanIznos, jeIzdat, izabraniKonobar, izabraniGost, stavke);
 
                     // 🔹 Slanje na server (trenutno zakomentarisano)
                     Komunikacija.getInstance().dodajRacun(r);
@@ -238,8 +241,12 @@ public class DodajRacunController {
                     //Cordinator.getInstance().osveziTabeluRacuna();
                     drf.dispose();
 
+                } catch (NumberFormatException | DateTimeParseException ex) {
+                    JOptionPane.showMessageDialog(drf, "Proverite format datuma, vremena i iznosa.", "Greska", JOptionPane.ERROR_MESSAGE);
+                } catch (IllegalArgumentException ex) {
+                    JOptionPane.showMessageDialog(drf, ex.getMessage(), "Neispravan unos", JOptionPane.WARNING_MESSAGE);
                 } catch (Exception ex) {
-                    JOptionPane.showMessageDialog(drf, "Greška prilikom dodavanja računa! Proverite format datuma/vremena.", "Greška", JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(drf, "Greška prilikom dodavanja računa.", "Greska", JOptionPane.ERROR_MESSAGE);
                 }
             }
         });
@@ -300,8 +307,12 @@ public class DodajRacunController {
                     //Cordinator.getInstance().osveziFormu();
                     drf.dispose();
 
+                } catch (NumberFormatException | DateTimeParseException ex) {
+                    JOptionPane.showMessageDialog(drf, "Proverite format id-a, datuma, vremena i iznosa.", "Greska", JOptionPane.ERROR_MESSAGE);
+                } catch (IllegalArgumentException ex) {
+                    JOptionPane.showMessageDialog(drf, ex.getMessage(), "Neispravan unos", JOptionPane.WARNING_MESSAGE);
                 } catch (Exception ex) {
-                    JOptionPane.showMessageDialog(drf, "Greška prilikom izmene računa!", "Greška", JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(drf, "Greška prilikom izmene računa!", "Greska", JOptionPane.ERROR_MESSAGE);
                 }
             }
         });

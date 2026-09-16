@@ -67,7 +67,7 @@ public class DodajSmenuController {
                     LocalTime pocetak = LocalTime.parse(pocetakTxt);
                     LocalTime kraj = LocalTime.parse(krajTxt);
 
-                    Smena s = new Smena(-1, naziv, pocetak, kraj);
+                    Smena s = new Smena(0, naziv, pocetak, kraj);
 
                     Komunikacija.getInstance().dodajSmenu(s);
                     JOptionPane.showMessageDialog(dsf, "Sistem je zapamtio smenu.", "Uspeh", JOptionPane.INFORMATION_MESSAGE);
@@ -76,10 +76,12 @@ public class DodajSmenuController {
                 } catch (DateTimeParseException ex) {
                     JOptionPane.showMessageDialog(dsf,
                             "Format vremena nije ispravan. Unesite vreme u formatu HH:mm (npr. 08:00).",
-                            "Greška",
+                            "Greska",
                             JOptionPane.ERROR_MESSAGE);
+                } catch (IllegalArgumentException ex) {
+                    JOptionPane.showMessageDialog(dsf, ex.getMessage(), "Neispravan unos", JOptionPane.WARNING_MESSAGE);
                 } catch (Exception ex) {
-                    JOptionPane.showMessageDialog(dsf, "Sistem ne može da zapamti smenu.", "Greška", JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(dsf, "Sistem ne može da zapamti smenu.", "Greska", JOptionPane.ERROR_MESSAGE);
                 }
             }
         });
@@ -108,13 +110,17 @@ public class DodajSmenuController {
                     JOptionPane.showMessageDialog(dsf, "Sistem je izmenio smenu.", "Uspeh", JOptionPane.INFORMATION_MESSAGE);
                     dsf.dispose();
 
+                } catch (NumberFormatException ex) {
+                    JOptionPane.showMessageDialog(dsf, "Id mora biti broj.", "Greska", JOptionPane.ERROR_MESSAGE);
                 } catch (DateTimeParseException ex) {
                     JOptionPane.showMessageDialog(dsf,
                             "Format vremena nije ispravan. Unesite vreme u formatu HH:mm (npr. 08:00).",
-                            "Greška",
+                            "Greska",
                             JOptionPane.ERROR_MESSAGE);
+                } catch (IllegalArgumentException ex) {
+                    JOptionPane.showMessageDialog(dsf, ex.getMessage(), "Neispravan unos", JOptionPane.WARNING_MESSAGE);
                 } catch (Exception ex) {
-                    JOptionPane.showMessageDialog(dsf, "Sistem ne može da izmeni smenu.", "Greška", JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(dsf, "Sistem ne može da izmeni smenu.", "Greska", JOptionPane.ERROR_MESSAGE);
                 }
             }
         });

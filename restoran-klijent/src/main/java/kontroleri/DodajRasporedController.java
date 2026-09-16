@@ -105,8 +105,10 @@ public class DodajRasporedController {
                     KonobarSmena ks = new KonobarSmena(konobar, smena, datum);
                     Komunikacija.getInstance().dodajRaspored(ks);
                     drf.dispose();
+                } catch (IllegalArgumentException ex) {
+                    JOptionPane.showMessageDialog(drf, ex.getMessage(), "Neispravan unos", JOptionPane.WARNING_MESSAGE);
                 } catch (Exception ex) {
-                    JOptionPane.showMessageDialog(drf, "Greška pri dodavanju rasporeda.", "Greška", JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(drf, "Greška pri dodavanju rasporeda.", "Greska", JOptionPane.ERROR_MESSAGE);
                 }
             }
         });
@@ -132,8 +134,10 @@ public class DodajRasporedController {
 
                     Komunikacija.getInstance().izmeniRaspored(ks);
                     drf.dispose();
+                } catch (IllegalArgumentException ex) {
+                    JOptionPane.showMessageDialog(drf, ex.getMessage(), "Neispravan unos", JOptionPane.WARNING_MESSAGE);
                 } catch (Exception ex) {
-                    JOptionPane.showMessageDialog(drf, "Greška pri izmeni rasporeda.", "Greška", JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(drf, "Greška pri izmeni rasporeda.", "Greska", JOptionPane.ERROR_MESSAGE);
                 }
             }
         });

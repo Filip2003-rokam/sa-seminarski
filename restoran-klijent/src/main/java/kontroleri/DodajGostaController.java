@@ -75,17 +75,17 @@ public class DodajGostaController {
                     return;
                 }
 
-                Komunikacija.getInstance().konekcija();
-                Gost g = new Gost(-1, ime, prezime, izabranaKategorija);
-
                 try {
+                    Komunikacija.getInstance().konekcija();
+                    Gost g = new Gost(0, ime, prezime, izabranaKategorija);
                     Komunikacija.getInstance().dodajGosta(g);
                     JOptionPane.showMessageDialog(dpf, "Gost je uspešno dodat!", "Uspeh", JOptionPane.INFORMATION_MESSAGE);
                     Cordinator.getInstance().osveziTabeluGostiju();
                     dpf.dispose();
+                } catch (IllegalArgumentException exc) {
+                    JOptionPane.showMessageDialog(dpf, exc.getMessage(), "Neispravan unos", JOptionPane.WARNING_MESSAGE);
                 } catch (Exception exc) {
-                    //JOptionPane.showMessageDialog(dpf, "Greška prilikom dodavanja gosta.", "Greška", JOptionPane.ERROR_MESSAGE);
-                    dpf.dispose();
+                    JOptionPane.showMessageDialog(dpf, "Greška prilikom dodavanja gosta.", "Greska", JOptionPane.ERROR_MESSAGE);
                 }
             }
         });
@@ -98,7 +98,6 @@ public class DodajGostaController {
             }
 
             private void izmeni(ActionEvent e) {
-                int id = Integer.parseInt(dpf.getjTextFieldId().getText());
                 String ime = dpf.getjTextFieldIme().getText().trim();
                 String prezime = dpf.getjTextFieldPrezime().getText().trim();
                 KategorijaGosta izabranaKategorija = (KategorijaGosta) dpf.getjComboBoxKategorijaGosta().getSelectedItem();
@@ -108,16 +107,20 @@ public class DodajGostaController {
                     return;
                 }
 
-                Komunikacija.getInstance().konekcija();
-                Gost g = new Gost(id, ime, prezime, izabranaKategorija);
-
                 try {
+                    int id = Integer.parseInt(dpf.getjTextFieldId().getText());
+                    Komunikacija.getInstance().konekcija();
+                    Gost g = new Gost(id, ime, prezime, izabranaKategorija);
                     Komunikacija.getInstance().izmaniGosta(g);
                     JOptionPane.showMessageDialog(dpf, "Gost je uspešno izmenjen!", "Uspeh", JOptionPane.INFORMATION_MESSAGE);
                     Cordinator.getInstance().osveziTabeluGostiju();
                     dpf.dispose();
+                } catch (NumberFormatException exc) {
+                    JOptionPane.showMessageDialog(dpf, "Id mora biti broj.", "Greska", JOptionPane.ERROR_MESSAGE);
+                } catch (IllegalArgumentException exc) {
+                    JOptionPane.showMessageDialog(dpf, exc.getMessage(), "Neispravan unos", JOptionPane.WARNING_MESSAGE);
                 } catch (Exception exc) {
-                    JOptionPane.showMessageDialog(dpf, "Greška prilikom izmene gosta.", "Greška", JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(dpf, "Greška prilikom izmene gosta.", "Greska", JOptionPane.ERROR_MESSAGE);
                 }
             }
         });
